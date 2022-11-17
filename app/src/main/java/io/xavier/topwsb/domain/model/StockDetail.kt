@@ -1,6 +1,6 @@
 package io.xavier.topwsb.domain.model
 
-data class StonkDetail(
+data class StockDetail(
     val symbol: String,
     val price: Double,
     val volume: Double,

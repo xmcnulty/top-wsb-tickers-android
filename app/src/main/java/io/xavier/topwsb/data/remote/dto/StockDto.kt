@@ -1,19 +1,19 @@
 package io.xavier.topwsb.data.remote.dto
 
-import io.xavier.topwsb.domain.model.Stonk
+import io.xavier.topwsb.domain.model.Stock
 
-data class StonksDto(
+data class StockDto(
     val no_of_comments: Int,
     val sentiment: String,
     val sentiment_score: Double,
     val ticker: String
 )
 
-fun StonksDto.toStonk(): Stonk {
-    return Stonk(
-        no_of_comments = no_of_comments,
+fun StockDto.toStock(): Stock {
+    return Stock(
+        numberOfComments = no_of_comments,
         sentiment = sentiment,
-        sentiment_score = sentiment_score,
+        sentimentScore = sentiment_score,
         ticker = ticker
     )
 }

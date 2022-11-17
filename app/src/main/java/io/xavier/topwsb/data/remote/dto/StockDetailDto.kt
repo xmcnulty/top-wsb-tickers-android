@@ -1,8 +1,8 @@
 package io.xavier.topwsb.data.remote.dto
 
-import io.xavier.topwsb.domain.model.StonkDetail
+import io.xavier.topwsb.domain.model.StockDetail
 
-data class StonkDetailDto(
+data class StockDetailDto(
     val symbol: String,
     val open: String,
     val high: String,
@@ -15,8 +15,8 @@ data class StonkDetailDto(
     val change_percent: String
 )
 
-fun StonkDetailDto.toStonkDetail(): StonkDetail {
-    return StonkDetail(
+fun StockDetailDto.toStockDetail(): StockDetail {
+    return StockDetail(
         symbol = symbol,
         price = price.toDouble(),
         volume = volume.toDouble(),

@@ -7,8 +7,8 @@ import dagger.hilt.components.SingletonComponent
 import io.xavier.topwsb.common.Constants
 import io.xavier.topwsb.data.remote.AlphaAdvantageApi
 import io.xavier.topwsb.data.remote.TradestieRedditApi
-import io.xavier.topwsb.data.repository.StonkRepositoryImpl
-import io.xavier.topwsb.domain.repository.StonkRepository
+import io.xavier.topwsb.data.repository.StockRepositoryImpl
+import io.xavier.topwsb.domain.repository.StockRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -42,7 +42,7 @@ object AppModule {
     fun provideStonkRepository(
         wsbApi: TradestieRedditApi,
         alphaAdvApi: AlphaAdvantageApi
-    ): StonkRepository {
-        return StonkRepositoryImpl(wsbApi, alphaAdvApi)
+    ): StockRepository {
+        return StockRepositoryImpl(wsbApi, alphaAdvApi)
     }
 }

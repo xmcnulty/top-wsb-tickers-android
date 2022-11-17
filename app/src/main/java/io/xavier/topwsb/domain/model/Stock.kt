@@ -1,8 +1,8 @@
 package io.xavier.topwsb.domain.model
 
-data class Stonk(
-    val no_of_comments: Int,
+data class Stock(
+    val numberOfComments: Int,
     val sentiment: String,
-    val sentiment_score: Double,
+    val sentimentScore: Double,
     val ticker: String
 )
