@@ -1,4 +1,4 @@
-package io.xavier.topwsb.ui.theme
+package io.xavier.topwsb.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
