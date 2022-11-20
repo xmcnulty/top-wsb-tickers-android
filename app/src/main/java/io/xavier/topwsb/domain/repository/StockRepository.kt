@@ -5,7 +5,7 @@ import io.xavier.topwsb.data.remote.dto.StockDto
 
 interface StockRepository {
 
-    suspend fun getStonks(): List<StockDto>
+    suspend fun getStocks(): List<StockDto>
 
-    suspend fun getStonkDetail(symbol: String): StockDetailDto
+    suspend fun getStockDetail(symbol: String): StockDetailDto
 }

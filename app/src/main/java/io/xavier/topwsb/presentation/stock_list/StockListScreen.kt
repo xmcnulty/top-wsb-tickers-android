@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
@@ -38,22 +37,20 @@ fun StockListScreen(
                     TrendingOnWsbText()
                 },
                 actions = {
-                    TODO()
                 }
             )
         }
     ) { innerPadding ->
         LazyColumn(
             state = stockListState,
-            contentPadding = innerPadding,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            contentPadding = innerPadding
         ) {
             item {
                 // TODO: SectionTitle
             }
 
-            items(state.stocks) {
-
+            items(state.stocks) { it ->
+                StockListItem(stock = it, onItemClick = {})
             }
         }
     }

@@ -20,10 +20,10 @@ class StockListViewModel @Inject constructor(
     val state: State<StockListState> = _state
 
     init {
-        getStonks()
+        getStocks()
     }
 
-    private fun getStonks() {
+    private fun getStocks() {
         getStockListUseCase().onEach { result ->
             when(result) {
                 is Resource.Success -> {

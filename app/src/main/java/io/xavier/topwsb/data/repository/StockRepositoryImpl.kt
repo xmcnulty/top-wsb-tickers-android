@@ -12,11 +12,11 @@ class StockRepositoryImpl @Inject constructor(
     private val wsbApi: TradestieRedditApi,
     private val alphaAdvApi: AlphaAdvantageApi
 ) : StockRepository {
-    override suspend fun getStonks(): List<StockDto> {
+    override suspend fun getStocks(): List<StockDto> {
         return wsbApi.getStonks()
     }
 
-    override suspend fun getStonkDetail(symbol: String): StockDetailDto {
+    override suspend fun getStockDetail(symbol: String): StockDetailDto {
         return alphaAdvApi.getStonkDetail(
             symbol,
             BuildConfig.API_KEY_ALPHA_ADVANTAGE

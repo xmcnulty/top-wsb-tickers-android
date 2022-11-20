@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface AlphaAdvantageApi {
-    @GET("function=GLOBAL_QUOTES&symbol={symbol}&apikey={apikey}")
+    @GET("query?function=GLOBAL_QUOTES&symbol={symbol}&apikey={apikey}")
     suspend fun getStonkDetail(
         @Path("symbol") symbol: String,
         @Path("apikey") apikey: String

@@ -16,7 +16,7 @@ class GetStockDetailUseCase @Inject constructor(
     operator fun invoke(symbol: String): Flow<Resource<StockDetail>> = flow {
         try {
             emit(Resource.Loading())
-            val stonk = repository.getStonkDetail(symbol).toStockDetail()
+            val stonk = repository.getStockDetail(symbol).toStockDetail()
             emit(Resource.Success(stonk))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))

@@ -16,7 +16,7 @@ class GetStockListUseCase @Inject constructor(
     operator fun invoke(): Flow<Resource<List<Stock>>> = flow {
         try {
             emit(Resource.Loading())
-            val stocks = repository.getStonks().map {
+            val stocks = repository.getStocks().map {
                 it.toStock()
             }
             emit(Resource.Success(stocks))
