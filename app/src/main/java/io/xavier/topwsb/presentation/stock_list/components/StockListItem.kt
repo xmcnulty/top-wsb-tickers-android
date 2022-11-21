@@ -16,10 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.xavier.topwsb.R
 import io.xavier.topwsb.domain.model.Stock
-import io.xavier.topwsb.presentation.theme.DarkPrimaryText
-import io.xavier.topwsb.presentation.theme.NegativeTrend
-import io.xavier.topwsb.presentation.theme.PositiveTrend
-import io.xavier.topwsb.presentation.theme.TopWSBTheme
+import io.xavier.topwsb.presentation.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

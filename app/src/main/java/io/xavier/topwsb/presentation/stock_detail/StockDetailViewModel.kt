@@ -1,4 +1,4 @@
-package io.xavier.topwsb.presentation.stonk_detail
+package io.xavier.topwsb.presentation.stock_detail
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class StonkDetailViewModel @Inject constructor(
+class StockDetailViewModel @Inject constructor(
     private val getStockDetailUseCase: GetStockDetailUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {

@@ -1,4 +1,4 @@
-package io.xavier.topwsb.presentation.stonk_detail
+package io.xavier.topwsb.presentation.stock_detail
 
 import io.xavier.topwsb.domain.model.StockDetail
 

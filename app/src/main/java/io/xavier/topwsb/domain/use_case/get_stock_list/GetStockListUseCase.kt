@@ -18,7 +18,7 @@ class GetStockListUseCase @Inject constructor(
             emit(Resource.Loading())
             val stocks = repository.getStocks().map {
                 it.toStock()
-            }
+            }.subList(0, 19)
             emit(Resource.Success(stocks))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))

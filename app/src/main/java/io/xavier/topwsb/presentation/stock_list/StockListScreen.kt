@@ -1,24 +1,27 @@
+@file:Suppress("OPT_IN_IS_NOT_ENABLED")
+
 package io.xavier.topwsb.presentation.stock_list
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import io.xavier.topwsb.R.drawable
+import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_list.components.StockListItem
 
+/**
+ * Screen that displays a list of the top 20 stocks mentioned on r/wallstreetbets
+ * in the past 24 hours. Uses Material 3 components and specifications.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StockListScreen(
@@ -32,51 +35,34 @@ fun StockListScreen(
     Scaffold(
         modifier = Modifier,
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
-                    TrendingOnWsbText()
-                },
-                actions = {
+                    Image(
+                        modifier = Modifier
+                            .requiredHeight(64.dp)
+                            .padding(top = 4.dp, start = 4.dp),
+                        painter = painterResource(id = drawable.ic_wsb_logo),
+                        contentDescription = null
+                    )
                 }
             )
         }
     ) { innerPadding ->
+
         LazyColumn(
             state = stockListState,
             contentPadding = innerPadding
         ) {
             item {
-                // TODO: SectionTitle
+                SectionTitle(
+                    title = "Trending on /r/wallstreetbets",
+                    modifier = Modifier.padding(start = 8.dp)
+                )
             }
 
-            items(state.stocks) { it ->
-                StockListItem(stock = it, onItemClick = {})
+            items(state.stocks) { stock ->
+                StockListItem(stock = stock, onItemClick = {})
             }
         }
-    }
-}
-
-@Composable
-fun TrendingOnWsbText(
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
-    ) {
-        Text(
-            text = "Powered by ",
-            color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.bodySmall
-        )
-
-        Image(
-            modifier = Modifier
-                .requiredHeight(20.dp)
-                .padding(top = 2.dp),
-            painter = painterResource(id = drawable.ic_wsb_logo),
-            contentDescription = null
-        )
     }
 }
