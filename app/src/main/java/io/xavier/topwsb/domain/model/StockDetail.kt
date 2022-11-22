@@ -1,10 +1,11 @@
 package io.xavier.topwsb.domain.model
 
 data class StockDetail(
-    val symbol: String,
-    val price: Double,
-    val volume: Double,
-    val lastTradingDay: String,
-    val previousClose: Double,
-    val changePercent: Double
+    val ticker: String,
+    val companyName: String,
+    val ma50: String,
+    val ma200: String,
+    val high52Week: String,
+    val low52Week: String,
+    val analystTargetPrice: String
 )

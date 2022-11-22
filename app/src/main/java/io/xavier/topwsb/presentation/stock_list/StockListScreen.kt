@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import io.xavier.topwsb.R.drawable
+import io.xavier.topwsb.domain.model.Stock
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_list.components.StockListItem
 
@@ -25,7 +25,7 @@ import io.xavier.topwsb.presentation.stock_list.components.StockListItem
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StockListScreen(
-    navController: NavController,
+    navToStockDetail: (Stock) -> Unit,
     viewModel: StockListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
@@ -61,7 +61,10 @@ fun StockListScreen(
             }
 
             items(state.stocks) { stock ->
-                StockListItem(stock = stock, onItemClick = {})
+                StockListItem(
+                    stock = stock,
+                    onItemClick = navToStockDetail
+                )
             }
         }
     }

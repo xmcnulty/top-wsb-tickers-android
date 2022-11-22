@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import io.xavier.topwsb.presentation.stock_list.StockListScreen
+import io.xavier.topwsb.presentation.navigation.TrendiesNavHost
 import io.xavier.topwsb.presentation.theme.TopWSBTheme
 
 @AndroidEntryPoint
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
 
             TopWSBTheme {
                 // A surface container using the 'background' color from the theme
-                StockListScreen(navController = navController)
+                TrendiesNavHost(navController = navController)
             }
         }
     }
