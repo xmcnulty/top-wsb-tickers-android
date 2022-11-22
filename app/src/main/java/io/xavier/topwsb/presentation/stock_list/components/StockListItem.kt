@@ -12,12 +12,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.xavier.topwsb.R
 import io.xavier.topwsb.domain.model.Stock
 import io.xavier.topwsb.presentation.theme.*
 
+/**
+ * Material 3 ListItem that displays a stock's ticker, WSB sentiment and number of comments
+ * for the past 24-hours. ListItems are ranked by number of comments. Clicking a ListItem
+ * opens a Screen that displays more information about the contained stock.
+ *
+ * @param stock [Stock] displayed in this ListItem
+ * @param onItemClick Callback to navigate to new detailed screen for [stock]
+ */
+@Suppress("OPT_IN_IS_NOT_ENABLED")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StockListItem(
@@ -26,7 +34,7 @@ fun StockListItem(
 ) {
     ListItem(
         leadingContent = {
-
+            // Stock ticker contained in card
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
@@ -56,7 +64,7 @@ fun StockListItem(
             }
         },
         headlineText = {
-
+            // Sentiment indicator
             val cardColor = if(stock.sentiment == "Bullish")
                 PositiveTrend
             else
@@ -84,6 +92,7 @@ fun StockListItem(
                 )
             }
         },
+        // number of comments
         supportingText = {
             Row(
                 modifier = Modifier.padding(top = 2.dp)
@@ -130,20 +139,4 @@ fun StockListItem(
     )
 
     Divider()
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun StockListItemPreview() {
-    TopWSBTheme {
-        StockListItem(
-            stock = Stock(
-                numberOfComments = 25,
-                sentiment = "Bullish",
-                sentimentScore = 0.023,
-                ticker = "AMD"
-            ),
-            onItemClick = {}
-        )
-    }
 }

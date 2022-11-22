@@ -32,7 +32,7 @@ fun TrendiesNavHost(
         composable(
             route = Screen.StockDetailScreen.route + "/{ticker}"
         ) {
-            StockDetailScreen()
+            StockDetailScreen { navController.popBackStack() }
         }
     }
 }

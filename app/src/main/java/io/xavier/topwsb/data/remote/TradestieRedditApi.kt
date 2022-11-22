@@ -6,5 +6,5 @@ import retrofit2.http.GET
 interface TradestieRedditApi {
 
     @GET("v1/apps/reddit")
-    suspend fun getStonks(): List<StockDto>
+    suspend fun getStocks(): List<StockDto>
 }

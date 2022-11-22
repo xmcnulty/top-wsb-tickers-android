@@ -39,7 +39,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideStonkRepository(
+    fun provideStockRepository(
         wsbApi: TradestieRedditApi,
         alphaAdvApi: AlphaAdvantageApi
     ): StockRepository {

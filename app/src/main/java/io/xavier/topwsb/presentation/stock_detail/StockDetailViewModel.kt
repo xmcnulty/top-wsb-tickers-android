@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.xavier.topwsb.common.Constants
+import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.domain.use_case.get_stock_detail.GetStockDetailUseCase
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
@@ -20,19 +21,34 @@ class StockDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    private val tag = "STOCK_DETAIL_VM"
+
     private val _state = mutableStateOf(StockDetailState())
     val state: State<StockDetailState> = _state
 
     init {
-        Log.d("STOCK_DETAIL", "Init block")
         savedStateHandle.get<String>(Constants.PARAM_STOCK_SYMBOL)?.let { symbol ->
+            Log.d(tag, "Init request for $symbol")
             getStockDetail(symbol)
         }
     }
 
     private fun getStockDetail(symbol: String) {
-        getStockDetailUseCase(symbol).onEach {
-
+        Log.d(tag, "Requesting stock detail for $symbol")
+        getStockDetailUseCase(symbol).onEach { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    Log.d(tag, "Loading")
+                    _state.value = StockDetailState(isLoading = true)
+                }
+                is Resource.Success -> {
+                    Log.d(tag, "Get Stock Detail Success")
+                    _state.value = StockDetailState(stockDetail = result.data)
+                }
+                is Resource.Error -> {
+                    Log.d(tag, "Get Stock Detail Error: ${result.message}")
+                }
+            }
         }.launchIn(viewModelScope)
     }
 }
