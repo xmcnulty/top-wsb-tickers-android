@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import io.xavier.topwsb.R.drawable
-import io.xavier.topwsb.domain.model.Stock
+import io.xavier.topwsb.domain.model.TrendingStock
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_list.components.StockListItem
 
@@ -25,7 +25,7 @@ import io.xavier.topwsb.presentation.stock_list.components.StockListItem
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StockListScreen(
-    navToStockDetail: (Stock) -> Unit,
+    navToStockDetail: (TrendingStock) -> Unit,
     viewModel: StockListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
@@ -60,9 +60,9 @@ fun StockListScreen(
                 )
             }
 
-            items(state.stocks) { stock ->
+            items(state.trendingStocks) { stock ->
                 StockListItem(
-                    stock = stock,
+                    trendingStock = stock,
                     onItemClick = navToStockDetail
                 )
             }

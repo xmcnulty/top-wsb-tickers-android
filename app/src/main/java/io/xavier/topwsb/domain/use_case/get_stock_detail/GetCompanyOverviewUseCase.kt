@@ -3,15 +3,15 @@ package io.xavier.topwsb.domain.use_case.get_stock_detail
 import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.data.remote.dto.toCompanyOverview
 import io.xavier.topwsb.domain.model.CompanyOverview
-import io.xavier.topwsb.domain.repository.StockRepository
+import io.xavier.topwsb.domain.repository.StockDataRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetStockDetailUseCase @Inject constructor(
-    private val repository: StockRepository
+class GetCompanyOverviewUseCase @Inject constructor(
+    private val repository: StockDataRepository
 ) {
     operator fun invoke(symbol: String): Flow<Resource<CompanyOverview>> = flow {
         try {

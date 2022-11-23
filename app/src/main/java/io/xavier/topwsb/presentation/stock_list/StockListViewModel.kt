@@ -28,7 +28,7 @@ class StockListViewModel @Inject constructor(
             when(result) {
                 is Resource.Success -> {
                     _state.value = StockListState(
-                        stocks = result.data ?: emptyList()
+                        trendingStocks = result.data ?: emptyList()
                     )
                 }
                 is Resource.Error -> {

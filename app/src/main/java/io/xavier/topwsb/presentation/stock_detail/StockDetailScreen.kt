@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import io.xavier.topwsb.R
-import io.xavier.topwsb.domain.model.toMap
+import io.xavier.topwsb.domain.mapper.toMap
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItem
 import io.xavier.topwsb.presentation.theme.DarkBackgroundTranslucent
@@ -69,6 +69,11 @@ fun StockDetailScreen(
             state = listState,
             contentPadding = innerPadding
         ) {
+
+            // Price percentage and chart
+            item {
+
+            }
 
             item {
                 Spacer(modifier = Modifier.height(16.dp))

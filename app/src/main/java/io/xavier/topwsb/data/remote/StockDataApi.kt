@@ -4,7 +4,7 @@ import io.xavier.topwsb.data.remote.dto.CompanyOverviewDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface AlphaAdvantageApi {
+interface StockDataApi {
     @GET("query?function=OVERVIEW")
     suspend fun getStockDetails(
         @Query("apikey") apiKey: String,

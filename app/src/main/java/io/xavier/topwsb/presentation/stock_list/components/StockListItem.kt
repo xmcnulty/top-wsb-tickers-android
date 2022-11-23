@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import io.xavier.topwsb.R
-import io.xavier.topwsb.domain.model.Stock
+import io.xavier.topwsb.domain.model.TrendingStock
 import io.xavier.topwsb.presentation.theme.*
 
 /**
@@ -22,15 +22,15 @@ import io.xavier.topwsb.presentation.theme.*
  * for the past 24-hours. ListItems are ranked by number of comments. Clicking a ListItem
  * opens a Screen that displays more information about the contained stock.
  *
- * @param stock [Stock] displayed in this ListItem
- * @param onItemClick Callback to navigate to new detailed screen for [stock]
+ * @param trendingStock [TrendingStock] displayed in this ListItem
+ * @param onItemClick Callback to navigate to new detailed screen for [trendingStock]
  */
 @Suppress("OPT_IN_IS_NOT_ENABLED")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StockListItem(
-    stock: Stock,
-    onItemClick: (Stock) -> Unit
+    trendingStock: TrendingStock,
+    onItemClick: (TrendingStock) -> Unit
 ) {
     ListItem(
         leadingContent = {
@@ -52,7 +52,7 @@ fun StockListItem(
                         .fillMaxWidth()
                 ) {
                     Text(
-                        text = stock.ticker,
+                        text = trendingStock.ticker,
                         style = MaterialTheme.typography.labelLarge,
                         modifier = Modifier
                             .padding(8.dp)
@@ -65,7 +65,7 @@ fun StockListItem(
         },
         headlineText = {
             // Sentiment indicator
-            val cardColor = if(stock.sentiment == "Bullish")
+            val cardColor = if(trendingStock.sentiment == "Bullish")
                 PositiveTrend
             else
                 NegativeTrend
@@ -78,7 +78,7 @@ fun StockListItem(
                 )
             ) {
                 Text(
-                    text = stock.sentiment,
+                    text = trendingStock.sentiment,
                     fontWeight = FontWeight.Bold,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.bodyMedium,
@@ -116,7 +116,7 @@ fun StockListItem(
                     )
                 ) {
                     Text(
-                        text = stock.numberOfComments.toString(),
+                        text = trendingStock.numberOfComments.toString(),
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(start = 4.dp, end = 4.dp, top = 1.dp, bottom = 1.dp),
                         fontWeight = FontWeight.Medium
@@ -135,7 +135,7 @@ fun StockListItem(
                 )
             }
         },
-        modifier = Modifier.clickable { onItemClick(stock) }
+        modifier = Modifier.clickable { onItemClick(trendingStock) }
     )
 
     Divider()

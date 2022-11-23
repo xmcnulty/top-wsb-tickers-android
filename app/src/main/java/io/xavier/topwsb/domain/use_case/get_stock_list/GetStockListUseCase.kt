@@ -2,8 +2,8 @@ package io.xavier.topwsb.domain.use_case.get_stock_list
 
 import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.data.remote.dto.toStock
-import io.xavier.topwsb.domain.model.Stock
-import io.xavier.topwsb.domain.repository.StockRepository
+import io.xavier.topwsb.domain.model.TrendingStock
+import io.xavier.topwsb.domain.repository.TrendingStockRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -11,12 +11,12 @@ import java.io.IOException
 import javax.inject.Inject
 
 class GetStockListUseCase @Inject constructor(
-    private val repository: StockRepository
+    private val repository: TrendingStockRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<Stock>>> = flow {
+    operator fun invoke(): Flow<Resource<List<TrendingStock>>> = flow {
         try {
             emit(Resource.Loading())
-            val stocks = repository.getStocks().map {
+            val stocks = repository.getTrendingStocks().map {
                 it.toStock()
             }.subList(0, 19)
             emit(Resource.Success(stocks))

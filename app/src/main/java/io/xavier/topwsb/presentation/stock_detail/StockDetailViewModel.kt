@@ -9,14 +9,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.xavier.topwsb.common.Constants
 import io.xavier.topwsb.common.Resource
-import io.xavier.topwsb.domain.use_case.get_stock_detail.GetStockDetailUseCase
+import io.xavier.topwsb.domain.use_case.get_stock_detail.GetCompanyOverviewUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
 class StockDetailViewModel @Inject constructor(
-    private val getStockDetailUseCase: GetStockDetailUseCase,
+    private val getCompanyOverviewUseCase: GetCompanyOverviewUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -34,7 +34,7 @@ class StockDetailViewModel @Inject constructor(
 
     private fun getCompanyOverview(symbol: String) {
         Log.d(tag, "Requesting stock detail for $symbol")
-        getStockDetailUseCase(symbol).onEach { result ->
+        getCompanyOverviewUseCase(symbol).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
                     Log.d(tag, "Loading")
