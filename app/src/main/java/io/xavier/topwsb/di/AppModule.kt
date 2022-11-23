@@ -26,7 +26,7 @@ object AppModule {
     @Singleton
     fun providesTrendingStockApi(): TrendingStockApi {
         return Retrofit.Builder()
-            .baseUrl(Constants.WSB_API_BASE_URL)
+            .baseUrl(Constants.TRADESTIE_API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(TrendingStockApi::class.java)
@@ -36,7 +36,7 @@ object AppModule {
     @Singleton
     fun providesStockDataApi(): StockDataApi {
         return Retrofit.Builder()
-            .baseUrl(Constants.ALPHA_ADV_BASE_URL)
+            .baseUrl(Constants.ALPHA_ADVANTAGE_API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(StockDataApi::class.java)

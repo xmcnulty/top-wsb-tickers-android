@@ -1,4 +1,4 @@
-package io.xavier.topwsb.data.remote.dto
+package io.xavier.topwsb.data.remote.dto.company_overview
 
 import io.xavier.topwsb.domain.model.CompanyOverview
 

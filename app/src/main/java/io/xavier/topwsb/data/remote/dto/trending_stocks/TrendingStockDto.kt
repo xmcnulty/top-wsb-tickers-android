@@ -1,15 +1,15 @@
-package io.xavier.topwsb.data.remote.dto
+package io.xavier.topwsb.data.remote.dto.trending_stocks
 
 import io.xavier.topwsb.domain.model.TrendingStock
 
-data class StockDto(
+data class TrendingStockDto(
     val no_of_comments: Int,
     val sentiment: String,
     val sentiment_score: Double,
     val ticker: String
 )
 
-fun StockDto.toStock(): TrendingStock {
+fun TrendingStockDto.toStock(): TrendingStock {
     return TrendingStock(
         numberOfComments = no_of_comments,
         sentiment = sentiment,
