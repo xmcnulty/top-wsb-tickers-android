@@ -1,6 +1,6 @@
 package io.xavier.topwsb.domain.model
 
-data class StockDetail(
+data class CompanyOverview(
     val ticker: String,
     val companyName: String,
     val ma50: String,
@@ -10,7 +10,7 @@ data class StockDetail(
     val analystTargetPrice: String
 )
 
-fun StockDetail.toMap(): Map<String, String> = mapOf(
+fun CompanyOverview.toMap(): Map<String, String> = mapOf(
     "Name" to companyName,
     "Ticker" to ticker,
     "Analyst Target" to analystTargetPrice,

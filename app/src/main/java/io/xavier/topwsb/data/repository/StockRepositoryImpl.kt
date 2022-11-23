@@ -3,7 +3,7 @@ package io.xavier.topwsb.data.repository
 import io.xavier.topwsb.BuildConfig
 import io.xavier.topwsb.data.remote.AlphaAdvantageApi
 import io.xavier.topwsb.data.remote.TradestieRedditApi
-import io.xavier.topwsb.data.remote.dto.StockDetailDto
+import io.xavier.topwsb.data.remote.dto.CompanyOverviewDto
 import io.xavier.topwsb.data.remote.dto.StockDto
 import io.xavier.topwsb.domain.repository.StockRepository
 import javax.inject.Inject
@@ -16,10 +16,10 @@ class StockRepositoryImpl @Inject constructor(
         return wsbApi.getStocks()
     }
 
-    override suspend fun getStockDetail(symbol: String): StockDetailDto {
+    override suspend fun getCompanyOverview(ticker: String): CompanyOverviewDto {
         return alphaAdvApi.getStockDetails(
             apiKey = BuildConfig.API_KEY_ALPHA_ADVANTAGE,
-            symbol = symbol
+            symbol = ticker
         )
     }
 }

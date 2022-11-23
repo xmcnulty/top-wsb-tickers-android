@@ -1,12 +1,12 @@
 package io.xavier.topwsb.data.remote.dto
 
-import io.xavier.topwsb.domain.model.StockDetail
+import io.xavier.topwsb.domain.model.CompanyOverview
 
 /**
  * Data class containing the fields returned from Alpha Advantage API OVERVIEW function call.
  * Data is returned from API in JSON format, and parsed by GSON.
  */
-data class StockDetailDto(
+data class CompanyOverviewDto(
     val `200DayMovingAverage`: String,
     val `50DayMovingAverage`: String,
     val `52WeekHigh`: String,
@@ -56,11 +56,11 @@ data class StockDetailDto(
 )
 
 /**
- * Converts a [StockDetailDto] to [StockDetail] with required information for application use.
+ * Converts a [CompanyOverviewDto] to [CompanyOverview] with required information for application use.
  *
- * @return [StockDetail] from data contained in this Dto object
+ * @return [CompanyOverview] from data contained in this Dto object
  */
-fun StockDetailDto.toStockDetail(): StockDetail = StockDetail(
+fun CompanyOverviewDto.toCompanyOverview(): CompanyOverview = CompanyOverview(
     ticker = Symbol,
     companyName = Name,
     ma50 = `50DayMovingAverage`,

@@ -57,7 +57,7 @@ fun StockDetailScreen(
                     }
                 },
                 title = {
-                    state.value.stockDetail?.let { stock ->
+                    state.value.companyOverview?.let { stock ->
                         SectionTitle(title = "\$${stock.ticker}")
                     }
                 }
@@ -89,7 +89,7 @@ fun StockDetailScreen(
                             shape = MaterialTheme.shapes.large
                         )
                 ) {
-                    state.value.stockDetail?.let { stockDetail ->
+                    state.value.companyOverview?.let { stockDetail ->
                         stockDetail.toMap().forEach {
                             SectionInfoItem(
                                 name = it.key,
