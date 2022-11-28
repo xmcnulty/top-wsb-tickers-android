@@ -1,7 +1,7 @@
 package io.xavier.topwsb.domain.use_case.get_stock_list
 
 import io.xavier.topwsb.common.Resource
-import io.xavier.topwsb.data.remote.dto.toStock
+import io.xavier.topwsb.data.remote.dto.trending_stocks.toStock
 import io.xavier.topwsb.domain.model.TrendingStock
 import io.xavier.topwsb.domain.repository.TrendingStockRepository
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +18,7 @@ class GetStockListUseCase @Inject constructor(
             emit(Resource.Loading())
             val stocks = repository.getTrendingStocks().map {
                 it.toStock()
-            }.subList(0, 19)
+            }
             emit(Resource.Success(stocks))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))

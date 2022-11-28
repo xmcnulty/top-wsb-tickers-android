@@ -2,7 +2,7 @@ package io.xavier.topwsb.data.repository
 
 import io.xavier.topwsb.BuildConfig
 import io.xavier.topwsb.data.remote.StockDataApi
-import io.xavier.topwsb.data.remote.dto.CompanyOverviewDto
+import io.xavier.topwsb.data.remote.dto.company_overview.CompanyOverviewDto
 import io.xavier.topwsb.domain.repository.StockDataRepository
 import javax.inject.Inject
 import javax.inject.Singleton

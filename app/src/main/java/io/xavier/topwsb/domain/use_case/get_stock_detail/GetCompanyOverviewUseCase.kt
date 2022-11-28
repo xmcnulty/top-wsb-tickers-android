@@ -1,7 +1,7 @@
 package io.xavier.topwsb.domain.use_case.get_stock_detail
 
 import io.xavier.topwsb.common.Resource
-import io.xavier.topwsb.data.remote.dto.toCompanyOverview
+import io.xavier.topwsb.data.remote.dto.company_overview.toCompanyOverview
 import io.xavier.topwsb.domain.model.CompanyOverview
 import io.xavier.topwsb.domain.repository.StockDataRepository
 import kotlinx.coroutines.flow.Flow

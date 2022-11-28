@@ -57,7 +57,7 @@ fun StockDetailScreen(
                     }
                 },
                 title = {
-                    state.value.companyOverview?.let { stock ->
+                    state.value.mktOverviewState.data?.let { stock ->
                         SectionTitle(title = "\$${stock.ticker}")
                     }
                 }
@@ -94,13 +94,18 @@ fun StockDetailScreen(
                             shape = MaterialTheme.shapes.large
                         )
                 ) {
-                    state.value.companyOverview?.let { stockDetail ->
-                        stockDetail.toMap().forEach {
-                            SectionInfoItem(
-                                name = it.key,
-                                value = it.value,
-                                showDivider = it.key != "200 day MA"
-                            )
+                    when (state.value.mktOverviewState.loading) {
+                        true -> Text(text = "Loading data")
+                        false -> {
+                            state.value.mktOverviewState.data?.let { stockDetail ->
+                                stockDetail.toMap().forEach {
+                                    SectionInfoItem(
+                                        name = it.key,
+                                        value = it.value,
+                                        showDivider = it.key != "200 day MA"
+                                    )
+                                }
+                            }
                         }
                     }
                 }

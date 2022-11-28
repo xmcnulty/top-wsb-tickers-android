@@ -10,10 +10,13 @@ import io.xavier.topwsb.common.Constants
 import io.xavier.topwsb.data.local.TrendingStockDatabase
 import io.xavier.topwsb.data.remote.StockDataApi
 import io.xavier.topwsb.data.remote.TrendingStockApi
+import io.xavier.topwsb.data.remote.WsbCommentsApi
 import io.xavier.topwsb.data.repository.StockDataRepositoryImpl
 import io.xavier.topwsb.data.repository.TrendingStockRepositoryImpl
+import io.xavier.topwsb.data.repository.WsbCommentsRespositoryImpl
 import io.xavier.topwsb.domain.repository.StockDataRepository
 import io.xavier.topwsb.domain.repository.TrendingStockRepository
+import io.xavier.topwsb.domain.repository.WsbCommentsRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -22,6 +25,12 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    /**
+     * Provides a singleton instance of [TrendingStockApi] that fetches trending stocks
+     * on /r/wallstreetbets.
+     *
+     * @return [TrendingStockApi]
+     */
     @Provides
     @Singleton
     fun providesTrendingStockApi(): TrendingStockApi {
@@ -32,6 +41,12 @@ object AppModule {
             .create(TrendingStockApi::class.java)
     }
 
+    /**
+     * Provides a singleton instance of [StockDataApi] that fetches company overview from
+     * Alpha Advantage.
+     *
+     * @return [StockDataApi]
+     */
     @Provides
     @Singleton
     fun providesStockDataApi(): StockDataApi {
@@ -42,6 +57,25 @@ object AppModule {
             .create(StockDataApi::class.java)
     }
 
+    /**
+     * Provides a singleton instance of [WsbCommentsApi] that fetches a list of comments
+     * from /r/wallstreetbets that mention a queried stock ticker.
+     *
+     * @return [WsbCommentsApi]
+     */
+    @Provides
+    @Singleton
+    fun providesWsbCommentApi(): WsbCommentsApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.PUSH_SHIFT_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(WsbCommentsApi::class.java)
+    }
+
+    /**
+     * Provides a singleton instance of [TrendingStockRepository]
+     */
     @Provides
     @Singleton
     fun providesTrendingStockRepository(
@@ -57,6 +91,14 @@ object AppModule {
         stockDataApi: StockDataApi
     ): StockDataRepository {
         return StockDataRepositoryImpl(stockDataApi)
+    }
+
+    @Provides
+    @Singleton
+    fun providesWsbCommentsRepository(
+        wsbCommentsApi: WsbCommentsApi
+    ): WsbCommentsRepository {
+        return WsbCommentsRespositoryImpl(wsbCommentsApi)
     }
 
     @Provides

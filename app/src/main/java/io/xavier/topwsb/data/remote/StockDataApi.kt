@@ -1,6 +1,6 @@
 package io.xavier.topwsb.data.remote
 
-import io.xavier.topwsb.data.remote.dto.CompanyOverviewDto
+import io.xavier.topwsb.data.remote.dto.company_overview.CompanyOverviewDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
