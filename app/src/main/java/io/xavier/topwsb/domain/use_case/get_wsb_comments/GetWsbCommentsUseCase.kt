@@ -1,6 +1,7 @@
 package io.xavier.topwsb.domain.use_case.get_wsb_comments
 
 import io.xavier.topwsb.common.Resource
+import io.xavier.topwsb.data.remote.dto.wsb_comments.WsbCommentDto
 import io.xavier.topwsb.domain.model.WsbComment
 import io.xavier.topwsb.domain.repository.WsbCommentsRepository
 import kotlinx.coroutines.flow.Flow
@@ -28,7 +29,7 @@ class GetWsbCommentsUseCase @Inject constructor(
     operator fun invoke(
         ticker: String,
         afterUtc: Int
-    ): Flow<Resource<List<WsbComment>>> = flow {
+    ): Flow<Resource<List<WsbCommentDto>>> = flow {
         try {
             emit(Resource.Loading())
 

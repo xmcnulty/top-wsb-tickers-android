@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.xavier.topwsb.common.Resource
-import io.xavier.topwsb.domain.use_case.get_stock_list.GetStockListUseCase
+import io.xavier.topwsb.domain.use_case.get_stock_list.GetTrendingStocksUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
 class StockListViewModel @Inject constructor(
-    private val getStockListUseCase: GetStockListUseCase
+    private val getTrendingStocksUseCase: GetTrendingStocksUseCase
 ) : ViewModel() {
 
     private val _state = mutableStateOf(StockListState())
@@ -24,7 +24,7 @@ class StockListViewModel @Inject constructor(
     }
 
     private fun getStocks() {
-        getStockListUseCase().onEach { result ->
+        getTrendingStocksUseCase().onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     _state.value = StockListState(
