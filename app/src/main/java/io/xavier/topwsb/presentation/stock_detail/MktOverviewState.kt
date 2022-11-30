@@ -1,6 +1,6 @@
 package io.xavier.topwsb.presentation.stock_detail
 
-import io.xavier.topwsb.domain.model.CompanyOverview
+import io.xavier.topwsb.domain.model.StockOverview
 
 /**
  * Contains the state of the market overview section on the stock detail screen.
@@ -12,5 +12,5 @@ import io.xavier.topwsb.domain.model.CompanyOverview
 data class MktOverviewState(
     var loading: Boolean = false,
     var errorMsg: String = "",
-    var data: CompanyOverview? = null
+    var data: StockOverview? = null
 )

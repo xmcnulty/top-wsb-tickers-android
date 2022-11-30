@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.xavier.topwsb.common.NUMBER_OF_COMMENTS_COL_NAME
 import io.xavier.topwsb.common.TABLE_NAME_TRENDING_STOCKS
+import io.xavier.topwsb.common.TICKER_STOCK_COL_NAME
 import io.xavier.topwsb.domain.model.TrendingStock
 
 /**
@@ -53,8 +54,8 @@ interface TrendingStockDao {
         """
             SELECT *
             FROM $TABLE_NAME_TRENDING_STOCKS
-            WHERE UPPER(:ticker) == ticker
+            WHERE UPPER(:ticker) == $TICKER_STOCK_COL_NAME
         """
     )
-    suspend fun getTrendingStock(ticker: String): TrendingStock
+    suspend fun getTrendingStock(ticker: String): List<TrendingStock>
 }

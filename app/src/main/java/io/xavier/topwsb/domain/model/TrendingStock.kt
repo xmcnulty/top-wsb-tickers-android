@@ -17,8 +17,8 @@ import io.xavier.topwsb.common.*
  */
 @Entity(tableName = TABLE_NAME_TRENDING_STOCKS)
 data class TrendingStock(
-    @PrimaryKey
-    @ColumnInfo(name = TICKER_COL_NAME)
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = TICKER_STOCK_COL_NAME)
     val ticker: String,
 
     @ColumnInfo(name = LAST_UPDATED_COL_NAME)
