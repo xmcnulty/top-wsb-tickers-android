@@ -9,14 +9,20 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetCompanyOverviewUseCase @Inject constructor(
+class GetStockOverviewUseCase @Inject constructor(
     private val repository: StockOverviewRepository
 ) {
-    operator fun invoke(symbol: String): Flow<Resource<StockOverview>> = flow {
+    /**
+     * Fetches [StockOverview] for given ticker.
+     *
+     * @param ticker ticker of stock to fetch info for
+     * @return flow with a [Resource] that wraps a [StockOverview] object if successful
+     */
+    operator fun invoke(ticker: String): Flow<Resource<StockOverview>> = flow {
+        emit(Resource.Loading())
         try {
-            emit(Resource.Loading())
-            val stock = repository.getStockOverview(symbol)
-            emit(Resource.Success(stock!!))
+            val stock = repository.getStockOverview(ticker)
+            emit(Resource.Success(stock))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
         } catch (e: IOException) {

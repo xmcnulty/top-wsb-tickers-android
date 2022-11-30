@@ -1,7 +1,9 @@
 package io.xavier.topwsb.data.repository
 
+import io.xavier.topwsb.BuildConfig
 import io.xavier.topwsb.data.local.TrendingStockDatabase
 import io.xavier.topwsb.data.remote.StockDataApi
+import io.xavier.topwsb.domain.mapper.toStockOverview
 import io.xavier.topwsb.domain.model.StockOverview
 import io.xavier.topwsb.domain.repository.StockOverviewRepository
 import javax.inject.Inject
@@ -15,18 +17,19 @@ class StockOverviewRepositoryImpl @Inject constructor(
 
     private val dao = database.dao
 
-    /**
-     * Queries database for stock overview for [ticker].
-     *
-     * @param ticker stock to query
-     * @return [StockOverview] if found, null otherwise
-     */
-    override suspend fun getStockOverview(ticker: String): StockOverview? {
+    override suspend fun getStockOverview(ticker: String): StockOverview {
         val result = dao.getStockOverview(ticker)
 
-        return if (result.isEmpty())
-            null
-        else
+        return if (result.isEmpty()) {
+            val stockOverview = stockDataApi.getStockOverview(
+                apiKey = BuildConfig.API_KEY_ALPHA_ADVANTAGE,
+                ticker = ticker
+            ).toStockOverview()
+
+            dao.insertStockOverview(stockOverview)
+
+            stockOverview
+        } else
             result[0]
     }
 }

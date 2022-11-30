@@ -8,6 +8,6 @@ interface StockDataApi {
     @GET("query?function=OVERVIEW")
     suspend fun getStockOverview(
         @Query("apikey") apiKey: String,
-        @Query("symbol") symbol: String
+        @Query("symbol") ticker: String
     ): StockOverviewDto
 }

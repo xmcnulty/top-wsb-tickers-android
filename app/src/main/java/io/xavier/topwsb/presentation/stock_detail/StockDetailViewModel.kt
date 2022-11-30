@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.xavier.topwsb.common.Constants
 import io.xavier.topwsb.common.Resource
-import io.xavier.topwsb.domain.use_case.get_stock_detail.GetCompanyOverviewUseCase
+import io.xavier.topwsb.domain.use_case.get_stock_detail.GetStockOverviewUseCase
 import io.xavier.topwsb.domain.use_case.get_wsb_comments.GetWsbCommentsUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -18,13 +18,13 @@ import javax.inject.Inject
 /**
  * View model for the stock detail screen.
  *
- * @property getCompanyOverviewUseCase Use case for retrieving company overview data from API.
+ * @property getStockOverviewUseCase Use case for retrieving company overview data from API.
  * @property getWsbCommentsUseCase Use case for retrieving wallstreetbets comments from API.
  * @param savedStateHandle [SavedStateHandle] used for retrieving ticker of stock to display
  */
 @HiltViewModel
 class StockDetailViewModel @Inject constructor(
-    private val getCompanyOverviewUseCase: GetCompanyOverviewUseCase,
+    private val getStockOverviewUseCase: GetStockOverviewUseCase,
     private val getWsbCommentsUseCase: GetWsbCommentsUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -51,7 +51,7 @@ class StockDetailViewModel @Inject constructor(
      */
     private fun getCompanyOverview(ticker: String) {
         Log.d(tag, "Requesting stock detail for $ticker")
-        getCompanyOverviewUseCase(ticker).onEach { result ->
+        getStockOverviewUseCase(ticker).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
                     Log.d(tag, "Loading")
