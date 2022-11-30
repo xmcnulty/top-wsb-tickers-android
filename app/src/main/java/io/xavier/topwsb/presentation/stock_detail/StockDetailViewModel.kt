@@ -88,10 +88,6 @@ class StockDetailViewModel @Inject constructor(
                     Log.e(tag, result.message!!)
                 }
                 is Resource.Success -> {
-                    _state.value.commentState = CommentState(
-                        loading = false,
-                        comments = result.data
-                    )
                     Log.d(tag, "Successfully loaded comments.")
                 }
             }

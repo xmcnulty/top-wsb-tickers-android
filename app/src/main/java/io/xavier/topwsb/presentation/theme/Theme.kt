@@ -10,12 +10,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val DarkColorPalette = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
-
 private val LightColorPalette = lightColorScheme(
     primary = Purple40,
     secondary = PurpleGrey40,
@@ -60,12 +54,6 @@ fun TopWSBTheme(
         }
         darkTheme -> DarkColorScheme
         else -> LightColorPalette
-    }
-
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
     }
 
     val view = LocalView.current
