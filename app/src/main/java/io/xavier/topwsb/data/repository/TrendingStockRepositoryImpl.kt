@@ -1,8 +1,9 @@
 package io.xavier.topwsb.data.repository
 
+import android.util.Log
 import io.xavier.topwsb.data.local.TrendingStockDatabase
 import io.xavier.topwsb.data.remote.TrendingStockApi
-import io.xavier.topwsb.data.remote.dto.trending_stocks.TrendingStockDto
+import io.xavier.topwsb.domain.mapper.toTrendingStock
 import io.xavier.topwsb.domain.model.TrendingStock
 import io.xavier.topwsb.domain.repository.TrendingStockRepository
 import javax.inject.Inject
@@ -14,35 +15,25 @@ class TrendingStockRepositoryImpl @Inject constructor(
     db: TrendingStockDatabase
 ) : TrendingStockRepository {
 
+    val tag = "TRENDING_STOCK_REPOSITORY"
+
     private val dao = db.dao
 
-    /**
-     * Gets a list of trending stocks from the tradestie api and returns a list of
-     * [TrendingStockDto] of stocks with at least five comments.
-     *
-     * @return list of [TrendingStockDto] with no_of_comments >= 5
-     */
     override suspend fun getTrendingStocks(): List<TrendingStock> {
-        return dao.getTrendingStocks()
-    }
+        val stocks = dao.getTrendingStocks()
 
-    override suspend fun getUpdatedTrendingStocks(): List<TrendingStockDto> {
-        return trendingApi.getStocks()
-    }
+        Log.d(tag, "Number of stocks in cache: ${stocks.size}")
 
-    /**
-     * Clears all trending stocks in the database
-     */
-    override suspend fun clearTrendingStockCache() {
-        dao.clearTrendingStocks()
-    }
+        return stocks.ifEmpty {
+            Log.d(tag, "Fetching trending stocks from remote")
 
-    /**
-     * Inserts a new list of stocks into the database.
-     *
-     * @param stocks list of [TrendingStock]s to insert
-     */
-    override suspend fun insertTrendingStocks(stocks: List<TrendingStock>) {
-        dao.insertTrendingStocks(stocks)
+            val currentTime = System.currentTimeMillis()
+
+            val result = trendingApi.getStocks().map { it.toTrendingStock(currentTime) }
+
+            dao.insertTrendingStocks(result)
+
+            result
+        }
     }
 }

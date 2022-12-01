@@ -21,11 +21,11 @@ class StockOverviewRepositoryImpl @Inject constructor(
     private val dao = database.dao
 
     override suspend fun getStockOverview(ticker: String): StockOverview {
-        Log.d(tag, "Fetching $ticker overview from remote")
-
         val result = dao.getStockOverview(ticker)
 
         return if (result.isEmpty()) {
+            Log.d(tag, "Fetching $ticker overview from remote")
+
             val stockOverview = stockDataApi.getStockOverview(
                 apiKey = BuildConfig.API_KEY_ALPHA_ADVANTAGE,
                 ticker = ticker
