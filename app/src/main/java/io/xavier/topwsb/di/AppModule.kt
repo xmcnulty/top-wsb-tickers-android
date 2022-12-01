@@ -11,10 +11,10 @@ import io.xavier.topwsb.data.local.TrendingStockDatabase
 import io.xavier.topwsb.data.remote.StockDataApi
 import io.xavier.topwsb.data.remote.TrendingStockApi
 import io.xavier.topwsb.data.remote.WsbCommentsApi
-import io.xavier.topwsb.data.repository.StockDataRepositoryImpl
+import io.xavier.topwsb.data.repository.StockOverviewRepositoryImpl
 import io.xavier.topwsb.data.repository.TrendingStockRepositoryImpl
 import io.xavier.topwsb.data.repository.WsbCommentsRespositoryImpl
-import io.xavier.topwsb.domain.repository.StockDataRepository
+import io.xavier.topwsb.domain.repository.StockOverviewRepository
 import io.xavier.topwsb.domain.repository.TrendingStockRepository
 import io.xavier.topwsb.domain.repository.WsbCommentsRepository
 import retrofit2.Retrofit
@@ -88,9 +88,10 @@ object AppModule {
     @Provides
     @Singleton
     fun providesStockDataRepository(
-        stockDataApi: StockDataApi
-    ): StockDataRepository {
-        return StockDataRepositoryImpl(stockDataApi)
+        stockDataApi: StockDataApi,
+        db: TrendingStockDatabase
+    ): StockOverviewRepository {
+        return StockOverviewRepositoryImpl(stockDataApi, db)
     }
 
     @Provides

@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.xavier.topwsb.common.NUMBER_OF_COMMENTS_COL_NAME
-import io.xavier.topwsb.common.TABLE_NAME_TRENDING_STOCKS
+import io.xavier.topwsb.common.*
+import io.xavier.topwsb.domain.model.StockOverview
 import io.xavier.topwsb.domain.model.TrendingStock
 
 /**
@@ -53,8 +53,30 @@ interface TrendingStockDao {
         """
             SELECT *
             FROM $TABLE_NAME_TRENDING_STOCKS
-            WHERE UPPER(:ticker) == ticker
+            WHERE UPPER(:ticker) == $TICKER_STOCK_COL_NAME
         """
     )
-    suspend fun getTrendingStock(ticker: String): TrendingStock
+    suspend fun getTrendingStock(ticker: String): List<TrendingStock>
+
+    /**
+     * Fetches a [StockOverview] object with given ticker.
+     *
+     * @param ticker ticker to query
+     * @return list of [StockOverview]. If matching overview is found, list should contain only
+     * on element as [ticker] is a unique key. If not found, the list will be empty.
+     */
+    @Query(
+        """
+            SELECT *
+            FROM $TABLE_NAME_STOCK_OVERVIEW
+            WHERE UPPER(:ticker) == $TICKER_OVERVIEW_COL_NAME
+        """
+    )
+    suspend fun getStockOverview(ticker: String): List<StockOverview>
+
+    /**
+     * Insert [StockOverview] into the database.
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertStockOverview(overview: StockOverview)
 }
