@@ -27,6 +27,9 @@ class GetStockOverviewUseCase @Inject constructor(
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
         } catch (e: IOException) {
             emit(Resource.Error("Couldn't reach server. Check your internet connection"))
+        } catch (e: NullPointerException) {
+            // TODO: A null pointer exception means the ticker doesn't map to a known stock
+            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
         }
     }
 }

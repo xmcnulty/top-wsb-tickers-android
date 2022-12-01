@@ -1,5 +1,7 @@
 package io.xavier.topwsb.presentation.stock_detail
 
+import io.xavier.topwsb.domain.model.StockOverview
+
 /**
  * State of the StockDetailScreen, divided into sub-states for each of the display sections.
  *
@@ -8,7 +10,7 @@ package io.xavier.topwsb.presentation.stock_detail
  *
  */
 data class StockDetailState(
-    var chartState: ChartState = ChartState(),
-    var commentState: CommentState = CommentState(),
-    var mktOverviewState: MktOverviewState = MktOverviewState()
+    val stockOverview: StockOverview? = null,
+    val stockOverviewLoading: Boolean = false,
+    val stockOverviewError: String? = null
 )

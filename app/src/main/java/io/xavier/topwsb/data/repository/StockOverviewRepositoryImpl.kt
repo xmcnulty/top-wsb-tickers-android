@@ -1,5 +1,6 @@
 package io.xavier.topwsb.data.repository
 
+import android.util.Log
 import io.xavier.topwsb.BuildConfig
 import io.xavier.topwsb.data.local.TrendingStockDatabase
 import io.xavier.topwsb.data.remote.StockDataApi
@@ -15,9 +16,13 @@ class StockOverviewRepositoryImpl @Inject constructor(
     database: TrendingStockDatabase
 ) : StockOverviewRepository {
 
+    val tag = "STOCK OVERVIEW REPOSITORY"
+
     private val dao = database.dao
 
     override suspend fun getStockOverview(ticker: String): StockOverview {
+        Log.d(tag, "Fetching $ticker overview from remote")
+
         val result = dao.getStockOverview(ticker)
 
         return if (result.isEmpty()) {
@@ -29,7 +34,9 @@ class StockOverviewRepositoryImpl @Inject constructor(
             dao.insertStockOverview(stockOverview)
 
             stockOverview
-        } else
+        } else {
+            Log.d(tag, "Fetched $ticker overview from cache")
             result[0]
+        }
     }
 }
