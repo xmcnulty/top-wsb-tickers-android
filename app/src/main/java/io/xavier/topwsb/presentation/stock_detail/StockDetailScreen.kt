@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import io.xavier.topwsb.R
@@ -22,8 +21,8 @@ import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItem
 import io.xavier.topwsb.presentation.theme.DarkBackgroundTranslucent
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
+import io.xavier.topwsb.presentation.theme.defaultHorizontalPadding
 
-private val defaultHorizontalPadding: Dp = 16.dp
 
 /**
  * Screen that shows detail of a particular stock.
@@ -31,6 +30,7 @@ private val defaultHorizontalPadding: Dp = 16.dp
  * @param viewModel View model for this screen
  * @param onBackPressed callback to NavHostController.popBackStack()
  */
+@Suppress("OPT_IN_IS_NOT_ENABLED")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StockDetailScreen(
@@ -78,8 +78,10 @@ fun StockDetailScreen(
 
                 SectionTitle(
                     title = "Overview",
-                    modifier = Modifier.padding(start = defaultHorizontalPadding)
+                    modifier = Modifier.padding(start = 12.dp)
                 )
+
+                Spacer(modifier = Modifier.height(8.dp))
             }
 
             item {

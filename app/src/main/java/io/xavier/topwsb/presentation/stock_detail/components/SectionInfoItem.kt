@@ -12,8 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
 import io.xavier.topwsb.presentation.theme.DarkSecondaryText
-
-private val defaultHorizontalPadding = 16.dp
+import io.xavier.topwsb.presentation.theme.defaultHorizontalPadding
 
 @Composable
 fun SectionInfoItem(
@@ -24,7 +23,7 @@ fun SectionInfoItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
