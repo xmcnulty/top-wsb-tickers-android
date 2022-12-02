@@ -18,6 +18,7 @@ import io.xavier.topwsb.domain.model.TrendingStock
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_list.components.LastUpdateText
 import io.xavier.topwsb.presentation.stock_list.components.StockListItem
+import io.xavier.topwsb.presentation.theme.defaultHorizontalPadding
 
 /**
  * Screen that displays a list of the top 20 stocks mentioned on r/wallstreetbets
@@ -63,8 +64,8 @@ fun StockListScreen(
         ) {
             item {
                 SectionTitle(
-                    title = "Trending on /r/wallstreetbets",
-                    modifier = Modifier.padding(start = 8.dp)
+                    title = "Trending on WallstreetBets",
+                    modifier = Modifier.padding(defaultHorizontalPadding)
                 )
             }
 
