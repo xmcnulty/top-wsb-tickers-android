@@ -17,7 +17,8 @@ class StockListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = mutableStateOf(StockListState())
-    val state: State<StockListState> = _state
+    val state: State<StockListState>
+        get() = _state
 
     init {
         getStocks()

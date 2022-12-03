@@ -1,3 +1,5 @@
+@file:Suppress("OPT_IN_IS_NOT_ENABLED")
+
 package io.xavier.topwsb.presentation.stock_detail
 
 import androidx.compose.foundation.Image
@@ -37,7 +39,7 @@ fun StockDetailScreen(
     viewModel: StockDetailViewModel = hiltViewModel(),
     onBackPressed: () -> Boolean
 ) {
-    val state = viewModel.state
+    val state = viewModel.state.value
 
     val listState = rememberLazyListState()
 

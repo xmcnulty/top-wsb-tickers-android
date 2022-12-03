@@ -1,9 +1,8 @@
 package io.xavier.topwsb.presentation.stock_detail
 
 import android.util.Log
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -35,7 +34,9 @@ class StockDetailViewModel @Inject constructor(
     private val tag = "STOCK_DETAIL_VIEW_MODEL"
     private lateinit var ticker: String
 
-    var state by mutableStateOf(StockDetailState())
+    private var _state = mutableStateOf(StockDetailState())
+    val state: State<StockDetailState>
+        get() = _state
 
     init {
         savedStateHandle.get<String>(Constants.PARAM_STOCK_SYMBOL)?.let { symbol ->
@@ -55,15 +56,15 @@ class StockDetailViewModel @Inject constructor(
             when (result) {
                 is Resource.Loading -> {
                     Log.d(tag, "Loading")
-                    state = state.copy(stockOverviewLoading = true)
+                    _state.value = _state.value.copy(stockOverviewLoading = true)
                 }
                 is Resource.Success -> {
                     Log.d(tag, "Get Stock Detail Success \n ${result.data!!.companyName}")
-                    state = state.copy(stockOverviewLoading = false,
+                    _state.value = _state.value.copy(stockOverviewLoading = false,
                         stockOverview = result.data)
                 }
                 is Resource.Error -> {
-                    state = state.copy(stockOverviewError = result.message)
+                    _state.value = _state.value.copy(stockOverviewError = result.message)
                     Log.d(tag, "Get Stock Detail Error: ${result.message}")
                 }
             }
@@ -98,21 +99,21 @@ class StockDetailViewModel @Inject constructor(
         getIntradayUseCase(ticker).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
-                    state = state.copy(isLoadingChart = true)
+                    _state.value = _state.value.copy(isLoadingChart = true)
                 }
                 is Resource.Error -> {
-                    state = state.copy(
+                    _state.value = _state.value.copy(
                         isLoadingChart = false,
                         chartError = result.message
                     )
                 }
                 is Resource.Success -> {
-                    state = state.copy(
+                    _state.value = _state.value.copy(
                         isLoadingChart = false,
                         intradayData = result.data
                     )
 
-                    print(state.intradayData)
+                    print(state.value.intradayData)
                 }
             }
         }.launchIn(viewModelScope)
