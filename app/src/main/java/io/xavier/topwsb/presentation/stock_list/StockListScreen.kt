@@ -16,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import io.xavier.topwsb.R.drawable
 import io.xavier.topwsb.domain.model.TrendingStock
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
+import io.xavier.topwsb.presentation.stock_list.components.LastUpdateText
 import io.xavier.topwsb.presentation.stock_list.components.StockListItem
 
 /**
@@ -43,6 +44,13 @@ fun StockListScreen(
                             .padding(top = 4.dp, start = 4.dp),
                         painter = painterResource(id = drawable.ic_wsb_logo),
                         contentDescription = null
+                    )
+                },
+                actions = {
+                    LastUpdateText(
+                        lastUpdateTime = state.lastUpdateFormatted,
+                        isRefreshing = state.isLoading,
+                        modifier = Modifier.padding(end = 8.dp)
                     )
                 }
             )
