@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.di.TimeOnlyFormatter
-import io.xavier.topwsb.domain.use_case.get_stock_list.GetTrendingStocksUseCase
+import io.xavier.topwsb.domain.use_case.stock_list.GetTrendingStocksUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.text.DateFormat
