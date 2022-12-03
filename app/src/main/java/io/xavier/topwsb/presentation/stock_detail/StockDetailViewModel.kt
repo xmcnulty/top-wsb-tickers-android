@@ -10,8 +10,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.xavier.topwsb.common.Constants
 import io.xavier.topwsb.common.Resource
-import io.xavier.topwsb.domain.use_case.get_stock_detail.GetStockOverviewUseCase
-import io.xavier.topwsb.domain.use_case.get_wsb_comments.GetWsbCommentsUseCase
+import io.xavier.topwsb.domain.use_case.stock_details.GetIntradayDataUseCase
+import io.xavier.topwsb.domain.use_case.stock_details.GetStockOverviewUseCase
+import io.xavier.topwsb.domain.use_case.stock_details.GetWsbCommentsUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -19,14 +20,15 @@ import javax.inject.Inject
 /**
  * View model for the stock detail screen.
  *
- * @property getStockOverviewUseCase Use case for retrieving company overview data from API.
- * @property getWsbCommentsUseCase Use case for retrieving wallstreetbets comments from API.
+ * @property getOverviewUseCase Use case for retrieving company overview data from API.
+ * @property getCommentsUseCase Use case for retrieving wallstreetbets comments from API.
  * @param savedStateHandle [SavedStateHandle] used for retrieving ticker of stock to display
  */
 @HiltViewModel
 class StockDetailViewModel @Inject constructor(
-    private val getStockOverviewUseCase: GetStockOverviewUseCase,
-    private val getWsbCommentsUseCase: GetWsbCommentsUseCase,
+    private val getOverviewUseCase: GetStockOverviewUseCase,
+    private val getCommentsUseCase: GetWsbCommentsUseCase,
+    private val getIntradayUseCase: GetIntradayDataUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -38,20 +40,18 @@ class StockDetailViewModel @Inject constructor(
     init {
         savedStateHandle.get<String>(Constants.PARAM_STOCK_SYMBOL)?.let { symbol ->
             ticker = symbol
-            getCompanyOverview(ticker)
         }
 
-        getWsbComments(ticker)
+        getCompanyOverview()
+        getIntradayData()
     }
 
     /**
      * Asynchronous call to get company overview information from Alpha Advantage API.
-     *
-     * @param ticker ticker of the stock/company to get overiew of
      */
-    private fun getCompanyOverview(ticker: String) {
+    private fun getCompanyOverview() {
         Log.d(tag, "Requesting stock detail for $ticker")
-        getStockOverviewUseCase(ticker).onEach { result ->
+        getOverviewUseCase(ticker).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
                     Log.d(tag, "Loading")
@@ -73,12 +73,10 @@ class StockDetailViewModel @Inject constructor(
     /**
      * Asynchronous call to get the comments on /r/walltreetbets that mention [ticker] in the
      * past 24-hours.
-     *
-     * @param ticker stock ticker to query
      */
-    private fun getWsbComments(ticker: String) {
+    private fun getWsbComments() {
         // TODO: implement afterUtc calculation
-        getWsbCommentsUseCase(ticker, 1669507200).onEach { result ->
+        getCommentsUseCase(ticker, 1669507200).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
                     Log.d(tag, "Loading comments")
@@ -94,11 +92,29 @@ class StockDetailViewModel @Inject constructor(
     }
 
     /**
-     * Loads the /r/wallstreetbets sentiment for [ticker] from the cache.
-     *
-     * @param ticker ticker of the stock to query sentiment
+     * Gets the intraday data for charting.
      */
-    private fun getWsbSentiment(ticker: String) {
+    private fun getIntradayData() {
+        getIntradayUseCase(ticker).onEach { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    state = state.copy(isLoadingChart = true)
+                }
+                is Resource.Error -> {
+                    state = state.copy(
+                        isLoadingChart = false,
+                        chartError = result.message
+                    )
+                }
+                is Resource.Success -> {
+                    state = state.copy(
+                        isLoadingChart = false,
+                        intradayData = result.data
+                    )
 
+                    print(state.intradayData)
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 }

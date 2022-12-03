@@ -11,9 +11,11 @@ import io.xavier.topwsb.data.local.TrendingStockDatabase
 import io.xavier.topwsb.data.remote.StockDataApi
 import io.xavier.topwsb.data.remote.TrendingStockApi
 import io.xavier.topwsb.data.remote.WsbCommentsApi
+import io.xavier.topwsb.data.repository.IntradayDataRepositoryImpl
 import io.xavier.topwsb.data.repository.StockOverviewRepositoryImpl
 import io.xavier.topwsb.data.repository.TrendingStockRepositoryImpl
 import io.xavier.topwsb.data.repository.WsbCommentsRespositoryImpl
+import io.xavier.topwsb.domain.repository.IntradayDataRepository
 import io.xavier.topwsb.domain.repository.StockOverviewRepository
 import io.xavier.topwsb.domain.repository.TrendingStockRepository
 import io.xavier.topwsb.domain.repository.WsbCommentsRepository
@@ -100,6 +102,14 @@ object AppModule {
         wsbCommentsApi: WsbCommentsApi
     ): WsbCommentsRepository {
         return WsbCommentsRespositoryImpl(wsbCommentsApi)
+    }
+
+    @Provides
+    @Singleton
+    fun providesIntradayRepository(
+        stockDataApi: StockDataApi
+    ): IntradayDataRepository {
+        return IntradayDataRepositoryImpl(stockDataApi)
     }
 
     @Provides

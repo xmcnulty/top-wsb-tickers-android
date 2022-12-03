@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName
  * @property close
  * @property volume
  */
-data class ChartDataPointDto(
+data class IntradayDataPointDto(
     @SerializedName("1. open")
     val open: String,
     @SerializedName("2. high")

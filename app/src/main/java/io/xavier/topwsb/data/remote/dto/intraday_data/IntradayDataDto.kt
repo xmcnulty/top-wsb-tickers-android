@@ -6,11 +6,11 @@ import com.google.gson.annotations.SerializedName
  * Data transfer object for data returned from alpha advantage api.
  *
  * @property metaData [MetaDataDto]
- * @property timeSeries map of string (date and time) to [ChartDataPointDto]
+ * @property timeSeries map of string (date and time) to [IntradayDataPointDto]
  */
-data class ChartDataDto(
+data class IntradayDataDto(
     @SerializedName("Meta Data")
     val metaData: MetaDataDto,
     @SerializedName("Time Series (30min)")
-    val timeSeries: Map<String, ChartDataPointDto>
+    val timeSeries: Map<String, IntradayDataPointDto>
 )

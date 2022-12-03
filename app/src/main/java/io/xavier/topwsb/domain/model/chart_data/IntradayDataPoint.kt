@@ -8,7 +8,11 @@ import java.time.LocalDateTime
  * @property time time of the data (chart x-axis)
  * @property price closing price at time
  */
-data class MarketChartDataPoint(
+data class IntradayDataPoint(
     val time: LocalDateTime,
     val price: Double
-)
+) {
+    override fun toString(): String {
+        return "$time:\t$$price"
+    }
+}

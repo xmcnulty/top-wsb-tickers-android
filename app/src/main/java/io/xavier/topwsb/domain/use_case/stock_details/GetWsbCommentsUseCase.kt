@@ -1,4 +1,4 @@
-package io.xavier.topwsb.domain.use_case.get_wsb_comments
+package io.xavier.topwsb.domain.use_case.stock_details
 
 import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.data.remote.dto.wsb_comments.WsbCommentDto

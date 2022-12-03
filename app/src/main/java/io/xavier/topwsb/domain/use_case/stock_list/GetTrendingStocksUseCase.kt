@@ -1,4 +1,4 @@
-package io.xavier.topwsb.domain.use_case.get_stock_list
+package io.xavier.topwsb.domain.use_case.stock_list
 
 import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.common.isOutdated
