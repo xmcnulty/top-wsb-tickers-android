@@ -14,9 +14,15 @@ interface TrendingStockRepository {
      * a call to the remote api will be made.
      *
      * @return list of [TrendingStock] objects
-     * @throws HttpException there was an error with the remote API call
-     * @throws IOException network error
      */
-    @kotlin.jvm.Throws(HttpException::class, IOException::class)
+    @Throws(HttpException::class, IOException::class)
     suspend fun getTrendingStocks(): List<TrendingStock>
+
+    /**
+     * Refreshes the cache with data from remote api.
+     *
+     * @return stocks from newly refreshed cache
+     */
+    @Throws(HttpException::class, IOException::class)
+    suspend fun refreshCache(): List<TrendingStock>
 }
