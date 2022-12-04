@@ -25,12 +25,15 @@ fun TrendiesNavHost(
             route = Screen.StockListScreen.route
         ) {
             StockListScreen(navToStockDetail = { stock ->
-                navController.navigate(Screen.StockDetailScreen.route + "/${stock.ticker}")
+                navController.navigate(
+                    route = Screen.StockDetailScreen.route
+                            + "/${stock.ticker}/${stock.sentiment.text}"
+                )
             })
         }
 
         composable(
-            route = Screen.StockDetailScreen.route + "/{ticker}"
+            route = Screen.StockDetailScreen.route + "/{ticker}/{sentiment}"
         ) {
             StockDetailScreen { navController.popBackStack() }
         }

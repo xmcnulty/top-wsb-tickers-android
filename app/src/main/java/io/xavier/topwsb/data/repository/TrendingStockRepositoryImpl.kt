@@ -1,8 +1,8 @@
 package io.xavier.topwsb.data.repository
 
 import io.xavier.topwsb.data.local.TrendingStockDatabase
+import io.xavier.topwsb.data.local.entities.TrendingStockEntity
 import io.xavier.topwsb.data.remote.TrendingStockApi
-import io.xavier.topwsb.domain.mapper.toTrendingStock
 import io.xavier.topwsb.domain.model.TrendingStock
 import io.xavier.topwsb.domain.repository.TrendingStockRepository
 import javax.inject.Inject
@@ -22,7 +22,9 @@ class TrendingStockRepositoryImpl @Inject constructor(
         val stocks = dao.getTrendingStocks()
 
         if (stocks.isNotEmpty()) {
-            return stocks
+            return stocks.map { entity ->
+                TrendingStock.fromEntity(entity)
+            }
         }
 
         return refreshCache()
@@ -33,14 +35,15 @@ class TrendingStockRepositoryImpl @Inject constructor(
 
         val currentTime = System.currentTimeMillis()
 
-        dao.insertTrendingStocks(stocks.map {
-            it.toTrendingStock(currentTime)
+        dao.insertTrendingStocks(stocks.map { dto ->
+            TrendingStockEntity.fromDto(
+                dto,
+                currentTime
+            )
         })
 
-        return dao.getTrendingStocks()
-    }
-
-    override suspend fun getTrendingStock(ticker: String): TrendingStock? {
-        return dao.getTrendingStock(ticker).getOrNull(0)
+        return dao.getTrendingStocks().map { entity ->
+            TrendingStock.fromEntity(entity)
+        }
     }
 }
