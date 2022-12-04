@@ -32,7 +32,7 @@ fun IntradayDataPointDto.toChartDataPoint(
  * @return [IntradayData]
  */
 fun IntradayDataDto.toIntradayData(): IntradayData {
-    val dataPoints = timeSeries.map { entry ->
+    val dataPoints = timeSeries!!.map { entry ->
         entry.value.toChartDataPoint(entry.key)
     }
 
