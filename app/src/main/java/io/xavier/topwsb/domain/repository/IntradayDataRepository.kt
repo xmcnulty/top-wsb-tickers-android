@@ -1,5 +1,6 @@
 package io.xavier.topwsb.domain.repository
 
+import io.xavier.topwsb.domain.exceptions.ApiException
 import io.xavier.topwsb.domain.model.chart_data.IntradayData
 
 /**
@@ -16,6 +17,9 @@ interface IntradayDataRepository {
      *
      * @param ticker stock ticker
      * @return [IntradayData]
+     *
+     * @throws [ApiException] if Api response contains no intraday data
      */
+    @Throws(ApiException::class)
     suspend fun getIntradayData(ticker: String): IntradayData
 }

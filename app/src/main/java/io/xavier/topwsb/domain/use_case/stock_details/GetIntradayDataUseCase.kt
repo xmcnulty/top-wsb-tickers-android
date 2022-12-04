@@ -1,6 +1,7 @@
 package io.xavier.topwsb.domain.use_case.stock_details
 
 import io.xavier.topwsb.common.Resource
+import io.xavier.topwsb.domain.exceptions.ApiException
 import io.xavier.topwsb.domain.model.chart_data.IntradayData
 import io.xavier.topwsb.domain.repository.IntradayDataRepository
 import retrofit2.HttpException
@@ -26,6 +27,8 @@ class GetIntradayDataUseCase @Inject constructor(
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
         } catch (e: IOException) {
             emit(Resource.Error("Couldn't reach server. Check your internet connection"))
+        } catch (e: ApiException) {
+            emit(Resource.Error(e.localizedMessage ?: "Api Error"))
         }
     }
 }
