@@ -36,4 +36,8 @@ class TrendingStockRepositoryImpl @Inject constructor(
             result
         }
     }
+
+    override suspend fun getTrendingStock(ticker: String): TrendingStock? {
+        return dao.getTrendingStock(ticker).getOrNull(0)
+    }
 }

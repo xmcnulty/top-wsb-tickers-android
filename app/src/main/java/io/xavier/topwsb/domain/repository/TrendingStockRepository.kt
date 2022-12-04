@@ -19,4 +19,12 @@ interface TrendingStockRepository {
      */
     @kotlin.jvm.Throws(HttpException::class, IOException::class)
     suspend fun getTrendingStocks(): List<TrendingStock>
+
+    /**
+     * Retrieves an individual [TrendingStock] from the cached list of trending stocks.
+     *
+     * @param ticker stock ticker of the [TrendingStock] to fetch
+     * @return [TrendingStock]. Null if [ticker] cannot be found
+     */
+    suspend fun getTrendingStock(ticker: String): TrendingStock?
 }
