@@ -15,24 +15,21 @@ import io.xavier.topwsb.domain.model.Sentiment
 
 /**
  * Custom composable for displaying sentiment within a card with a background that is specified
- * in [Sentiment]. If [sentiment] is [Sentiment.UNKNOWN], the background of the card will be set
- * to [unknownBg]
+ * in [Sentiment].
  *
  * @param sentiment [Sentiment] to display in the card
  * @param modifier [Modifier]
- * @param unknownBg [Color] that is set as the card's background if [sentiment] is
- *  [Sentiment.UNKNOWN]
  */
 @Composable
 fun SentimentCard(
     sentiment: Sentiment,
-    modifier: Modifier = Modifier,
-    unknownBg: Color
+    modifier: Modifier = Modifier
 ) {
     Card(
         shape = MaterialTheme.shapes.extraSmall,
+        modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = sentiment.color ?: unknownBg,
+            containerColor = sentiment.color,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer
         )
     ) {
@@ -41,7 +38,7 @@ fun SentimentCard(
             fontWeight = FontWeight.Bold,
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.bodyMedium,
-            modifier = modifier.padding(
+            modifier = Modifier.padding(
                 start = 4.dp,
                 end = 4.dp,
                 top = 2.dp,

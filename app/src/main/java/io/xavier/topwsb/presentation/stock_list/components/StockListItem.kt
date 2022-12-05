@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import io.xavier.topwsb.R
 import io.xavier.topwsb.domain.model.TrendingStock
+import io.xavier.topwsb.presentation.common_composables.SentimentCard
 import io.xavier.topwsb.presentation.theme.*
 
 /**
@@ -64,33 +65,7 @@ fun StockListItem(
             }
         },
         headlineText = {
-            // Sentiment indicator
-            val cardColor = if(trendingStock.sentiment == "Bullish")
-                PositiveTrend
-            else
-                NegativeTrend
-
-            Card(
-                shape = MaterialTheme.shapes.extraSmall,
-                colors = CardDefaults.cardColors(
-                    containerColor = cardColor,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-            ) {
-                Text(
-                    text = trendingStock.sentiment,
-                    fontWeight = FontWeight.Bold,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(
-                        start = 4.dp,
-                        end = 4.dp,
-                        top = 2.dp,
-                        bottom = 2.dp
-                    ),
-                    maxLines = 1
-                )
-            }
+            SentimentCard(sentiment = trendingStock.sentiment)
         },
         // number of comments
         supportingText = {

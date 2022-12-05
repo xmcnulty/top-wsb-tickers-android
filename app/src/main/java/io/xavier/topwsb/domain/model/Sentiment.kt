@@ -1,6 +1,7 @@
 package io.xavier.topwsb.domain.model
 
 import androidx.compose.ui.graphics.Color
+import io.xavier.topwsb.presentation.theme.DarkSelectedCard
 import io.xavier.topwsb.presentation.theme.NegativeTrend
 import io.xavier.topwsb.presentation.theme.PositiveTrend
 
@@ -10,10 +11,10 @@ import io.xavier.topwsb.presentation.theme.PositiveTrend
  * @property text string representation for this
  * @property color color representation for this
  */
-enum class Sentiment(val text: String, val color: Color?) {
+enum class Sentiment(val text: String, val color: Color) {
     BULLISH("Bullish", PositiveTrend),
     BEARISH("Bearish", NegativeTrend),
-    UNKNOWN("Unknown", null); // when sentiment is unknown.
+    UNKNOWN("Unknown", DarkSelectedCard); // when sentiment is unknown.
 
     companion object {
         fun fromName(sentiment: String): Sentiment = when {
