@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.xavier.topwsb.common.Constants
 import io.xavier.topwsb.common.Resource
+import io.xavier.topwsb.domain.model.Sentiment
 import io.xavier.topwsb.domain.use_case.stock_details.GetIntradayDataUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetStockOverviewUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetWsbCommentsUseCase
@@ -38,9 +39,18 @@ class StockDetailViewModel @Inject constructor(
     val state: State<StockDetailState>
         get() = _state
 
+    private var _sentiment = mutableStateOf(Sentiment.UNKNOWN)
+    val sentiment: State<Sentiment>
+        get() = _sentiment
+
     init {
         savedStateHandle.get<String>(Constants.PARAM_STOCK_SYMBOL)?.let { symbol ->
             ticker = symbol
+        }
+
+        savedStateHandle.get<String>("sentiment")?.let {
+            Log.d(tag, "Sentiment is $it")
+            _sentiment.value = Sentiment.fromName(it)
         }
 
         getCompanyOverview()
