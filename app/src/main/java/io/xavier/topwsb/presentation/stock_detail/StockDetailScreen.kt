@@ -21,6 +21,7 @@ import io.xavier.topwsb.R
 import io.xavier.topwsb.domain.mapper.toMap
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItem
+import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItemSentiment
 import io.xavier.topwsb.presentation.theme.DarkBackgroundTranslucent
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
 import io.xavier.topwsb.presentation.theme.defaultHorizontalPadding
@@ -104,9 +105,15 @@ fun StockDetailScreen(
                                     SectionInfoItem(
                                         name = it.key,
                                         value = it.value,
-                                        showDivider = it.key != "52 Week Low"
+                                        showDivider = true
                                     )
                                 }
+
+                                // Show WSB sentiment.
+                                SectionInfoItemSentiment(
+                                    sentiment = viewModel.sentiment.value,
+                                    showDivider = false
+                                )
                             }
                         }
                     }

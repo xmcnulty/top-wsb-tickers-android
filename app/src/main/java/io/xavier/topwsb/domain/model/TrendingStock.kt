@@ -1,9 +1,6 @@
 package io.xavier.topwsb.domain.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import io.xavier.topwsb.common.*
+import io.xavier.topwsb.data.local.entities.TrendingStockEntity
 
 /**
  * Data class for a trending stock, as returned from remote API. Object is also
@@ -15,21 +12,27 @@ import io.xavier.topwsb.common.*
  * @property sentiment overall wallstreetbets sentiment for this stock
  * @property sentimentScore sentiment score for this stock on wallstreetbets
  */
-@Entity(tableName = TABLE_NAME_TRENDING_STOCKS)
 data class TrendingStock(
-    @PrimaryKey(autoGenerate = false)
-    @ColumnInfo(name = TICKER_STOCK_COL_NAME)
     val ticker: String,
-
-    @ColumnInfo(name = LAST_UPDATED_COL_NAME)
     val lastUpdatedUtc: Long,
-
-    @ColumnInfo(name = NUMBER_OF_COMMENTS_COL_NAME)
     val numberOfComments: Int,
-
-    @ColumnInfo(name = SENTIMENT_COL_NAME)
-    val sentiment: String,
-
-    @ColumnInfo(name = SENTIMENT_SCORE_COL_NAME)
+    val sentiment: Sentiment,
     val sentimentScore: Double
-)
+) {
+
+    companion object {
+        /**
+         * Creates a [TrendingStock] object from a [TrendingStockEntity].
+         *
+         * @param entity [TrendingStockEntity]
+         * @return new [TrendingStock] created from [entity]
+         */
+        fun fromEntity(entity: TrendingStockEntity): TrendingStock = TrendingStock(
+            ticker = entity.ticker,
+            lastUpdatedUtc = entity.lastUpdatedUtc,
+            numberOfComments = entity.numberOfComments,
+            sentiment = Sentiment.fromName(entity.sentiment),
+            sentimentScore = entity.sentimentScore
+        )
+    }
+}

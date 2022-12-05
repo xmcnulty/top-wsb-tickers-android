@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.di.TimeOnlyFormatter
 import io.xavier.topwsb.domain.use_case.stock_list.GetTrendingStocksUseCase
+import io.xavier.topwsb.domain.use_case.stock_list.RefreshTrendingStocksUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.text.DateFormat
@@ -23,6 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class StockListViewModel @Inject constructor(
     private val getTrendingStocksUseCase: GetTrendingStocksUseCase,
+    private val refreshStocksUseCase: RefreshTrendingStocksUseCase,
     @TimeOnlyFormatter private val timeFormatter: DateFormat
 ) : ViewModel() {
 
@@ -75,5 +77,37 @@ class StockListViewModel @Inject constructor(
             return timeFormatter.format(Date(time))
         }
         return "-"
+    }
+
+    /**
+     * Refresh the list of trending stocks.
+     */
+    fun refreshStocks() {
+        refreshStocksUseCase().onEach { result ->
+            when(result) {
+                is Resource.Loading -> {
+                    _state.value = _state.value.copy(
+                        isLoading = true
+                    )
+                }
+                is Resource.Error -> {
+                    _state.value = _state.value.copy(
+                        isLoading = false,
+                        error = result.message
+                    )
+                }
+                is Resource.Success -> {
+                    val lastUpdate = result.data!!.maxOfOrNull {
+                        it.lastUpdatedUtc
+                    }
+
+                    _state.value = _state.value.copy(
+                        isLoading = false,
+                        lastUpdateFormatted = formatTime(lastUpdate),
+                        trendingStocks = result.data
+                    )
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 }

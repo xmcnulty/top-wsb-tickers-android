@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.xavier.topwsb.common.*
+import io.xavier.topwsb.data.local.entities.TrendingStockEntity
 import io.xavier.topwsb.domain.model.StockOverview
 import io.xavier.topwsb.domain.model.TrendingStock
 
@@ -21,7 +22,7 @@ interface TrendingStockDao {
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTrendingStocks(
-        trendingStockEntities: List<TrendingStock>
+        trendingStockEntities: List<TrendingStockEntity>
     )
 
     /**
@@ -41,22 +42,7 @@ interface TrendingStockDao {
         FROM $TABLE_NAME_TRENDING_STOCKS
         ORDER BY $NUMBER_OF_COMMENTS_COL_NAME DESC
     """)
-    suspend fun getTrendingStocks(): List<TrendingStock>
-
-    /**
-     * Query and return a trending stock from the database
-     *
-     * @param ticker ticker of the stock to query
-     * @return [TrendingStock] with the provided ticker
-     */
-    @Query(
-        """
-            SELECT *
-            FROM $TABLE_NAME_TRENDING_STOCKS
-            WHERE UPPER(:ticker) == $TICKER_STOCK_COL_NAME
-        """
-    )
-    suspend fun getTrendingStock(ticker: String): List<TrendingStock>
+    suspend fun getTrendingStocks(): List<TrendingStockEntity>
 
     /**
      * Fetches a [StockOverview] object with given ticker.
