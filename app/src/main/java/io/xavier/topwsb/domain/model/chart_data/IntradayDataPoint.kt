@@ -10,9 +10,12 @@ import java.time.LocalDateTime
  */
 data class IntradayDataPoint(
     val time: LocalDateTime,
-    val price: Double
+    val open: Double,
+    val high: Double,
+    val low: Double,
+    val close: Double
 ) {
     override fun toString(): String {
-        return "$time:\t$$price"
+        return "$time:\t$$open"
     }
 }

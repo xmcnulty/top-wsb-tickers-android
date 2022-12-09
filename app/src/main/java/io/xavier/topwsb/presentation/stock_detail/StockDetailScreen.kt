@@ -2,29 +2,31 @@
 
 package io.xavier.topwsb.presentation.stock_detail
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import io.xavier.topwsb.R
 import io.xavier.topwsb.domain.mapper.toMap
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
+import io.xavier.topwsb.presentation.custom_composables.LineChart
 import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItem
 import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItemSentiment
-import io.xavier.topwsb.presentation.theme.DarkBackgroundTranslucent
-import io.xavier.topwsb.presentation.theme.DarkPrimaryText
-import io.xavier.topwsb.presentation.theme.defaultHorizontalPadding
+import io.xavier.topwsb.presentation.theme.*
 
 
 /**
@@ -73,7 +75,78 @@ fun StockDetailScreen(
 
             // Price percentage and chart
             item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .requiredHeight(190.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.End
+                ) {
+                    state.intradayData?.let {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(defaultHorizontalPadding),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
 
+                            Column {
+                                // TODO: GET START PRICE AND CURRENT PRICE
+                                Text(
+                                    text = "Price: ",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    textAlign = TextAlign.Start,
+                                    color = DarkSecondaryText,
+                                    maxLines = 1
+                                )
+
+                                Text(
+                                    text = "**start price**",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    textAlign = TextAlign.Start,
+                                    color = DarkPrimaryText,
+                                    fontWeight = FontWeight.Medium,
+                                    maxLines = 1
+                                )
+                            }
+
+                            Card(
+                                modifier = Modifier
+                                    .sizeIn(minWidth = 72.dp),
+                                shape = MaterialTheme.shapes.small,
+                                colors = CardDefaults.cardColors(
+                                    // TODO: SET TREND COLOR
+                                    containerColor = PositiveTrend,
+                                    contentColor = Color.White
+                                )
+                            ) {
+                                // TODO: PRICE CHANGE PERCENTAGE
+                                Text(
+                                    text = "**price change %**",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    modifier = Modifier
+                                        .padding(horizontal = 8.dp, vertical = 1.dp)
+                                        .align(Alignment.End),
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.End,
+                                    maxLines = 1
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.size(16.dp))
+
+                        AnimatedVisibility(
+                            // TODO: IS LINE CHART VISIBLE
+                            visible = true,
+                            exit = ExitTransition.None
+                        ) {
+                            LineChart(
+                                data = state.intradayData, graphColor = , showDashedLine = )
+                        }
+                    }
+                }
             }
 
             item {
