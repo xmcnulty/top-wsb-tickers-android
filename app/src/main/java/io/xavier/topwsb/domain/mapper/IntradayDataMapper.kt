@@ -22,7 +22,10 @@ fun IntradayDataPointDto.toChartDataPoint(
 
     return IntradayDataPoint(
         time = date,
-        price = close.toDouble()
+        open = open.toDouble(),
+        high = high.toDouble(),
+        low = low.toDouble(),
+        close = close.toDouble()
     )
 }
 
