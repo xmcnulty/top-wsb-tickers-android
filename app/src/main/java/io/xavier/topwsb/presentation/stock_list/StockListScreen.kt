@@ -3,6 +3,7 @@
 package io.xavier.topwsb.presentation.stock_list
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,6 +19,7 @@ import io.xavier.topwsb.domain.model.TrendingStock
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_list.components.LastUpdateText
 import io.xavier.topwsb.presentation.stock_list.components.StockListItem
+import io.xavier.topwsb.presentation.theme.defaultHorizontalPadding
 
 /**
  * Screen that displays a list of the top 20 stocks mentioned on r/wallstreetbets
@@ -50,7 +52,11 @@ fun StockListScreen(
                     LastUpdateText(
                         lastUpdateTime = state.lastUpdateFormatted,
                         isRefreshing = state.isLoading,
-                        modifier = Modifier.padding(end = 8.dp)
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .clickable {
+                                viewModel.refreshStocks()
+                            }
                     )
                 }
             )
@@ -63,8 +69,8 @@ fun StockListScreen(
         ) {
             item {
                 SectionTitle(
-                    title = "Trending on /r/wallstreetbets",
-                    modifier = Modifier.padding(start = 8.dp)
+                    title = "Trending on WallstreetBets",
+                    modifier = Modifier.padding(defaultHorizontalPadding)
                 )
             }
 

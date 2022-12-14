@@ -4,8 +4,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import io.xavier.topwsb.common.*
+import io.xavier.topwsb.data.local.entities.TrendingStockEntity
 
 /**
  * Data class and database table that stores basic information about a stock. The information
@@ -20,14 +22,14 @@ import io.xavier.topwsb.common.*
 @Entity(
     tableName = TABLE_NAME_STOCK_OVERVIEW,
     foreignKeys = [ForeignKey(
-        entity = TrendingStock::class,
+        entity = TrendingStockEntity::class,
         parentColumns = arrayOf(TICKER_STOCK_COL_NAME),
         childColumns = arrayOf(TICKER_OVERVIEW_COL_NAME),
         onUpdate = CASCADE,
         onDelete = CASCADE
     )]
 )
-data class StockOverview(
+data class MarketData(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = TICKER_OVERVIEW_COL_NAME)
     val ticker: String,

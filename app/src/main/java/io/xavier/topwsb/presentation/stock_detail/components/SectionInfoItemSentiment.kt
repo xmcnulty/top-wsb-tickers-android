@@ -8,16 +8,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import io.xavier.topwsb.presentation.theme.DarkPrimaryText
+import io.xavier.topwsb.domain.model.Sentiment
+import io.xavier.topwsb.presentation.common_composables.SentimentCard
 import io.xavier.topwsb.presentation.theme.DarkSecondaryText
 import io.xavier.topwsb.presentation.theme.defaultHorizontalPadding
 
 @Composable
-fun SectionInfoItem(
-    name: String,
-    value: String,
+fun SectionInfoItemSentiment(
+    sentiment: Sentiment,
     showDivider: Boolean
 ) {
     Row(
@@ -28,19 +27,14 @@ fun SectionInfoItem(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = name,
+            text = "WSB Sentiment",
             color = DarkSecondaryText,
             style = MaterialTheme.typography.bodyMedium
         )
 
         Spacer(modifier = Modifier.size(8.dp))
 
-        Text(
-            text = value,
-            fontWeight = FontWeight.SemiBold,
-            color = DarkPrimaryText,
-            style = MaterialTheme.typography.bodyMedium
-        )
+        SentimentCard(sentiment = sentiment)
     }
 
     if (showDivider) {

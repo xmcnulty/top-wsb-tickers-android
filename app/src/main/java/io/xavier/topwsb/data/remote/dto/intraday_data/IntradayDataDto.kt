@@ -12,5 +12,5 @@ data class IntradayDataDto(
     @SerializedName("Meta Data")
     val metaData: MetaDataDto,
     @SerializedName("Time Series (30min)")
-    val timeSeries: Map<String, IntradayDataPointDto>
+    val timeSeries: Map<String, IntradayDataPointDto>?
 )
