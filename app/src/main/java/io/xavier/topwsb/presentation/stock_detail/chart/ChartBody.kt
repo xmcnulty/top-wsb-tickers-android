@@ -1,6 +1,7 @@
 package io.xavier.topwsb.presentation.stock_detail.chart
 
 import android.content.Context
+import android.graphics.Paint
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
@@ -13,13 +14,13 @@ import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
 import io.xavier.topwsb.common.prepareChart
 import io.xavier.topwsb.domain.model.chart_data.IntradayData
-import io.xavier.topwsb.presentation.theme.DarkSecondaryText
+import io.xavier.topwsb.presentation.theme.DarkSelectedCard
 import io.xavier.topwsb.presentation.theme.NegativeTrend
 import io.xavier.topwsb.presentation.theme.PositiveTrend
 
 @Composable
 fun ChartBody(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     data: IntradayData
 ) {
     AndroidView(
@@ -63,12 +64,13 @@ private fun prepareCandleSticksData(
 
     val dataSet = CandleDataSet(candleEntries, data.ticker)
 
-    dataSet.color = DarkSecondaryText.toArgb()
+    //dataSet.color = DarkSecondaryText.toArgb()
     dataSet.setDrawIcons(false)
     dataSet.axisDependency = YAxis.AxisDependency.LEFT
-    dataSet.shadowColor = DarkSecondaryText.toArgb()
+    dataSet.shadowColor = DarkSelectedCard.toArgb()
     dataSet.decreasingColor = NegativeTrend.toArgb()
     dataSet.increasingColor = PositiveTrend.toArgb()
+    dataSet.increasingPaintStyle = Paint.Style.FILL
 
     return CandleData(dataSet)
 }

@@ -37,6 +37,8 @@ fun IntradayDataPointDto.toChartDataPoint(
 fun IntradayDataDto.toIntradayData(): IntradayData {
     val dataPoints = timeSeries.map { entry ->
         entry.value.toChartDataPoint(entry.key)
+    }.sortedBy {
+        it.time
     }
 
     return IntradayData(
