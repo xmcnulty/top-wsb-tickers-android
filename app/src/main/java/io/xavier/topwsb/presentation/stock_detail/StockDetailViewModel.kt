@@ -10,7 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.xavier.topwsb.common.Constants
 import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.domain.model.Sentiment
-import io.xavier.topwsb.domain.model.chart_data.ChartData
 import io.xavier.topwsb.domain.use_case.stock_details.GetIntradayDataUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetStockOverviewUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetWsbCommentsUseCase
@@ -36,7 +35,8 @@ class StockDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val tag = "STOCK_DETAIL_VIEW_MODEL"
-    private lateinit var ticker: String
+    lateinit var ticker: String
+        private set
 
     private var _state = mutableStateOf(StockDetailState())
     val state: State<StockDetailState>
@@ -138,7 +138,7 @@ class StockDetailViewModel @Inject constructor(
                         )
                     )
 
-                    print(state.value.intradayData)
+                    print(state.value.marketDataState)
                 }
             }
         }.launchIn(viewModelScope)

@@ -14,11 +14,11 @@ import io.xavier.topwsb.presentation.theme.DarkSelectedCard
  */
 fun BarLineChartBase<*>.prepareChart() {
     this.setDrawGridBackground(true)
-    this.description.isEnabled = true
+    this.description.isEnabled = false
     this.setDrawBorders(false)
 
     // if more than 100 entries are displayed in chart, no values will be drawn
-    //this.setMaxVisibleValueCount(100)
+    this.setMaxVisibleValueCount(20)
 
     this.setDrawGridBackground(false)
 
@@ -48,10 +48,11 @@ fun BarLineChartBase<*>.prepareChart() {
     this.setScaleEnabled(true)
 
     // if disabled, scaling can be done on x- and y-axis separately
-    this.setPinchZoom(false)
+    this.setPinchZoom(true)
 
     // customize legend
     val l = this.legend
+    l.isEnabled = false
     l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
     l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
     l.orientation = Legend.LegendOrientation.HORIZONTAL

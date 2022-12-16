@@ -3,7 +3,7 @@ package io.xavier.topwsb.domain.model.chart_data
 import androidx.compose.ui.graphics.Color
 
 data class ChartData(
-    val charData: List<IntradayData>,
+    val intraData: IntradayData,
     val startPrice: String,
     val startPriceDate: String,
     val lowPrice: String,

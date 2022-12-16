@@ -20,7 +20,9 @@ import io.xavier.topwsb.R
 import io.xavier.topwsb.domain.mapper.toMap
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_detail.chart.ChartBody
+import io.xavier.topwsb.presentation.stock_detail.chart.ChartState
 import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItem
+import io.xavier.topwsb.presentation.stock_detail.market_data.MarketDataState
 import io.xavier.topwsb.presentation.theme.DarkBackgroundTranslucent
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
 
@@ -58,7 +60,7 @@ fun StockDetailScreen(
                     }
                 },
                 title = {
-                    SectionTitle(title = "\$${state.stockOverview?.ticker}")
+                    SectionTitle(title = "\$${viewModel.ticker}")
                 }
             )
         }
@@ -78,13 +80,14 @@ fun StockDetailScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.End
                 ) {
-                    state.intradayData?.let {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(defaultHorizontalPadding),
-                            contentAlignment = Alignment.Center
-                        ) {
+                    when(state.chartState) {
+                        is ChartState.Success -> {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(defaultHorizontalPadding),
+                                contentAlignment = Alignment.Center
+                            ) {
 //                            Column {
 //                                Text(
 //                                    text = "Price: ",
@@ -125,10 +128,13 @@ fun StockDetailScreen(
 //                                    maxLines = 1
 //                                )
 //                            }
-                            ChartBody(
-                                modifier = Modifier.fillMaxSize(),
-                                data = state.intradayData
-                            )
+                                state.chartState.data?.let {
+                                    ChartBody(
+                                        modifier = Modifier.fillMaxSize(),
+                                        data = it
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -153,17 +159,16 @@ fun StockDetailScreen(
                             shape = MaterialTheme.shapes.large
                         )
                 ) {
-                    when (state.stockOverviewLoading) {
-                        true -> Text(text = "Loading data")
-                        false -> {
-                            state.stockOverview?.let { stockDetail ->
-                                stockDetail.toMap().forEach {
-                                    SectionInfoItem(
-                                        name = it.key,
-                                        value = it.value,
-                                        showDivider = it.key != "52 Week Low"
-                                    )
-                                }
+                    when(state.marketDataState) {
+                        is MarketDataState.Success -> {
+
+
+                            state.marketDataState.data.toMap().forEach {
+                                SectionInfoItem(
+                                    name = it.key,
+                                    value = it.value,
+                                    showDivider = it.key != "52 Week Low"
+                                )
                             }
                         }
                     }
