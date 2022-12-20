@@ -11,6 +11,6 @@ import com.google.gson.annotations.SerializedName
 data class IntradayDataDto(
     @SerializedName("Meta Data")
     val metaData: MetaDataDto,
-    @SerializedName("Time Series (30min)")
+    @SerializedName("Time Series (60min)")
     val timeSeries: Map<String, IntradayDataPointDto>?
 )

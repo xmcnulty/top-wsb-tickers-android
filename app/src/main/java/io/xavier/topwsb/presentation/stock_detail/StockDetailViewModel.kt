@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.xavier.topwsb.common.Constants
 import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.domain.model.Sentiment
+import io.xavier.topwsb.domain.model.chart_data.IntradayInterval
 import io.xavier.topwsb.domain.use_case.stock_details.GetIntradayDataUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetStockOverviewUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetWsbCommentsUseCase
@@ -117,7 +118,10 @@ class StockDetailViewModel @Inject constructor(
      * Gets the intraday data for charting.
      */
     private fun getChartData() {
-        getIntradayUseCase(ticker).onEach { result ->
+        getIntradayUseCase(
+            ticker,
+            IntradayInterval.ONE_HOUR // TODO: This will be selectable
+        ).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
                     _state.value = _state.value.copy(
@@ -130,6 +134,8 @@ class StockDetailViewModel @Inject constructor(
                             message = result.message ?: "Error loading data"
                         )
                     )
+
+                    throw Exception(result.message)
                 }
                 is Resource.Success -> {
                     _state.value = _state.value.copy(
