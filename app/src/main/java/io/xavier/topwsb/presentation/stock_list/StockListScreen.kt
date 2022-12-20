@@ -1,5 +1,3 @@
-@file:Suppress("OPT_IN_IS_NOT_ENABLED")
-
 package io.xavier.topwsb.presentation.stock_list
 
 import androidx.compose.foundation.Image
@@ -25,6 +23,7 @@ import io.xavier.topwsb.presentation.theme.defaultHorizontalPadding
  * Screen that displays a list of the top 20 stocks mentioned on r/wallstreetbets
  * in the past 24 hours. Uses Material 3 components and specifications.
  */
+@Suppress("OPT_IN_IS_NOT_ENABLED")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StockListScreen(
