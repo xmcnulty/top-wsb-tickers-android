@@ -1,9 +1,9 @@
 package io.xavier.topwsb.domain.mapper
 
 import io.xavier.topwsb.data.remote.dto.company_overview.StockOverviewDto
-import io.xavier.topwsb.domain.model.MarketData
+import io.xavier.topwsb.domain.model.StockOverview
 
-fun MarketData.toMap(): Map<String, String> = mapOf(
+fun StockOverview.toMap(): Map<String, String> = mapOf(
     "Name" to companyName,
     "Ticker" to ticker,
     "Analyst Target" to "$$analystTargetPrice",
@@ -12,11 +12,11 @@ fun MarketData.toMap(): Map<String, String> = mapOf(
 )
 
 /**
- * Converts a [StockOverviewDto] to [MarketData] with required information for application use.
+ * Converts a [StockOverviewDto] to [StockOverview] with required information for application use.
  *
- * @return [MarketData] from data contained in this Dto object
+ * @return [StockOverview] from data contained in this Dto object
  */
-fun StockOverviewDto.toStockOverview(): MarketData = MarketData(
+fun StockOverviewDto.toStockOverview(): StockOverview = StockOverview(
     ticker = Symbol,
     companyName = Name,
     high52Week = `52WeekHigh`,

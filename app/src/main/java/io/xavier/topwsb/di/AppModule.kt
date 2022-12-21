@@ -6,7 +6,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.xavier.topwsb.BuildConfig
 import io.xavier.topwsb.common.Constants
 import io.xavier.topwsb.data.local.TrendingStockDatabase
 import io.xavier.topwsb.data.remote.StockDataApi
@@ -20,8 +19,6 @@ import io.xavier.topwsb.domain.repository.IntradayDataRepository
 import io.xavier.topwsb.domain.repository.StockOverviewRepository
 import io.xavier.topwsb.domain.repository.TrendingStockRepository
 import io.xavier.topwsb.domain.repository.WsbCommentsRepository
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -55,22 +52,7 @@ object AppModule {
     @Provides
     @Singleton
     fun providesStockDataApi(): StockDataApi {
-
-        // Log OkHttp Traffic if debug mode.
-        val client = if (BuildConfig.DEBUG) {
-            BuildConfig.DEBUG
-            val logging = HttpLoggingInterceptor()
-            logging.level = HttpLoggingInterceptor.Level.BASIC
-
-            OkHttpClient.Builder()
-                .addInterceptor(logging)
-                .build()
-        } else {
-            OkHttpClient.Builder().build()
-        }
-
         return Retrofit.Builder()
-            .client(client)
             .baseUrl(Constants.ALPHA_ADVANTAGE_API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
