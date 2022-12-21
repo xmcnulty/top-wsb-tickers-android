@@ -22,7 +22,10 @@ fun IntradayDataPointDto.toChartDataPoint(
 
     return IntradayDataPoint(
         time = date,
-        price = close.toDouble()
+        open = open.toDouble(),
+        high = high.toDouble(),
+        low = low.toDouble(),
+        close = close.toDouble()
     )
 }
 
@@ -34,6 +37,8 @@ fun IntradayDataPointDto.toChartDataPoint(
 fun IntradayDataDto.toIntradayData(): IntradayData {
     val dataPoints = timeSeries!!.map { entry ->
         entry.value.toChartDataPoint(entry.key)
+    }.sortedBy {
+        it.time
     }
 
     return IntradayData(

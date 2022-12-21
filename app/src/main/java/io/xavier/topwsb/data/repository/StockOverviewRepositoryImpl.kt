@@ -5,7 +5,7 @@ import io.xavier.topwsb.BuildConfig
 import io.xavier.topwsb.data.local.TrendingStockDatabase
 import io.xavier.topwsb.data.remote.StockDataApi
 import io.xavier.topwsb.domain.mapper.toStockOverview
-import io.xavier.topwsb.domain.model.StockOverview
+import io.xavier.topwsb.domain.model.MarketData
 import io.xavier.topwsb.domain.repository.StockOverviewRepository
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,7 +20,7 @@ class StockOverviewRepositoryImpl @Inject constructor(
 
     private val dao = database.dao
 
-    override suspend fun getStockOverview(ticker: String): StockOverview {
+    override suspend fun getStockOverview(ticker: String): MarketData {
         val result = dao.getStockOverview(ticker)
 
         return if (result.isEmpty()) {
