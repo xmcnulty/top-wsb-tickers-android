@@ -1,7 +1,7 @@
 package io.xavier.topwsb.domain.use_case.stock_details
 
 import io.xavier.topwsb.common.Resource
-import io.xavier.topwsb.domain.model.MarketData
+import io.xavier.topwsb.domain.model.StockOverview
 import io.xavier.topwsb.domain.repository.StockOverviewRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -13,12 +13,12 @@ class GetStockOverviewUseCase @Inject constructor(
     private val repository: StockOverviewRepository
 ) {
     /**
-     * Fetches [MarketData] for given ticker.
+     * Fetches [StockOverview] for given ticker.
      *
      * @param ticker ticker of stock to fetch info for
-     * @return flow with a [Resource] that wraps a [MarketData] object if successful
+     * @return flow with a [Resource] that wraps a [StockOverview] object if successful
      */
-    operator fun invoke(ticker: String): Flow<Resource<MarketData>> = flow {
+    operator fun invoke(ticker: String): Flow<Resource<StockOverview>> = flow {
         emit(Resource.Loading())
         try {
             val stock = repository.getStockOverview(ticker)
