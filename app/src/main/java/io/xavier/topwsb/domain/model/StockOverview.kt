@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import io.xavier.topwsb.common.*
 import io.xavier.topwsb.data.local.entities.TrendingStockEntity
@@ -29,7 +28,7 @@ import io.xavier.topwsb.data.local.entities.TrendingStockEntity
         onDelete = CASCADE
     )]
 )
-data class MarketData(
+data class StockOverview(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = TICKER_OVERVIEW_COL_NAME)
     val ticker: String,

@@ -13,8 +13,6 @@ import io.xavier.topwsb.domain.model.Sentiment
 import io.xavier.topwsb.domain.use_case.stock_details.GetIntradayDataUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetStockOverviewUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetWsbCommentsUseCase
-import io.xavier.topwsb.presentation.stock_detail.chart.ChartState
-import io.xavier.topwsb.presentation.stock_detail.market_data.MarketDataState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -35,15 +33,15 @@ class StockDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val tag = "STOCK_DETAIL_VIEW_MODEL"
-    lateinit var ticker: String
-        private set
+    private lateinit var ticker: String
 
     private var _state = mutableStateOf(StockDetailState())
     val state: State<StockDetailState>
         get() = _state
 
-    lateinit var sentiment: Sentiment
-        private set
+    private var _sentiment = mutableStateOf(Sentiment.UNKNOWN)
+    val sentiment: State<Sentiment>
+        get() = _sentiment
 
     init {
         savedStateHandle.get<String>(Constants.PARAM_STOCK_SYMBOL)?.let { symbol ->
@@ -52,40 +50,31 @@ class StockDetailViewModel @Inject constructor(
 
         savedStateHandle.get<String>("sentiment")?.let {
             Log.d(tag, "Sentiment is $it")
-            sentiment = Sentiment.fromName(it)
+            _sentiment.value = Sentiment.fromName(it)
         }
 
-        getMarketData()
-        getChartData()
+        getCompanyOverview()
+        getIntradayData()
     }
 
     /**
      * Asynchronous call to get company overview information from Alpha Advantage API.
      */
-    private fun getMarketData() {
+    private fun getCompanyOverview() {
         Log.d(tag, "Requesting stock detail for $ticker")
         getOverviewUseCase(ticker).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
                     Log.d(tag, "Loading")
-                    _state.value = _state.value.copy(
-                        marketDataState = MarketDataState.Loading
-                    )
+                    _state.value = _state.value.copy(stockOverviewLoading = true)
                 }
                 is Resource.Success -> {
                     Log.d(tag, "Get Stock Detail Success \n ${result.data!!.companyName}")
-                    _state.value = _state.value.copy(
-                        marketDataState = MarketDataState.Success(
-                            data = result.data
-                        )
-                    )
+                    _state.value = _state.value.copy(stockOverviewLoading = false,
+                        stockOverview = result.data)
                 }
                 is Resource.Error -> {
-                    _state.value = _state.value.copy(
-                        marketDataState = MarketDataState.Error(
-                            message = result.message ?: "Could not load data"
-                        )
-                    )
+                    _state.value = _state.value.copy(stockOverviewError = result.message)
                     Log.d(tag, "Get Stock Detail Error: ${result.message}")
                 }
             }
@@ -116,29 +105,25 @@ class StockDetailViewModel @Inject constructor(
     /**
      * Gets the intraday data for charting.
      */
-    private fun getChartData() {
+    private fun getIntradayData() {
         getIntradayUseCase(ticker).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
-                    _state.value = _state.value.copy(
-                        chartState = ChartState.Loading
-                    )
+                    _state.value = _state.value.copy(isLoadingChart = true)
                 }
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
-                        chartState = ChartState.Error(
-                            message = result.message ?: "Error loading data"
-                        )
+                        isLoadingChart = false,
+                        chartError = result.message
                     )
                 }
                 is Resource.Success -> {
                     _state.value = _state.value.copy(
-                        chartState = ChartState.Success(
-                            data = result.data
-                        )
+                        isLoadingChart = false,
+                        intradayData = result.data
                     )
 
-                    print(state.value.marketDataState)
+                    print(state.value.intradayData)
                 }
             }
         }.launchIn(viewModelScope)
