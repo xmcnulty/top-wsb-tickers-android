@@ -14,7 +14,7 @@ import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
 import io.xavier.topwsb.common.prepareChart
 import io.xavier.topwsb.domain.model.chart_data.IntradayData
-import io.xavier.topwsb.presentation.theme.DarkSelectedCard
+import io.xavier.topwsb.presentation.theme.DarkSecondaryText
 import io.xavier.topwsb.presentation.theme.NegativeTrend
 import io.xavier.topwsb.presentation.theme.PositiveTrend
 
@@ -39,7 +39,11 @@ private fun createCandleSticksChart(
     data: IntradayData
 ): BarLineChartBase<CandleData> {
     val chart = CandleStickChart(context)
-    chart.prepareChart()
+    chart.prepareChart(
+        times = data.dataPoints.map {
+            it.time
+        }
+    )
 
     chart.data = prepareCandleSticksData(data)
 
@@ -54,7 +58,7 @@ private fun prepareCandleSticksData(
 ): CandleData {
     val candleEntries: List<CandleEntry> = data.dataPoints.mapIndexed { index, dataPoint ->
         CandleEntry(
-            index.toFloat(), // value on the x-axis. TODO: implement
+            index.toFloat(),
             dataPoint.high.toFloat(),
             dataPoint.low.toFloat(),
             dataPoint.open.toFloat(),
@@ -67,7 +71,7 @@ private fun prepareCandleSticksData(
     //dataSet.color = DarkSecondaryText.toArgb()
     dataSet.setDrawIcons(false)
     dataSet.axisDependency = YAxis.AxisDependency.LEFT
-    dataSet.shadowColor = DarkSelectedCard.toArgb()
+    dataSet.shadowColor = DarkSecondaryText.toArgb()
     dataSet.decreasingColor = NegativeTrend.toArgb()
     dataSet.increasingColor = PositiveTrend.toArgb()
     dataSet.increasingPaintStyle = Paint.Style.FILL

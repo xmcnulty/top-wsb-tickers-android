@@ -5,14 +5,18 @@ import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter
+import io.xavier.topwsb.presentation.stock_detail.chart.MonthAxisValueFormatter
+import io.xavier.topwsb.presentation.stock_detail.chart.PriceValueFormatter
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
 import io.xavier.topwsb.presentation.theme.DarkSelectedCard
+import java.time.LocalDateTime
 
 /**
  * Utility function to prepare chart style and formatting.
  */
-fun BarLineChartBase<*>.prepareChart() {
+fun BarLineChartBase<*>.prepareChart(
+    times: List<LocalDateTime>
+) {
     this.setDrawGridBackground(true)
     this.description.isEnabled = false
     this.setDrawBorders(false)
@@ -26,8 +30,8 @@ fun BarLineChartBase<*>.prepareChart() {
     this.xAxis.setDrawAxisLine(true)
     this.xAxis.axisLineColor = DarkSelectedCard.toArgb()
     this.xAxis.position = XAxis.XAxisPosition.BOTTOM
-    this.xAxis.setDrawGridLines(false)
-    this.xAxis.valueFormatter = DefaultAxisValueFormatter(5)
+    this.xAxis.setDrawGridLines(true)
+    this.xAxis.valueFormatter = MonthAxisValueFormatter(times)
     this.xAxis.textColor = DarkPrimaryText.toArgb()
 
     // set y values
@@ -37,11 +41,12 @@ fun BarLineChartBase<*>.prepareChart() {
     this.axisLeft.setDrawGridLines(false)
     this.axisLeft.setDrawAxisLine(true)
     this.axisLeft.axisLineColor = DarkSelectedCard.toArgb()
+    this.axisLeft.valueFormatter = PriceValueFormatter()
     //this.axisLeft.spaceTop = 15f
     this.axisLeft.textColor = DarkPrimaryText.toArgb()
 
     // enable touch gestures
-    this.setTouchEnabled(false)
+    this.setTouchEnabled(true)
 
     // enable scaling and dragging
     this.isDragEnabled = true
