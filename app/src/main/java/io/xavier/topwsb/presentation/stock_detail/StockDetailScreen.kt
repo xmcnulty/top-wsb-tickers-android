@@ -71,7 +71,7 @@ fun StockDetailScreen(
             contentPadding = innerPadding
         ) {
 
-            // Price percentage and chart
+            // Chart
             item {
                 Column(
                     modifier = Modifier
@@ -80,60 +80,27 @@ fun StockDetailScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.End
                 ) {
-                    when(state.chartState) {
-                        is ChartState.Success -> {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(defaultHorizontalPadding),
-                                contentAlignment = Alignment.Center
-                            ) {
-//                            Column {
-//                                Text(
-//                                    text = "Price: ",
-//                                    style = MaterialTheme.typography.bodyMedium,
-//                                    textAlign = TextAlign.Start,
-//                                    color = DarkSecondaryText,
-//                                    maxLines = 1
-//                                )
-//
-//                                Text(
-//                                    text = state.intradayData.dataPoints.last().close.toString(),
-//                                    style = MaterialTheme.typography.bodyMedium,
-//                                    textAlign = TextAlign.Start,
-//                                    color = DarkPrimaryText,
-//                                    fontWeight = FontWeight.Medium,
-//                                    maxLines = 1
-//                                )
-//                            }
-
-//                            Card(
-//                                modifier = Modifier
-//                                    .sizeIn(minWidth = 72.dp),
-//                                shape = MaterialTheme.shapes.small,
-//                                colors = CardDefaults.cardColors(
-//                                    containerColor = PositiveTrend, // TODO: Set trend color
-//                                    contentColor = Color.White
-//                                )
-//                            ) {
-//                                // TODO: PRICE CHANGE PERCENTAGE
-//                                Text(
-//                                    text = "chng %",
-//                                    style = MaterialTheme.typography.titleMedium,
-//                                    modifier = Modifier
-//                                        .padding(horizontal = 8.dp)
-//                                        .align(Alignment.End),
-//                                    fontWeight = FontWeight.Bold,
-//                                    textAlign = TextAlign.End,
-//                                    maxLines = 1
-//                                )
-//                            }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(defaultHorizontalPadding),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        when(state.chartState) {
+                            is ChartState.Success -> {
                                 state.chartState.data?.let {
                                     ChartBody(
-                                        modifier = Modifier.fillMaxSize(),
+                                        modifier = Modifier
+                                            .fillMaxSize(),
                                         data = it
                                     )
                                 }
+                            }
+                            is ChartState.Loading -> {
+                                CircularProgressIndicator()
+                            }
+                            is ChartState.Error -> {
+                                TODO("Display error text")
                             }
                         }
                     }
