@@ -16,7 +16,7 @@ class MonthAxisValueFormatter(
 
     override fun getFormattedValue(value: Float): String {
         val index = value.toInt()
-        val pattern = "d MMM\nHH:mm"
+        val pattern = "d MMM"
 
         return times[index].format(DateTimeFormatter.ofPattern(pattern, Locale.getDefault()))
     }

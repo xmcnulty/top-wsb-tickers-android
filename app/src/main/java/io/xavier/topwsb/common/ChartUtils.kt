@@ -41,7 +41,7 @@ fun BarLineChartBase<CandleData>.prepareChart(
     this.axisLeft.isEnabled = true
     this.axisRight.isEnabled = false
     this.axisLeft.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-    this.axisLeft.setDrawGridLines(false)
+    this.axisLeft.setDrawGridLines(true)
     this.axisLeft.setDrawAxisLine(true)
     this.axisLeft.axisLineColor = DarkSelectedCard.toArgb()
     this.axisLeft.valueFormatter = PriceValueFormatter()
@@ -49,14 +49,14 @@ fun BarLineChartBase<CandleData>.prepareChart(
     this.axisLeft.textColor = DarkPrimaryText.toArgb()
 
     // enable touch gestures
-    this.setTouchEnabled(true)
+    this.setTouchEnabled(false)
 
     // enable scaling and dragging
-    this.isDragEnabled = true
-    this.setScaleEnabled(true)
+    this.isDragEnabled = false
+    this.setScaleEnabled(false)
 
     // if disabled, scaling can be done on x- and y-axis separately
-    this.setPinchZoom(true)
+    this.setPinchZoom(false)
 
     // customize legend
     val l = this.legend
