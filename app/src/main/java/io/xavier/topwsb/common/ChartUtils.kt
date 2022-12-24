@@ -5,16 +5,19 @@ import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
-import io.xavier.topwsb.presentation.stock_detail.chart.MonthAxisValueFormatter
-import io.xavier.topwsb.presentation.stock_detail.chart.PriceValueFormatter
+import com.github.mikephil.charting.data.CandleData
+import io.xavier.topwsb.presentation.stock_detail.components.chart.MonthAxisValueFormatter
+import io.xavier.topwsb.presentation.stock_detail.components.chart.PriceValueFormatter
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
 import io.xavier.topwsb.presentation.theme.DarkSelectedCard
 import java.time.LocalDateTime
 
 /**
- * Utility function to prepare chart style and formatting.
+ * Utility function to prepare candle stick chart.
+ *
+ * @param times List of times (x-axis). Used for formatting/labeling
  */
-fun BarLineChartBase<*>.prepareChart(
+fun BarLineChartBase<CandleData>.prepareChart(
     times: List<LocalDateTime>
 ) {
     this.setDrawGridBackground(true)

@@ -1,4 +1,4 @@
-package io.xavier.topwsb.presentation.stock_detail.chart
+package io.xavier.topwsb.presentation.stock_detail.components.chart
 
 import io.xavier.topwsb.domain.model.chart_data.IntradayData
 

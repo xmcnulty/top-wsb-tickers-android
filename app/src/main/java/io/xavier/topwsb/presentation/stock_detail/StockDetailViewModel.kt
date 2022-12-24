@@ -14,7 +14,7 @@ import io.xavier.topwsb.domain.model.chart_data.IntradayInterval
 import io.xavier.topwsb.domain.use_case.stock_details.GetIntradayDataUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetStockOverviewUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetWsbCommentsUseCase
-import io.xavier.topwsb.presentation.stock_detail.chart.ChartState
+import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartState
 import io.xavier.topwsb.presentation.stock_detail.market_data.MarketDataState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

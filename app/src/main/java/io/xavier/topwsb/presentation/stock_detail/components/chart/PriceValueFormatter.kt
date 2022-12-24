@@ -1,4 +1,4 @@
-package io.xavier.topwsb.presentation.stock_detail.chart
+package io.xavier.topwsb.presentation.stock_detail.components.chart
 
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.text.NumberFormat

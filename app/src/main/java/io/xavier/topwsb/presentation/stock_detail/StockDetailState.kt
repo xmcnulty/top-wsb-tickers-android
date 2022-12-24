@@ -1,6 +1,6 @@
 package io.xavier.topwsb.presentation.stock_detail
 
-import io.xavier.topwsb.presentation.stock_detail.chart.ChartState
+import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartState
 import io.xavier.topwsb.presentation.stock_detail.market_data.MarketDataState
 
 /**

@@ -19,12 +19,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import io.xavier.topwsb.R
 import io.xavier.topwsb.domain.mapper.toMap
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
-import io.xavier.topwsb.presentation.stock_detail.chart.ChartBody
-import io.xavier.topwsb.presentation.stock_detail.chart.ChartState
 import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItem
+import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartSection
 import io.xavier.topwsb.presentation.stock_detail.market_data.MarketDataState
+import io.xavier.topwsb.presentation.theme.DarkBackground
 import io.xavier.topwsb.presentation.theme.DarkBackgroundTranslucent
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
+import io.xavier.topwsb.presentation.theme.DarkSecondaryText
 
 private val defaultHorizontalPadding: Dp = 16.dp
 
@@ -66,6 +67,37 @@ fun StockDetailScreen(
         }
     ) { innerPadding ->
 
+        // Show progress indicator is market overview is loading
+        if (state.marketDataState is MarketDataState.Loading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(DarkBackground),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(color = DarkPrimaryText)
+            }
+
+            return@Scaffold
+        }
+
+        // if the market data couldn't be loaded show a message
+        if (state.marketDataState is MarketDataState.Error) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(DarkBackground),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = state.marketDataState.message,
+                    color = DarkSecondaryText
+                )
+            }
+
+            return@Scaffold
+        }
+
         LazyColumn(
             state = listState,
             contentPadding = innerPadding
@@ -80,44 +112,25 @@ fun StockDetailScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.End
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(defaultHorizontalPadding),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        when(state.chartState) {
-                            is ChartState.Success -> {
-                                state.chartState.data?.let {
-                                    ChartBody(
-                                        modifier = Modifier
-                                            .fillMaxSize(),
-                                        data = it
-                                    )
-                                }
-                            }
-                            is ChartState.Loading -> {
-                                CircularProgressIndicator()
-                            }
-                            is ChartState.Error -> {
-                                TODO("Display error text")
-                            }
-                        }
-                    }
+                    ChartSection(chartState = state.chartState)
                 }
             }
 
+            // Section title "Overview"
             item {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 SectionTitle(
                     title = "Overview",
-                    modifier = Modifier.padding(start = defaultHorizontalPadding)
+                    modifier = Modifier.padding(
+                        start = defaultHorizontalPadding,
+                        bottom = defaultHorizontalPadding
+                    )
                 )
             }
 
+            // Stock overview section items
             item {
-
                 Column(
                     modifier = Modifier
                         .padding(horizontal = defaultHorizontalPadding)
@@ -126,17 +139,13 @@ fun StockDetailScreen(
                             shape = MaterialTheme.shapes.large
                         )
                 ) {
-                    when(state.marketDataState) {
-                        is MarketDataState.Success -> {
-
-
-                            state.marketDataState.data.toMap().forEach {
-                                SectionInfoItem(
-                                    name = it.key,
-                                    value = it.value,
-                                    showDivider = it.key != "52 Week Low"
-                                )
-                            }
+                    if (state.marketDataState is MarketDataState.Success) {
+                        state.marketDataState.data.toMap().forEach {
+                            SectionInfoItem(
+                                name = it.key,
+                                value = it.value,
+                                showDivider = it.key != "52 Week Low"
+                            )
                         }
                     }
                 }
