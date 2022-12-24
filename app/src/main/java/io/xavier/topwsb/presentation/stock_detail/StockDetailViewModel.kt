@@ -120,7 +120,7 @@ class StockDetailViewModel @Inject constructor(
     private fun getChartData() {
         getIntradayUseCase(
             ticker,
-            IntradayInterval.ONE_HOUR // TODO: This will be selectable
+            IntradayInterval.ONE_HOUR
         ).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
