@@ -20,6 +20,6 @@ interface WsbCommentsApi {
     @GET("reddit/comment/search?subreddit=wallstreetbets&sort_by=created_utc&sort=desc")
     suspend fun getComments(
         @Query("q") ticker: String,
-        @Query("after") afterUtc: Int
+        @Query("after") afterUtc: Long
     ): WsbCommentsResponse
 }

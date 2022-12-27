@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -21,7 +22,8 @@ import io.xavier.topwsb.domain.mapper.toMap
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItem
 import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartSection
-import io.xavier.topwsb.presentation.stock_detail.market_data.MarketDataState
+import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentsState
+import io.xavier.topwsb.presentation.stock_detail.components.market_data.MarketDataState
 import io.xavier.topwsb.presentation.theme.DarkBackground
 import io.xavier.topwsb.presentation.theme.DarkBackgroundTranslucent
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
@@ -148,6 +150,26 @@ fun StockDetailScreen(
                             )
                         }
                     }
+                }
+            }
+
+            // Section title for comments.
+            item {
+                SectionTitle(
+                    title = "Today's Comments",
+                    modifier = Modifier.padding(defaultHorizontalPadding)
+                )
+            }
+
+            if (state.commentsState is CommentsState.Success) {
+                items(state.commentsState.comments) {
+                    // TODO: filler replace
+                    SectionInfoItem(name = "Comment", value = it.author, showDivider = true)
+                }
+            } else {
+                item {
+                    // TODO: Filler replace
+                    Text(text = "Error")
                 }
             }
         }

@@ -1,8 +1,8 @@
 package io.xavier.topwsb.domain.repository
 
-import io.xavier.topwsb.data.remote.dto.wsb_comments.WsbCommentsResponse
+import io.xavier.topwsb.domain.model.WsbComment
 
 
 interface WsbCommentsRepository {
-    suspend fun getComments(ticker: String, afterUtc: Int): WsbCommentsResponse
+    suspend fun getComments(ticker: String, afterUtc: Long): List<WsbComment>
 }

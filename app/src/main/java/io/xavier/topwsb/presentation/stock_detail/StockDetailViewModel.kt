@@ -15,7 +15,8 @@ import io.xavier.topwsb.domain.use_case.stock_details.GetIntradayDataUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetStockOverviewUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetWsbCommentsUseCase
 import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartState
-import io.xavier.topwsb.presentation.stock_detail.market_data.MarketDataState
+import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentsState
+import io.xavier.topwsb.presentation.stock_detail.components.market_data.MarketDataState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -58,6 +59,7 @@ class StockDetailViewModel @Inject constructor(
 
         getMarketData()
         getChartData()
+        getWsbComments()
     }
 
     /**
@@ -98,16 +100,26 @@ class StockDetailViewModel @Inject constructor(
      * past 24-hours.
      */
     private fun getWsbComments() {
-        // TODO: implement afterUtc calculation
-        getCommentsUseCase(ticker, 1669507200).onEach { result ->
+        getCommentsUseCase(ticker).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
+                    _state.value = _state.value.copy(
+                        commentsState = CommentsState.Loading
+                    )
                     Log.d(tag, "Loading comments")
                 }
                 is Resource.Error -> {
+                    _state.value = _state.value.copy(
+                        commentsState = CommentsState.Error(
+                            message = result.message ?: "An unexpected error occurred"
+                        )
+                    )
                     Log.e(tag, result.message!!)
                 }
                 is Resource.Success -> {
+                    _state.value = _state.value.copy(
+                        commentsState = CommentsState.Success(result.data ?: emptyList())
+                    )
                     Log.d(tag, "Successfully loaded comments.")
                 }
             }
