@@ -17,7 +17,7 @@ interface WsbCommentsApi {
      * @param afterUtc search comments after this epoch time
      * @return list of [WsbCommentsResponse] objects parsed by GSON
      */
-    @GET("reddit/comment/search?subreddit=wallstreetbets&sort_by=created_utc&sort=desc")
+    @GET("reddit/comment/search?subreddit=wallstreetbets&sort_by=created_utc")
     suspend fun getComments(
         @Query("q") ticker: String,
         @Query("after") afterUtc: Long

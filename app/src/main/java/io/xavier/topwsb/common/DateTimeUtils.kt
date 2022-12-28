@@ -1,28 +1,21 @@
 package io.xavier.topwsb.common
 
 import android.util.Log
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.time.ZoneId
-import java.time.ZoneOffset
 
 /**
  * Gets the time in milliseconds for midnight (start) of the current day.
  *
  * @return start time of the day in milliseconds
  */
-fun getTodayMidnightMillis(): Long {
-    val now = LocalDateTime.now()
+fun startOfDayMilliseconds(): Long {
+    val now = LocalDate.now()
 
-    val midnight = LocalDateTime.of(
-        now.year,
-        now.month.value,
-        now.dayOfMonth,
-        0,
-        0
-    )
+    val dayStart = now.atStartOfDay(ZoneId.systemDefault())
 
     // TODO: Remove logging for production.
-    val midnightMillis = midnight.toEpochSecond(ZoneOffset.of(ZoneId.systemDefault().id))
+    val midnightMillis = dayStart.toEpochSecond()
     Log.d("Date Time Utils", "Midnight milliseconds: $midnightMillis")
     return midnightMillis
 }

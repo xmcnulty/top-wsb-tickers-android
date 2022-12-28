@@ -169,7 +169,18 @@ fun StockDetailScreen(
             } else {
                 item {
                     // TODO: Filler replace
-                    Text(text = "Error")
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(DarkBackground)
+                        ,
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Error loading comments",
+                            color = DarkSecondaryText
+                        )
+                    }
                 }
             }
         }
