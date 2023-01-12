@@ -1,13 +1,14 @@
 package io.xavier.topwsb.domain.use_case.stock_details
 
+import io.xavier.topwsb.common.MILlIS_24_HOURS
 import io.xavier.topwsb.common.Resource
-import io.xavier.topwsb.common.startOfDayMilliseconds
 import io.xavier.topwsb.domain.model.WsbComment
 import io.xavier.topwsb.domain.repository.WsbCommentsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
+import java.time.Instant
 import javax.inject.Inject
 
 /**
@@ -32,7 +33,7 @@ class GetWsbCommentsUseCase @Inject constructor(
             emit(Resource.Loading())
 
             val comments = repository.getComments(
-                ticker, startOfDayMilliseconds()
+                ticker, Instant.now().epochSecond - MILlIS_24_HOURS
             )
             emit(Resource.Success(comments))
 

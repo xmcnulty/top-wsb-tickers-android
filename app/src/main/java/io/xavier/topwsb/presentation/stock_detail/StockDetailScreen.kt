@@ -22,6 +22,7 @@ import io.xavier.topwsb.domain.mapper.toMap
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItem
 import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartSection
+import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentListItem
 import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentsState
 import io.xavier.topwsb.presentation.stock_detail.components.market_data.MarketDataState
 import io.xavier.topwsb.presentation.theme.DarkBackground
@@ -162,9 +163,9 @@ fun StockDetailScreen(
             }
 
             if (state.commentsState is CommentsState.Success) {
-                items(state.commentsState.comments) {
+                items(state.commentsState.comments) { comment ->
                     // TODO: filler replace
-                    SectionInfoItem(name = "Comment", value = it.author, showDivider = true)
+                    CommentListItem(comment)
                 }
             } else {
                 item {
@@ -177,7 +178,7 @@ fun StockDetailScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "Error loading comments",
+                            text = "No comments",
                             color = DarkSecondaryText
                         )
                     }

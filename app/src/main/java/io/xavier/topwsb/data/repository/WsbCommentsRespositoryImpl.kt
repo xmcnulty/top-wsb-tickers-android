@@ -1,5 +1,6 @@
 package io.xavier.topwsb.data.repository
 
+import android.util.Log
 import io.xavier.topwsb.data.remote.WsbCommentsApi
 import io.xavier.topwsb.domain.mapper.toWsbComment
 import io.xavier.topwsb.domain.model.WsbComment
@@ -13,6 +14,8 @@ class WsbCommentsRespositoryImpl @Inject constructor(
 ) : WsbCommentsRepository {
 
     override suspend fun getComments(ticker: String, afterUtc: Long): List<WsbComment> {
+        Log.d("Comments Repository", "Requesting comments containing $ticker after $afterUtc")
+
         return api.getComments(ticker, afterUtc).getComments().map {
             it.toWsbComment()
         }
