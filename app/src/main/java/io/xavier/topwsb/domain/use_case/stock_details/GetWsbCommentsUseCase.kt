@@ -1,7 +1,7 @@
 package io.xavier.topwsb.domain.use_case.stock_details
 
 import io.xavier.topwsb.common.Resource
-import io.xavier.topwsb.common.getTodayMidnightMillis
+import io.xavier.topwsb.common.startOfDayMilliseconds
 import io.xavier.topwsb.domain.model.WsbComment
 import io.xavier.topwsb.domain.repository.WsbCommentsRepository
 import kotlinx.coroutines.flow.Flow
@@ -32,7 +32,7 @@ class GetWsbCommentsUseCase @Inject constructor(
             emit(Resource.Loading())
 
             val comments = repository.getComments(
-                ticker, getTodayMidnightMillis()
+                ticker, startOfDayMilliseconds()
             )
             emit(Resource.Success(comments))
 
