@@ -30,7 +30,7 @@ fun BarLineChartBase<CandleData>.prepareChart(
     this.setDrawGridBackground(false)
 
     // set x values
-    this.xAxis.setDrawAxisLine(true)
+    this.xAxis.setDrawAxisLine(false)
     this.xAxis.axisLineColor = DarkSelectedCard.toArgb()
     this.xAxis.position = XAxis.XAxisPosition.BOTTOM
     this.xAxis.setDrawGridLines(false)
@@ -41,8 +41,8 @@ fun BarLineChartBase<CandleData>.prepareChart(
     this.axisLeft.isEnabled = true
     this.axisRight.isEnabled = false
     this.axisLeft.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-    this.axisLeft.setDrawGridLines(false)
-    this.axisLeft.setDrawAxisLine(true)
+    this.axisLeft.setDrawGridLines(true)
+    this.axisLeft.setDrawAxisLine(false)
     this.axisLeft.axisLineColor = DarkSelectedCard.toArgb()
     this.axisLeft.valueFormatter = PriceValueFormatter()
     //this.axisLeft.spaceTop = 15f
@@ -52,8 +52,8 @@ fun BarLineChartBase<CandleData>.prepareChart(
     this.setTouchEnabled(false)
 
     // enable scaling and dragging
-    this.isDragEnabled = false
-    this.setScaleEnabled(false)
+    this.isDragEnabled = true
+    this.setScaleEnabled(true)
 
     // if disabled, scaling can be done on x- and y-axis separately
     this.setPinchZoom(false)
