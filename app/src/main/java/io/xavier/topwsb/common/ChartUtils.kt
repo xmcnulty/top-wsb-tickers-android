@@ -20,7 +20,7 @@ import java.time.LocalDateTime
 fun BarLineChartBase<CandleData>.prepareChart(
     times: List<LocalDateTime>
 ) {
-    this.setDrawGridBackground(true)
+    this.setDrawGridBackground(false)
     this.description.isEnabled = false
     this.setDrawBorders(false)
 
@@ -33,7 +33,7 @@ fun BarLineChartBase<CandleData>.prepareChart(
     this.xAxis.setDrawAxisLine(true)
     this.xAxis.axisLineColor = DarkSelectedCard.toArgb()
     this.xAxis.position = XAxis.XAxisPosition.BOTTOM
-    this.xAxis.setDrawGridLines(true)
+    this.xAxis.setDrawGridLines(false)
     this.xAxis.valueFormatter = MonthAxisValueFormatter(times)
     this.xAxis.textColor = DarkPrimaryText.toArgb()
 
@@ -41,7 +41,7 @@ fun BarLineChartBase<CandleData>.prepareChart(
     this.axisLeft.isEnabled = true
     this.axisRight.isEnabled = false
     this.axisLeft.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-    this.axisLeft.setDrawGridLines(true)
+    this.axisLeft.setDrawGridLines(false)
     this.axisLeft.setDrawAxisLine(true)
     this.axisLeft.axisLineColor = DarkSelectedCard.toArgb()
     this.axisLeft.valueFormatter = PriceValueFormatter()
