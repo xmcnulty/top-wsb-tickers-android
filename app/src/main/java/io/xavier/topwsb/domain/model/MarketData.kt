@@ -3,8 +3,7 @@ package io.xavier.topwsb.domain.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.ForeignKey.CASCADE
-import androidx.room.Ignore
+import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
 import io.xavier.topwsb.common.*
 import io.xavier.topwsb.data.local.entities.TrendingStockEntity

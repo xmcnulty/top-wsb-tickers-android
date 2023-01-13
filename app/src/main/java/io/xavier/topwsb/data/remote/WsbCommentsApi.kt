@@ -15,11 +15,13 @@ interface WsbCommentsApi {
      *
      * @param ticker query parameter to search for comments mentioning the specified stock ticker
      * @param afterUtc search comments after this epoch time
+     * @param limit limits the number of comments returned. Default is 100.
      * @return list of [WsbCommentsResponse] objects parsed by GSON
      */
-    @GET("reddit/comment/search?subreddit=wallstreetbets&sort_by=created_utc&sort=desc")
+    @GET("reddit/comment/search?subreddit=wallstreetbets&sort_by=created_utc")
     suspend fun getComments(
         @Query("q") ticker: String,
-        @Query("after") afterUtc: Int
+        @Query("after") afterUtc: Long,
+        @Query("limit") limit: Int = 100
     ): WsbCommentsResponse
 }

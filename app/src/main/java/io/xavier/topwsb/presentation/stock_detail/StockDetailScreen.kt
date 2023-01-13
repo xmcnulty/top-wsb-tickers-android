@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -21,11 +22,14 @@ import io.xavier.topwsb.domain.mapper.toMap
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItem
 import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartSection
-import io.xavier.topwsb.presentation.stock_detail.market_data.MarketDataState
+import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentListItem
+import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentsState
+import io.xavier.topwsb.presentation.stock_detail.components.market_data.MarketDataState
 import io.xavier.topwsb.presentation.theme.DarkBackground
 import io.xavier.topwsb.presentation.theme.DarkBackgroundTranslucent
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
 import io.xavier.topwsb.presentation.theme.DarkSecondaryText
+import java.text.DateFormat
 
 private val defaultHorizontalPadding: Dp = 16.dp
 
@@ -147,6 +151,39 @@ fun StockDetailScreen(
                                 showDivider = it.key != "52 Week Low"
                             )
                         }
+                    }
+                }
+            }
+
+            // Section title for comments.
+            item {
+                SectionTitle(
+                    title = "Recent Comments",
+                    modifier = Modifier.padding(defaultHorizontalPadding)
+                )
+            }
+
+            if (state.commentsState is CommentsState.Success) {
+                // formats timestamps to HH:MM
+                val formatter = DateFormat.getTimeInstance(DateFormat.SHORT)
+
+                items(state.commentsState.comments) { comment ->
+                    CommentListItem(comment, formatter)
+                }
+            } else {
+                item {
+                    // TODO: Filler replace
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(DarkBackground)
+                        ,
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "No comments",
+                            color = DarkSecondaryText
+                        )
                     }
                 }
             }
