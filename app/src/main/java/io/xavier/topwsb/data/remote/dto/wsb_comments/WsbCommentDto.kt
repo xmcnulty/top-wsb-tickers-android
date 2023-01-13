@@ -24,7 +24,7 @@ data class WsbCommentDto(
     val collapsed_reason_code: Any,
     val comment_type: Any,
     val controversiality: Int,
-    val created_utc: Int,
+    val created_utc: Long,
     val distinguished: String,
     val gilded: Int,
     val gildings: Gildings,

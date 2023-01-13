@@ -29,6 +29,7 @@ import io.xavier.topwsb.presentation.theme.DarkBackground
 import io.xavier.topwsb.presentation.theme.DarkBackgroundTranslucent
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
 import io.xavier.topwsb.presentation.theme.DarkSecondaryText
+import java.text.DateFormat
 
 private val defaultHorizontalPadding: Dp = 16.dp
 
@@ -157,15 +158,17 @@ fun StockDetailScreen(
             // Section title for comments.
             item {
                 SectionTitle(
-                    title = "Today's Comments",
+                    title = "Recent Comments",
                     modifier = Modifier.padding(defaultHorizontalPadding)
                 )
             }
 
             if (state.commentsState is CommentsState.Success) {
+                // formats timestamps to HH:MM
+                val formatter = DateFormat.getTimeInstance(DateFormat.SHORT)
+
                 items(state.commentsState.comments) { comment ->
-                    // TODO: filler replace
-                    CommentListItem(comment)
+                    CommentListItem(comment, formatter)
                 }
             } else {
                 item {
