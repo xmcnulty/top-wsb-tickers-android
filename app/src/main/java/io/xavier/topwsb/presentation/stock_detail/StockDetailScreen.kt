@@ -172,7 +172,6 @@ fun StockDetailScreen(
                 }
             } else {
                 item {
-                    // TODO: Filler replace
                     Box(
                         modifier = Modifier
                             .fillMaxSize()

@@ -33,7 +33,6 @@ fun ChartSection(
                 }
             }
             is ChartState.Error -> {
-                // TODO: Format
                 Text(text = chartState.message)
             }
             ChartState.Loading -> {
