@@ -4,7 +4,7 @@ import io.xavier.topwsb.data.local.TrendingStockDatabase
 import io.xavier.topwsb.data.local.entities.TrendingStockEntity
 import io.xavier.topwsb.data.remote.TrendingStockApi
 import io.xavier.topwsb.domain.model.TrendingStock
-import io.xavier.topwsb.domain.repository.TrendingStockRepository
+import io.xavier.topwsb.data.local.repository.TrendingStockRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,9 +13,6 @@ class TrendingStockRepositoryImpl @Inject constructor(
     private val trendingApi: TrendingStockApi,
     db: TrendingStockDatabase
 ) : TrendingStockRepository {
-
-    val tag = "TRENDING_STOCK_REPOSITORY"
-
     private val dao = db.dao
 
     override suspend fun getTrendingStocks(): List<TrendingStock> {

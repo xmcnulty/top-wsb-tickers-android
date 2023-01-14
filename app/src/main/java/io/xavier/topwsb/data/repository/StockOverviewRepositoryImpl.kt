@@ -6,7 +6,7 @@ import io.xavier.topwsb.data.local.TrendingStockDatabase
 import io.xavier.topwsb.data.remote.StockDataApi
 import io.xavier.topwsb.domain.mapper.toStockOverview
 import io.xavier.topwsb.domain.model.MarketData
-import io.xavier.topwsb.domain.repository.StockOverviewRepository
+import io.xavier.topwsb.data.local.repository.StockOverviewRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 

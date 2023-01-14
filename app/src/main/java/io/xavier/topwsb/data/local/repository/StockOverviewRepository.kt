@@ -1,4 +1,4 @@
-package io.xavier.topwsb.domain.repository
+package io.xavier.topwsb.data.local.repository
 import retrofit2.HttpException
 import java.io.IOException
 import io.xavier.topwsb.domain.model.MarketData

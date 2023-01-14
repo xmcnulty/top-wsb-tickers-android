@@ -2,7 +2,7 @@ package io.xavier.topwsb.domain.use_case.stock_details
 
 import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.domain.model.MarketData
-import io.xavier.topwsb.domain.repository.StockOverviewRepository
+import io.xavier.topwsb.data.local.repository.StockOverviewRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

@@ -4,7 +4,7 @@ import android.util.Log
 import io.xavier.topwsb.data.remote.WsbCommentsApi
 import io.xavier.topwsb.domain.mapper.toWsbComment
 import io.xavier.topwsb.domain.model.WsbComment
-import io.xavier.topwsb.domain.repository.WsbCommentsRepository
+import io.xavier.topwsb.data.local.repository.WsbCommentsRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,7 +17,7 @@ class WsbCommentsRespositoryImpl @Inject constructor(
         Log.d("Comments Repository", "Requesting comments containing $ticker after $afterUtc")
 
         return api.getComments(ticker, afterUtc).getComments().map {
-            it.toWsbComment()
+            it.toWsbComment(ticker)
         }
     }
 }

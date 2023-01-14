@@ -16,10 +16,10 @@ import io.xavier.topwsb.data.repository.IntradayDataRepositoryImpl
 import io.xavier.topwsb.data.repository.StockOverviewRepositoryImpl
 import io.xavier.topwsb.data.repository.TrendingStockRepositoryImpl
 import io.xavier.topwsb.data.repository.WsbCommentsRespositoryImpl
-import io.xavier.topwsb.domain.repository.IntradayDataRepository
-import io.xavier.topwsb.domain.repository.StockOverviewRepository
-import io.xavier.topwsb.domain.repository.TrendingStockRepository
-import io.xavier.topwsb.domain.repository.WsbCommentsRepository
+import io.xavier.topwsb.data.local.repository.IntradayDataRepository
+import io.xavier.topwsb.data.local.repository.StockOverviewRepository
+import io.xavier.topwsb.data.local.repository.TrendingStockRepository
+import io.xavier.topwsb.data.local.repository.WsbCommentsRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

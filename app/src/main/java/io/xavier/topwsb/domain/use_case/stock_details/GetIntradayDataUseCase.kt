@@ -4,7 +4,7 @@ import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.domain.exceptions.ApiException
 import io.xavier.topwsb.domain.model.chart_data.IntradayData
 import io.xavier.topwsb.domain.model.chart_data.IntradayInterval
-import io.xavier.topwsb.domain.repository.IntradayDataRepository
+import io.xavier.topwsb.data.local.repository.IntradayDataRepository
 import retrofit2.HttpException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

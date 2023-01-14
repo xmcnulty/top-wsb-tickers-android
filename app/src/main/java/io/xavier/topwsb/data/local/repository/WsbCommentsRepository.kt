@@ -1,4 +1,4 @@
-package io.xavier.topwsb.domain.repository
+package io.xavier.topwsb.data.local.repository
 
 import io.xavier.topwsb.domain.model.WsbComment
 
