@@ -1,4 +1,4 @@
-package io.xavier.topwsb.data.local.repository
+package io.xavier.topwsb.domain.repository
 
 import io.xavier.topwsb.domain.model.TrendingStock
 import retrofit2.HttpException

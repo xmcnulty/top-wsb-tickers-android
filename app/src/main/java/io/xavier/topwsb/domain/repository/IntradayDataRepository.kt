@@ -1,4 +1,4 @@
-package io.xavier.topwsb.data.local.repository
+package io.xavier.topwsb.domain.repository
 
 import io.xavier.topwsb.domain.exceptions.ApiException
 import io.xavier.topwsb.domain.model.chart_data.IntradayData

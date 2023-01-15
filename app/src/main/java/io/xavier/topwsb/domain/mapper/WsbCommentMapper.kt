@@ -11,9 +11,10 @@ import io.xavier.topwsb.domain.model.WsbComment
  */
 fun WsbCommentDto.toWsbComment(ticker: String): WsbComment =
     WsbComment(
+        id = 0,
         text = this.body,
         ticker = ticker,
         createdUtc = this.created_utc * 1_000, // convert from seconds to ms
         author = this.author,
-        permalink = this.permalink
+        link = this.permalink
     )

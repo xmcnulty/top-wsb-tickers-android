@@ -14,6 +14,7 @@ object Constants {
  */
 const val TABLE_NAME_TRENDING_STOCKS = "trending_stocks"
 const val TABLE_NAME_STOCK_OVERVIEW = "stock_overview"
+const val TABLE_NAME_COMMENTS = "wsb_comments"
 
 // Common column names
 const val TICKER_STOCK_COL_NAME = "ticker_trending_stock"
@@ -30,6 +31,3 @@ const val COMPANY_NAME_COL_NAME = "company_name"
 const val HIGH_52WEEK_COL_NAME = "52_week_high"
 const val LOW_52WEEK_COL_NAME = "52_week_low"
 const val ANALYST_TGT_COL_NAME = "analyst_target"
-
-// Comments table column names
-const val TICKER_COMMENT = "ticker_comment"

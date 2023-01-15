@@ -3,7 +3,7 @@ package io.xavier.topwsb.domain.use_case.stock_details
 import io.xavier.topwsb.common.MILlIS_24_HOURS
 import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.domain.model.WsbComment
-import io.xavier.topwsb.data.local.repository.WsbCommentsRepository
+import io.xavier.topwsb.domain.repository.WsbCommentsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

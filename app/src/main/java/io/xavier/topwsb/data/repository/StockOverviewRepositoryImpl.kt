@@ -2,23 +2,23 @@ package io.xavier.topwsb.data.repository
 
 import android.util.Log
 import io.xavier.topwsb.BuildConfig
-import io.xavier.topwsb.data.local.TrendingStockDatabase
+import io.xavier.topwsb.data.local.TrendiesDatabase
 import io.xavier.topwsb.data.remote.StockDataApi
 import io.xavier.topwsb.domain.mapper.toStockOverview
 import io.xavier.topwsb.domain.model.MarketData
-import io.xavier.topwsb.data.local.repository.StockOverviewRepository
+import io.xavier.topwsb.domain.repository.StockOverviewRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class StockOverviewRepositoryImpl @Inject constructor(
     private val stockDataApi: StockDataApi,
-    database: TrendingStockDatabase
+    database: TrendiesDatabase
 ) : StockOverviewRepository {
 
     val tag = "STOCK OVERVIEW REPOSITORY"
 
-    private val dao = database.dao
+    private val dao = database.stockOverviewDao
 
     override suspend fun getStockOverview(ticker: String): MarketData {
         val result = dao.getStockOverview(ticker)

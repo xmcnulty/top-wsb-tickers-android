@@ -8,18 +8,18 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.xavier.topwsb.BuildConfig
 import io.xavier.topwsb.common.Constants
-import io.xavier.topwsb.data.local.TrendingStockDatabase
+import io.xavier.topwsb.data.local.TrendiesDatabase
 import io.xavier.topwsb.data.remote.StockDataApi
 import io.xavier.topwsb.data.remote.TrendingStockApi
 import io.xavier.topwsb.data.remote.WsbCommentsApi
 import io.xavier.topwsb.data.repository.IntradayDataRepositoryImpl
 import io.xavier.topwsb.data.repository.StockOverviewRepositoryImpl
 import io.xavier.topwsb.data.repository.TrendingStockRepositoryImpl
-import io.xavier.topwsb.data.repository.WsbCommentsRespositoryImpl
-import io.xavier.topwsb.data.local.repository.IntradayDataRepository
-import io.xavier.topwsb.data.local.repository.StockOverviewRepository
-import io.xavier.topwsb.data.local.repository.TrendingStockRepository
-import io.xavier.topwsb.data.local.repository.WsbCommentsRepository
+import io.xavier.topwsb.data.repository.WsbCommentsRepositoryImpl
+import io.xavier.topwsb.domain.repository.IntradayDataRepository
+import io.xavier.topwsb.domain.repository.StockOverviewRepository
+import io.xavier.topwsb.domain.repository.TrendingStockRepository
+import io.xavier.topwsb.domain.repository.WsbCommentsRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -100,7 +100,7 @@ object AppModule {
     @Singleton
     fun providesTrendingStockRepository(
         wsbApi: TrendingStockApi,
-        db: TrendingStockDatabase
+        db: TrendiesDatabase
     ): TrendingStockRepository {
         return TrendingStockRepositoryImpl(wsbApi, db)
     }
@@ -109,7 +109,7 @@ object AppModule {
     @Singleton
     fun providesStockDataRepository(
         stockDataApi: StockDataApi,
-        db: TrendingStockDatabase
+        db: TrendiesDatabase
     ): StockOverviewRepository {
         return StockOverviewRepositoryImpl(stockDataApi, db)
     }
@@ -117,9 +117,10 @@ object AppModule {
     @Provides
     @Singleton
     fun providesWsbCommentsRepository(
-        wsbCommentsApi: WsbCommentsApi
+        wsbCommentsApi: WsbCommentsApi,
+        db: TrendiesDatabase
     ): WsbCommentsRepository {
-        return WsbCommentsRespositoryImpl(wsbCommentsApi)
+        return WsbCommentsRepositoryImpl(wsbCommentsApi, db)
     }
 
     @Provides
@@ -132,10 +133,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesTrendingStockDB(app: Application): TrendingStockDatabase {
+    fun providesTrendingStockDB(app: Application): TrendiesDatabase {
         return Room.databaseBuilder(
             app,
-            TrendingStockDatabase::class.java,
+            TrendiesDatabase::class.java,
             "trending_stock.db"
         ).build()
     }

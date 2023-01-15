@@ -1,8 +1,10 @@
-package io.xavier.topwsb.data.local.repository
+package io.xavier.topwsb.domain.repository
 
 import io.xavier.topwsb.domain.model.WsbComment
 
 
 interface WsbCommentsRepository {
     suspend fun getComments(ticker: String, afterUtc: Long): List<WsbComment>
+
+    suspend fun refreshComments(ticker: String, afterUtc: Long): List<WsbComment>
 }

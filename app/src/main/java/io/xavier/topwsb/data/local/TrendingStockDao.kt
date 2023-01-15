@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.xavier.topwsb.common.*
 import io.xavier.topwsb.data.local.entities.TrendingStockEntity
-import io.xavier.topwsb.domain.model.MarketData
 import io.xavier.topwsb.domain.model.TrendingStock
 
 /**
@@ -43,26 +42,4 @@ interface TrendingStockDao {
         ORDER BY $NUMBER_OF_COMMENTS_COL_NAME DESC
     """)
     suspend fun getTrendingStocks(): List<TrendingStockEntity>
-
-    /**
-     * Fetches a [MarketData] object with given ticker.
-     *
-     * @param ticker ticker to query
-     * @return list of [MarketData]. If matching overview is found, list should contain only
-     * on element as [ticker] is a unique key. If not found, the list will be empty.
-     */
-    @Query(
-        """
-            SELECT *
-            FROM $TABLE_NAME_STOCK_OVERVIEW
-            WHERE UPPER(:ticker) == $TICKER_OVERVIEW_COL_NAME
-        """
-    )
-    suspend fun getStockOverview(ticker: String): List<MarketData>
-
-    /**
-     * Insert [MarketData] into the database.
-     */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertStockOverview(overview: MarketData)
 }
