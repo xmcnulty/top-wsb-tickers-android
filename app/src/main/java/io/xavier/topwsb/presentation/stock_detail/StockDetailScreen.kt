@@ -147,10 +147,14 @@ fun StockDetailScreen(
                         state.marketDataState.data.toMap().forEach {
                             SectionInfoItem(
                                 name = it.key,
-                                value = it.value,
-                                showDivider = it.key != "52 Week Low"
+                                value = it.value
                             )
                         }
+
+                        SectionInfoItem(
+                            name = "WSB Sentiment",
+                            sentiment = viewModel.sentiment
+                        )
                     }
                 }
             }
