@@ -10,6 +10,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -29,6 +32,7 @@ import io.xavier.topwsb.presentation.theme.DarkBackground
 import io.xavier.topwsb.presentation.theme.DarkBackgroundTranslucent
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
 import io.xavier.topwsb.presentation.theme.DarkSecondaryText
+import kotlinx.coroutines.launch
 import java.text.DateFormat
 
 private val defaultHorizontalPadding: Dp = 16.dp
@@ -46,11 +50,28 @@ fun StockDetailScreen(
     onBackPressed: () -> Boolean
 ) {
     val state = viewModel.state.value
-
+    val errorEvents = viewModel.errorEvents
     val listState = rememberLazyListState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = snackbarHostState) {
+        errorEvents.collect { errorMessage ->
+            scope.launch {
+                snackbarHostState.showSnackbar(
+                    errorMessage,
+                    withDismissAction = true,
+                    actionLabel = "Retry"
+                )
+            }
+        }
+    }
 
     Scaffold(
         modifier = Modifier,
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         topBar = {
             CenterAlignedTopAppBar(
                 navigationIcon = {
@@ -72,7 +93,7 @@ fun StockDetailScreen(
     ) { innerPadding ->
 
         // Show progress indicator is market overview is loading
-        if (state.marketDataState is MarketDataState.Loading) {
+        if (viewModel.isLoading()) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -86,16 +107,18 @@ fun StockDetailScreen(
         }
 
         // if the market data couldn't be loaded show a message
-        if (state.marketDataState is MarketDataState.Error) {
+        if (viewModel.isError()) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(DarkBackground),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = state.marketDataState.message,
-                    color = DarkSecondaryText
+                Icon(
+                    painterResource(id = R.drawable.outline_error),
+                    contentDescription = "Error",
+                    modifier = Modifier.requiredSize(64.dp),
+                    tint = DarkBackgroundTranslucent
                 )
             }
 
@@ -114,7 +137,7 @@ fun StockDetailScreen(
                         .fillMaxWidth()
                         .requiredHeight(224.dp),
                     verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.End
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     ChartSection(chartState = state.chartState)
                 }

@@ -1,6 +1,9 @@
 package io.xavier.topwsb.domain.use_case.stock_details
 
 import io.xavier.topwsb.common.Resource
+import io.xavier.topwsb.domain.exceptions.ApiException
+import io.xavier.topwsb.domain.exceptions.ERROR_NO_DATA
+import io.xavier.topwsb.domain.exceptions.ERROR_NO_NETWORK
 import io.xavier.topwsb.domain.model.MarketData
 import io.xavier.topwsb.domain.repository.StockOverviewRepository
 import kotlinx.coroutines.flow.Flow
@@ -26,9 +29,9 @@ class GetStockOverviewUseCase @Inject constructor(
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
         } catch (e: IOException) {
-            emit(Resource.Error("Couldn't reach server. Check your internet connection"))
-        } catch (e: NullPointerException) {
-            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
+            emit(Resource.Error(ERROR_NO_NETWORK))
+        } catch (e: ApiException) {
+            emit(Resource.Error(e.localizedMessage ?: ERROR_NO_DATA))
         }
     }
 }

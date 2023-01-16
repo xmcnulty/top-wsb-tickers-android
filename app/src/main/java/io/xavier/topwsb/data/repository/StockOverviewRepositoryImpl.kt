@@ -1,9 +1,9 @@
 package io.xavier.topwsb.data.repository
 
-import android.util.Log
 import io.xavier.topwsb.BuildConfig
 import io.xavier.topwsb.data.local.TrendiesDatabase
 import io.xavier.topwsb.data.remote.StockDataApi
+import io.xavier.topwsb.domain.exceptions.ApiException
 import io.xavier.topwsb.domain.mapper.toStockOverview
 import io.xavier.topwsb.domain.model.MarketData
 import io.xavier.topwsb.domain.repository.StockOverviewRepository
@@ -16,26 +16,25 @@ class StockOverviewRepositoryImpl @Inject constructor(
     database: TrendiesDatabase
 ) : StockOverviewRepository {
 
-    val tag = "STOCK OVERVIEW REPOSITORY"
-
     private val dao = database.stockOverviewDao
 
     override suspend fun getStockOverview(ticker: String): MarketData {
         val result = dao.getStockOverview(ticker)
 
         return if (result.isEmpty()) {
-            Log.d(tag, "Fetching $ticker overview from remote")
+            try {
+                val stockOverview = stockDataApi.getStockOverview(
+                    apiKey = BuildConfig.API_KEY_ALPHA_ADVANTAGE,
+                    ticker = ticker
+                ).toStockOverview()
 
-            val stockOverview = stockDataApi.getStockOverview(
-                apiKey = BuildConfig.API_KEY_ALPHA_ADVANTAGE,
-                ticker = ticker
-            ).toStockOverview()
+                dao.insertStockOverview(stockOverview)
 
-            dao.insertStockOverview(stockOverview)
-
-            stockOverview
+                stockOverview
+            } catch (e: NullPointerException) {
+                throw ApiException()
+            }
         } else {
-            Log.d(tag, "Fetched $ticker overview from cache")
             result[0]
         }
     }
