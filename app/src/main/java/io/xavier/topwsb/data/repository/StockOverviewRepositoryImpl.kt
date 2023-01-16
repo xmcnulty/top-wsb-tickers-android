@@ -31,7 +31,7 @@ class StockOverviewRepositoryImpl @Inject constructor(
                 dao.insertStockOverview(stockOverview)
 
                 stockOverview
-            } catch (e: Exception) {
+            } catch (e: NullPointerException) {
                 throw ApiException()
             }
         } else {
