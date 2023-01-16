@@ -17,8 +17,10 @@ import io.xavier.topwsb.domain.use_case.stock_details.GetWsbCommentsUseCase
 import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartState
 import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentsState
 import io.xavier.topwsb.presentation.stock_detail.components.market_data.MarketDataState
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 /**
@@ -46,6 +48,9 @@ class StockDetailViewModel @Inject constructor(
 
     lateinit var sentiment: Sentiment
         private set
+
+    private val errorEventsChannel = Channel<String>()
+    val errorEvents = errorEventsChannel.receiveAsFlow()
 
     init {
         savedStateHandle.get<String>(Constants.PARAM_STOCK_SYMBOL)?.let { symbol ->
@@ -84,12 +89,15 @@ class StockDetailViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
+                    val errorMessage = result.message ?: "An unexpected error occurred"
+
                     _state.value = _state.value.copy(
                         marketDataState = MarketDataState.Error(
-                            message = result.message ?: "Could not load data"
+                            message = errorMessage
                         )
                     )
-                    Log.d(tag, "Get Stock Detail Error: ${result.message}")
+
+                    errorEventsChannel.send(errorMessage)
                 }
             }
         }.launchIn(viewModelScope)
@@ -106,15 +114,16 @@ class StockDetailViewModel @Inject constructor(
                     _state.value = _state.value.copy(
                         commentsState = CommentsState.Loading
                     )
-                    Log.d(tag, "Loading comments")
                 }
                 is Resource.Error -> {
+                    val errorMessage = result.message ?: "An unexpected error occurred"
+
                     _state.value = _state.value.copy(
                         commentsState = CommentsState.Error(
-                            message = result.message ?: "An unexpected error occurred"
+                            message = errorMessage
                         )
                     )
-                    Log.e(tag, result.message!!)
+                    errorEventsChannel.send(errorMessage)
                 }
                 is Resource.Success -> {
                     _state.value = _state.value.copy(
@@ -170,6 +179,13 @@ class StockDetailViewModel @Inject constructor(
         val stockDetailState = _state.value
 
         return stockDetailState.commentsState is CommentsState.Loading
-            && stockDetailState.marketDataState is MarketDataState.Loading
+                || stockDetailState.marketDataState is MarketDataState.Loading
+    }
+
+    fun isError(): Boolean {
+        val stockDetailState = _state.value
+
+        return stockDetailState.commentsState is CommentsState.Error
+                || stockDetailState.marketDataState is MarketDataState.Error
     }
 }
