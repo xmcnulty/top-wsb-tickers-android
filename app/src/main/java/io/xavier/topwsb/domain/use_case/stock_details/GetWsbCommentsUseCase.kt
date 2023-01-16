@@ -2,6 +2,8 @@ package io.xavier.topwsb.domain.use_case.stock_details
 
 import io.xavier.topwsb.common.MILlIS_24_HOURS
 import io.xavier.topwsb.common.Resource
+import io.xavier.topwsb.domain.exceptions.ERROR_HTTP
+import io.xavier.topwsb.domain.exceptions.ERROR_NO_NETWORK
 import io.xavier.topwsb.domain.model.WsbComment
 import io.xavier.topwsb.domain.repository.WsbCommentsRepository
 import kotlinx.coroutines.flow.Flow
@@ -38,9 +40,9 @@ class GetWsbCommentsUseCase @Inject constructor(
             emit(Resource.Success(comments))
 
         } catch (e: HttpException) {
-            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
+            emit(Resource.Error(e.localizedMessage ?: ERROR_HTTP))
         } catch (e: IOException) {
-            emit(Resource.Error("Couldn't reach server. Check your internet connection"))
+            emit(Resource.Error(ERROR_NO_NETWORK))
         }
     }
 }

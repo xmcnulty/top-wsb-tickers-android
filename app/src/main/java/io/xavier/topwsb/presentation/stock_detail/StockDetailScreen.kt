@@ -72,7 +72,7 @@ fun StockDetailScreen(
     ) { innerPadding ->
 
         // Show progress indicator is market overview is loading
-        if (state.marketDataState is MarketDataState.Loading) {
+        if (viewModel.isLoading()) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -93,9 +93,11 @@ fun StockDetailScreen(
                     .background(DarkBackground),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = state.marketDataState.message,
-                    color = DarkSecondaryText
+                Icon(
+                    painterResource(id = R.drawable.outline_error),
+                    contentDescription = "Error",
+                    modifier = Modifier.requiredSize(64.dp),
+                    tint = DarkBackgroundTranslucent
                 )
             }
 
@@ -114,7 +116,7 @@ fun StockDetailScreen(
                         .fillMaxWidth()
                         .requiredHeight(224.dp),
                     verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.End
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     ChartSection(chartState = state.chartState)
                 }

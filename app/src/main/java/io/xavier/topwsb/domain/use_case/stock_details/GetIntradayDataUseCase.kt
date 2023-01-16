@@ -2,6 +2,7 @@ package io.xavier.topwsb.domain.use_case.stock_details
 
 import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.domain.exceptions.ApiException
+import io.xavier.topwsb.domain.exceptions.ERROR_NO_DATA
 import io.xavier.topwsb.domain.model.chart_data.IntradayData
 import io.xavier.topwsb.domain.model.chart_data.IntradayInterval
 import io.xavier.topwsb.domain.repository.IntradayDataRepository
@@ -36,7 +37,7 @@ class GetIntradayDataUseCase @Inject constructor(
             emit(Resource.Error("Couldn't reach server. Check your internet connection"))
         } catch (e: ApiException) {
             e.printStackTrace()
-            emit(Resource.Error(e.localizedMessage ?: "Api Error"))
+            emit(Resource.Error(message = e.localizedMessage ?: ERROR_NO_DATA))
         }
     }
 }

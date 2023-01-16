@@ -46,7 +46,7 @@ fun StockListItem(
                 Card(
                     shape = MaterialTheme.shapes.medium,
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        containerColor = DarkBackgroundTranslucent,
                         contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                     ),
                     modifier = Modifier

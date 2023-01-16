@@ -147,7 +147,7 @@ class StockDetailViewModel @Inject constructor(
                         )
                     )
 
-                    throw Exception(result.message)
+                    //throw Exception(result.message)
                 }
                 is Resource.Success -> {
                     _state.value = _state.value.copy(
@@ -160,5 +160,16 @@ class StockDetailViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    /**
+     * The screen will show a loading state when either the market overview or the comments are
+     * loading. Chart loading will be displayed separately in the chart area.
+     */
+    fun isLoading(): Boolean {
+        val stockDetailState = _state.value
+
+        return stockDetailState.commentsState is CommentsState.Loading
+            && stockDetailState.marketDataState is MarketDataState.Loading
     }
 }

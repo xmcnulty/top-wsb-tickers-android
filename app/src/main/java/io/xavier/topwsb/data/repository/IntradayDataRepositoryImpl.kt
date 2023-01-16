@@ -25,7 +25,7 @@ class IntradayDataRepositoryImpl @Inject constructor(
         )
 
         if (data.timeSeries.isNullOrEmpty()) {
-            throw ApiException("Unable to fetch timeseries data.")
+            throw ApiException()
         }
 
         return data.toIntradayData()

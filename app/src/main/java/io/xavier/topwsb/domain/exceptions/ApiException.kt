@@ -8,4 +8,4 @@ package io.xavier.topwsb.domain.exceptions
  *
  * @author xmcnulty
  */
-class ApiException(message: String) : Exception(message)
+class ApiException(message: String = ERROR_NO_DATA) : Exception(message)

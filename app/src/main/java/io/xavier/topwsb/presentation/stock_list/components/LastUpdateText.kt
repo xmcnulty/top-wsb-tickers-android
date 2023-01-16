@@ -1,9 +1,6 @@
 package io.xavier.topwsb.presentation.stock_list.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -43,17 +40,20 @@ fun LastUpdateText(
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = if (isRefreshing) "Updating..." else lastUpdateTime,
+                text = if (isRefreshing) "Updating" else lastUpdateTime,
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.End,
                 fontWeight = FontWeight.Medium
             )
 
+            Spacer(modifier = Modifier.width(4.dp))
+
             if (isRefreshing) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(16.dp),
-                    color = MaterialTheme.colorScheme.onBackground
+                    color = MaterialTheme.colorScheme.onBackground,
+                    strokeWidth = 2.dp
                 )
             }
         }
