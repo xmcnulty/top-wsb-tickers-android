@@ -8,5 +8,6 @@
 [![AndroidAPI](https://img.shields.io/badge/API-23%2B-brightgreen.svg?style=flat)](https://www.android.com/)
 [![Kotlin](https://img.shields.io/badge/kotlin-1.7.20-blue.svg?logo=kotlin)](https://kotlinlang.org)
 [![JetpackCompose](https://img.shields.io/badge/Jetpack%20Compose-1.3.3-yellow)](https://developer.android.com/jetpack/compose)
+[![CodeFactor](https://www.codefactor.io/repository/github/xmcnulty/wsb-trendies/badge)](https://www.codefactor.io/repository/github/xmcnulty/wsb-trendies)
 
 </div>
