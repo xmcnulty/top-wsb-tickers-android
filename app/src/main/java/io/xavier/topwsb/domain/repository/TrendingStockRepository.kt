@@ -24,5 +24,5 @@ interface TrendingStockRepository {
      * @return stocks from newly refreshed cache
      */
     @Throws(HttpException::class, IOException::class)
-    suspend fun refreshCache(): List<TrendingStock>
+    suspend fun refreshTrendingStocks(): List<TrendingStock>
 }

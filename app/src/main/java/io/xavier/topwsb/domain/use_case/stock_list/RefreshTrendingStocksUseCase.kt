@@ -17,7 +17,7 @@ class RefreshTrendingStocksUseCase @Inject constructor(
         emit(Resource.Loading())
 
         try {
-            val stocks = repository.refreshCache()
+            val stocks = repository.refreshTrendingStocks()
 
             emit(Resource.Success(stocks))
         } catch (e: HttpException) {

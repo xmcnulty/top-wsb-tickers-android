@@ -1,7 +1,7 @@
 package io.xavier.topwsb.data.repository
 
 import io.xavier.topwsb.BuildConfig
-import io.xavier.topwsb.data.remote.StockDataApi
+import io.xavier.topwsb.data.remote.PolygonApi
 import io.xavier.topwsb.domain.exceptions.ApiException
 import io.xavier.topwsb.domain.mapper.toIntradayData
 import io.xavier.topwsb.domain.model.chart_data.IntradayData
@@ -12,13 +12,13 @@ import javax.inject.Singleton
 
 @Singleton
 class IntradayDataRepositoryImpl @Inject constructor(
-    private val stockDataApi: StockDataApi
+    private val polygonApi: PolygonApi
 ) : IntradayDataRepository {
     override suspend fun getIntradayData(
         ticker: String,
         interval: IntradayInterval
     ): IntradayData {
-        val data = stockDataApi.getIntradayData(
+        val data = polygonApi.getIntradayData(
             apiKey = BuildConfig.API_KEY_ALPHA_ADVANTAGE,
             ticker = ticker,
             interval = interval

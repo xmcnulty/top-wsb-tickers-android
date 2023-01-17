@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
     id 'com.google.dagger.hilt.android'
 }
 
@@ -25,6 +26,7 @@ android {
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
         buildConfigField "String", "API_KEY_ALPHA_ADVANTAGE", "\"${properties.getProperty("API_KEY_ALPHA_ADVANTAGE")}\""
+        buildConfigField "String", "API_KEY_POLYGON", "\"${properties.getProperty("API_KEY_POLYGON")}\""
     }
 
     buildTypes {

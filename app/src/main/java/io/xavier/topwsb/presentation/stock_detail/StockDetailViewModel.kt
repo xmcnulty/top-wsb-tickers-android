@@ -6,13 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.xavier.topwsb.common.Constants
 import io.xavier.topwsb.common.Resource
-import io.xavier.topwsb.domain.model.Sentiment
+import io.xavier.topwsb.domain.model.TrendingStock
 import io.xavier.topwsb.domain.model.chart_data.IntradayInterval
 import io.xavier.topwsb.domain.use_case.stock_details.GetIntradayDataUseCase
-import io.xavier.topwsb.domain.use_case.stock_details.GetStockOverviewUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetWsbCommentsUseCase
 import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartState
 import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentsState
@@ -26,89 +25,43 @@ import javax.inject.Inject
 /**
  * View model for the stock detail screen.
  *
- * @property getOverviewUseCase Use case for retrieving company overview data from API.
  * @property getCommentsUseCase Use case for retrieving wallstreetbets comments from API.
+ * @property getIntradayUseCase Use case for getting chart data
  * @param savedStateHandle [SavedStateHandle] used for retrieving ticker of stock to display
  */
 @HiltViewModel
 class StockDetailViewModel @Inject constructor(
-    private val getOverviewUseCase: GetStockOverviewUseCase,
     private val getCommentsUseCase: GetWsbCommentsUseCase,
     private val getIntradayUseCase: GetIntradayDataUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-
     private val tag = "STOCK_DETAIL_VIEW_MODEL"
-    lateinit var ticker: String
+
+    lateinit var stock: TrendingStock
         private set
 
     private var _state = mutableStateOf(StockDetailState())
     val state: State<StockDetailState>
         get() = _state
 
-    lateinit var sentiment: Sentiment
-        private set
-
     private val errorEventsChannel = Channel<String>()
     val errorEvents = errorEventsChannel.receiveAsFlow()
 
     init {
-        savedStateHandle.get<String>(Constants.PARAM_STOCK_SYMBOL)?.let { symbol ->
-            ticker = symbol
-        }
+        savedStateHandle.get<String>("stock")?.let { stockJson ->
+            stock = Gson().fromJson(stockJson, TrendingStock::class.java)
 
-        savedStateHandle.get<String>("sentiment")?.let {
-            Log.d(tag, "Sentiment is $it")
-            sentiment = Sentiment.fromName(it)
+            getChartData()
+            getWsbComments()
         }
-
-        getMarketData()
-        getChartData()
-        getWsbComments()
     }
 
     /**
-     * Asynchronous call to get company overview information from Alpha Advantage API.
-     */
-    private fun getMarketData() {
-        Log.d(tag, "Requesting stock detail for $ticker")
-        getOverviewUseCase(ticker).onEach { result ->
-            when (result) {
-                is Resource.Loading -> {
-                    Log.d(tag, "Loading")
-                    _state.value = _state.value.copy(
-                        marketDataState = MarketDataState.Loading
-                    )
-                }
-                is Resource.Success -> {
-                    Log.d(tag, "Get Stock Detail Success \n ${result.data!!.companyName}")
-                    _state.value = _state.value.copy(
-                        marketDataState = MarketDataState.Success(
-                            data = result.data
-                        )
-                    )
-                }
-                is Resource.Error -> {
-                    val errorMessage = result.message ?: "An unexpected error occurred"
-
-                    _state.value = _state.value.copy(
-                        marketDataState = MarketDataState.Error(
-                            message = errorMessage
-                        )
-                    )
-
-                    errorEventsChannel.send(errorMessage)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    /**
-     * Asynchronous call to get the comments on /r/walltreetbets that mention [ticker] in the
+     * Asynchronous call to get the comments on /r/walltreetbets that mention the stock ticker in the
      * past 24-hours.
      */
     private fun getWsbComments() {
-        getCommentsUseCase(ticker).onEach { result ->
+        getCommentsUseCase(stock.ticker).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
                     _state.value = _state.value.copy(
@@ -140,7 +93,7 @@ class StockDetailViewModel @Inject constructor(
      */
     private fun getChartData() {
         getIntradayUseCase(
-            ticker,
+            stock.ticker,
             IntradayInterval.ONE_HOUR
         ).onEach { result ->
             when (result) {
@@ -155,8 +108,6 @@ class StockDetailViewModel @Inject constructor(
                             message = result.message ?: "Error loading data"
                         )
                     )
-
-                    //throw Exception(result.message)
                 }
                 is Resource.Success -> {
                     _state.value = _state.value.copy(

@@ -91,7 +91,7 @@ fun StockListItem(
                     )
                 ) {
                     Text(
-                        text = trendingStock.numberOfComments.toString(),
+                        text = trendingStock.commentCount.toString(),
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(start = 4.dp, end = 4.dp, top = 1.dp, bottom = 1.dp),
                         fontWeight = FontWeight.Medium

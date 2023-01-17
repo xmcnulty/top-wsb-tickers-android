@@ -21,13 +21,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import io.xavier.topwsb.R
-import io.xavier.topwsb.domain.mapper.toMap
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItem
 import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartSection
 import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentListItem
 import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentsState
-import io.xavier.topwsb.presentation.stock_detail.components.market_data.MarketDataState
 import io.xavier.topwsb.presentation.theme.DarkBackground
 import io.xavier.topwsb.presentation.theme.DarkBackgroundTranslucent
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
@@ -86,7 +84,7 @@ fun StockDetailScreen(
                     }
                 },
                 title = {
-                    SectionTitle(title = "\$${viewModel.ticker}")
+                    SectionTitle(title = "\$${viewModel.stock.ticker}")
                 }
             )
         }
@@ -166,19 +164,29 @@ fun StockDetailScreen(
                             shape = MaterialTheme.shapes.large
                         )
                 ) {
-                    if (state.marketDataState is MarketDataState.Success) {
-                        state.marketDataState.data.toMap().forEach {
-                            SectionInfoItem(
-                                name = it.key,
-                                value = it.value
-                            )
-                        }
+                    val stock = viewModel.stock
 
+                    val detailsMap = mutableMapOf(
+                        "Name" to stock.name,
+                        "Type" to stock.type.string,
+                        "Shares Outstanding" to stock.sharesOutstanding.toString()
+                    )
+
+                    stock.marketCap?.let { marketCap ->
+                        detailsMap["Market Cap"] = marketCap.toString()
+                    }
+
+                    detailsMap.forEach {
                         SectionInfoItem(
-                            name = "WSB Sentiment",
-                            sentiment = viewModel.sentiment
+                            name = it.key,
+                            value = it.value
                         )
                     }
+
+                    SectionInfoItem(
+                        name = "WSB Sentiment",
+                        sentiment = viewModel.stock.sentiment
+                    )
                 }
             }
 
