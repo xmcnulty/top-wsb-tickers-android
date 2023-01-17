@@ -49,13 +49,12 @@ fun StockListScreen(
                 },
                 actions = {
                     LastUpdateText(
-                        lastUpdateTime = state.lastUpdateFormatted,
-                        isRefreshing = state.isLoading,
                         modifier = Modifier
                             .padding(end = 8.dp)
                             .clickable {
                                 viewModel.refreshStocks()
-                            }
+                            },
+                        state = state
                     )
                 }
             )

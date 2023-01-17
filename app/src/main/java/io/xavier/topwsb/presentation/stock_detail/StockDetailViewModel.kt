@@ -51,7 +51,7 @@ class StockDetailViewModel @Inject constructor(
         savedStateHandle.get<String>("stock")?.let { stockJson ->
             stock = Gson().fromJson(stockJson, TrendingStock::class.java)
 
-            getChartData()
+            //getChartData()
             getWsbComments()
         }
     }
@@ -131,12 +131,5 @@ class StockDetailViewModel @Inject constructor(
 
         return stockDetailState.commentsState is CommentsState.Loading
                 || stockDetailState.marketDataState is MarketDataState.Loading
-    }
-
-    fun isError(): Boolean {
-        val stockDetailState = _state.value
-
-        return stockDetailState.commentsState is CommentsState.Error
-                || stockDetailState.marketDataState is MarketDataState.Error
     }
 }

@@ -32,6 +32,8 @@ import io.xavier.topwsb.presentation.theme.DarkPrimaryText
 import io.xavier.topwsb.presentation.theme.DarkSecondaryText
 import kotlinx.coroutines.launch
 import java.text.DateFormat
+import java.text.NumberFormat
+import java.util.*
 
 private val defaultHorizontalPadding: Dp = 16.dp
 
@@ -105,7 +107,7 @@ fun StockDetailScreen(
         }
 
         // if the market data couldn't be loaded show a message
-        if (viewModel.isError()) {
+        /*if (viewModel.isError()) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -121,7 +123,7 @@ fun StockDetailScreen(
             }
 
             return@Scaffold
-        }
+        }*/
 
         LazyColumn(
             state = listState,
@@ -165,15 +167,18 @@ fun StockDetailScreen(
                         )
                 ) {
                     val stock = viewModel.stock
+                    var numFormatter = NumberFormat.getInstance()
 
                     val detailsMap = mutableMapOf(
                         "Name" to stock.name,
                         "Type" to stock.type.string,
-                        "Shares Outstanding" to stock.sharesOutstanding.toString()
+                        "Shares Outstanding" to numFormatter.format(stock.sharesOutstanding)
                     )
 
                     stock.marketCap?.let { marketCap ->
-                        detailsMap["Market Cap"] = marketCap.toString()
+                        numFormatter = NumberFormat.getCurrencyInstance()
+                        numFormatter.maximumFractionDigits = 0
+                        detailsMap["Market Cap"] = numFormatter.format(marketCap.toLong())
                     }
 
                     detailsMap.forEach {

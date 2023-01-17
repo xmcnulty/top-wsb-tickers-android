@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.xavier.topwsb.domain.model.Sentiment
 import io.xavier.topwsb.presentation.common_composables.SentimentCard
@@ -52,7 +53,9 @@ fun SectionInfoItem(
                 text = value,
                 fontWeight = FontWeight.SemiBold,
                 color = DarkPrimaryText,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 1,
+                textAlign = TextAlign.End
             )
         }
     }

@@ -46,6 +46,8 @@ class TrendingStockRepositoryImpl @Inject constructor(
     override suspend fun refreshTrendingStocks(): List<TrendingStock> {
         val stocks = getRemoteStocks()
 
+        dao.clearTrendingStocks()
+
         dao.insertTrendingStocks(
             stocks.map { trendingStock ->
                 trendingStock.toEntity()
@@ -86,20 +88,27 @@ class TrendingStockRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun getDetails(stocks: List<TrendingStockDto>): List<Pair<TrendingStockDto, TickerDetailDto?>> = runBlocking {
-        stocks.map {
-            val details = try {
-                polygonApi.getTickerDetails(
-                    ticker = it.ticker,
-                    apiKey = BuildConfig.API_KEY_POLYGON
-                )
-            } catch (e: Exception) {
-                null
+    private suspend fun getDetails(
+        stocks: List<TrendingStockDto>
+    ): List<Pair<TrendingStockDto, TickerDetailDto?>> {
+        val details = coroutineScope {
+            stocks.map {
+                val details = try {
+                    polygonApi.getTickerDetails(
+                        ticker = it.ticker,
+                        apiKey = BuildConfig.API_KEY_POLYGON
+                    )
+                } catch (e: Exception) {
+                    null
+                }
+
+                Log.d("Getting Details", details?.status ?: "Error")
+
+                it to details
             }
-
-            Log.d("Getting Details", details?.status ?: "Error")
-
-            it to details
         }
+
+        return details
     }
+
 }
