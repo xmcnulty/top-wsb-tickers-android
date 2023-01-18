@@ -1,7 +1,7 @@
 package io.xavier.topwsb.data.remote
 
+import io.xavier.topwsb.data.remote.dto.chart_data.ChartDataDto
 import io.xavier.topwsb.data.remote.dto.ticker_detail.TickerDetailDto
-import io.xavier.topwsb.data.remote.dto.intraday_data.IntradayDataDto
 import io.xavier.topwsb.domain.repository.chart_data.TimeSpan
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -44,5 +44,5 @@ interface PolygonApi {
        @Query("adjusted") adjusted: Boolean = true,
        @Query("sort") sort: String = "asc",
        @Query("apiKey") apiKey: String
-    ): IntradayDataDto
+    ): ChartDataDto
 }

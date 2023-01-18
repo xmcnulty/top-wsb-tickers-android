@@ -13,15 +13,18 @@ import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
 import io.xavier.topwsb.common.prepareChart
-import io.xavier.topwsb.domain.model.chart_data.IntradayData
+import io.xavier.topwsb.domain.model.chart_data.ChartData
 import io.xavier.topwsb.presentation.theme.DarkSecondaryText
 import io.xavier.topwsb.presentation.theme.NegativeTrend
 import io.xavier.topwsb.presentation.theme.PositiveTrend
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 @Composable
 fun ChartBody(
     modifier: Modifier = Modifier,
-    data: IntradayData
+    data: ChartData
 ) {
     AndroidView(
         modifier = modifier,
@@ -36,12 +39,15 @@ fun ChartBody(
  */
 private fun createCandleSticksChart(
     context: Context,
-    data: IntradayData
+    data: ChartData
 ): BarLineChartBase<CandleData> {
     val chart = CandleStickChart(context)
     chart.prepareChart(
         times = data.dataPoints.map {
-            it.time
+            LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(it.time),
+                ZoneId.systemDefault()
+            )
         }
     )
 
@@ -51,10 +57,10 @@ private fun createCandleSticksChart(
 }
 
 /**
- * Maps [IntradayData] to [CandleData] for charting.
+ * Maps [ChartData] to [CandleData] for charting.
  */
 private fun prepareCandleSticksData(
-    data: IntradayData
+    data: ChartData
 ): CandleData {
     val candleEntries: List<CandleEntry> = data.dataPoints.mapIndexed { index, dataPoint ->
         CandleEntry(

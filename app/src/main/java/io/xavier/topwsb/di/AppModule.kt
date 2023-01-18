@@ -11,12 +11,12 @@ import io.xavier.topwsb.data.local.TrendiesDatabase
 import io.xavier.topwsb.data.remote.PolygonApi
 import io.xavier.topwsb.data.remote.TrendingStockApi
 import io.xavier.topwsb.data.remote.WsbCommentsApi
-import io.xavier.topwsb.data.repository.IntradayDataRepositoryImpl
+import io.xavier.topwsb.data.repository.ChartDataRepositoryImpl
 import io.xavier.topwsb.data.repository.TrendingStockRepositoryImpl
 import io.xavier.topwsb.data.repository.WsbCommentsRepositoryImpl
-import io.xavier.topwsb.domain.repository.IntradayDataRepository
 import io.xavier.topwsb.domain.repository.TrendingStockRepository
 import io.xavier.topwsb.domain.repository.WsbCommentsRepository
+import io.xavier.topwsb.domain.repository.chart_data.ChartDataRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -91,10 +91,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesIntradayRepository(
-        polygonApi: PolygonApi
-    ): IntradayDataRepository {
-        return IntradayDataRepositoryImpl(polygonApi)
+    fun providesChartDataRepository(
+        api: PolygonApi
+    ): ChartDataRepository {
+        return ChartDataRepositoryImpl(api)
     }
 
     @Provides

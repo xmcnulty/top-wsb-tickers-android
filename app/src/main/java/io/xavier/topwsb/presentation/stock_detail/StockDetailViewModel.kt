@@ -10,12 +10,10 @@ import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.domain.model.trending_stock.TrendingStock
-import io.xavier.topwsb.domain.model.chart_data.IntradayInterval
-import io.xavier.topwsb.domain.use_case.stock_details.GetIntradayDataUseCase
+import io.xavier.topwsb.domain.use_case.stock_details.GetChartDataUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetWsbCommentsUseCase
 import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartState
 import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentsState
-import io.xavier.topwsb.presentation.stock_detail.components.market_data.MarketDataState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -26,13 +24,13 @@ import javax.inject.Inject
  * View model for the stock detail screen.
  *
  * @property getCommentsUseCase Use case for retrieving wallstreetbets comments from API.
- * @property getIntradayUseCase Use case for getting chart data
+ * @property getChartDataUseCase Use case for getting chart data
  * @param savedStateHandle [SavedStateHandle] used for retrieving ticker of stock to display
  */
 @HiltViewModel
 class StockDetailViewModel @Inject constructor(
     private val getCommentsUseCase: GetWsbCommentsUseCase,
-    private val getIntradayUseCase: GetIntradayDataUseCase,
+    private val getChartDataUseCase: GetChartDataUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val tag = "STOCK_DETAIL_VIEW_MODEL"
@@ -51,7 +49,7 @@ class StockDetailViewModel @Inject constructor(
         savedStateHandle.get<String>("stock")?.let { stockJson ->
             stock = Gson().fromJson(stockJson, TrendingStock::class.java)
 
-            //getChartData()
+            getChartData()
             getWsbComments()
         }
     }
@@ -92,9 +90,8 @@ class StockDetailViewModel @Inject constructor(
      * Gets the intraday data for charting.
      */
     private fun getChartData() {
-        getIntradayUseCase(
-            stock.ticker,
-            IntradayInterval.ONE_HOUR
+        getChartDataUseCase(
+            stock.ticker
         ).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
@@ -115,8 +112,6 @@ class StockDetailViewModel @Inject constructor(
                             data = result.data
                         )
                     )
-
-                    print(state.value.marketDataState)
                 }
             }
         }.launchIn(viewModelScope)
@@ -130,6 +125,5 @@ class StockDetailViewModel @Inject constructor(
         val stockDetailState = _state.value
 
         return stockDetailState.commentsState is CommentsState.Loading
-                || stockDetailState.marketDataState is MarketDataState.Loading
     }
 }
