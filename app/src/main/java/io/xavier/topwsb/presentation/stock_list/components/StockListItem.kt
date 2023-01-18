@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import io.xavier.topwsb.R
-import io.xavier.topwsb.domain.model.TrendingStock
+import io.xavier.topwsb.domain.model.trending_stock.TrendingStock
 import io.xavier.topwsb.presentation.common_composables.SentimentCard
 import io.xavier.topwsb.presentation.theme.*
 

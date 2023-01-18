@@ -1,4 +1,4 @@
-package io.xavier.topwsb.domain.model
+package io.xavier.topwsb.domain.model.trending_stock
 
 enum class StockType(
     val string: String

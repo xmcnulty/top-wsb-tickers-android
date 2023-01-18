@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.xavier.topwsb.common.*
 import io.xavier.topwsb.data.local.entities.TrendingStockEntity
-import io.xavier.topwsb.domain.model.TrendingStock
+import io.xavier.topwsb.domain.model.trending_stock.TrendingStock
 
 /**
  * Interface for accessing and modifying trending stocks in a local database.

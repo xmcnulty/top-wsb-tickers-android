@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.xavier.topwsb.common.Resource
-import io.xavier.topwsb.domain.model.TrendingStock
+import io.xavier.topwsb.domain.model.trending_stock.TrendingStock
 import io.xavier.topwsb.domain.model.chart_data.IntradayInterval
 import io.xavier.topwsb.domain.use_case.stock_details.GetIntradayDataUseCase
 import io.xavier.topwsb.domain.use_case.stock_details.GetWsbCommentsUseCase
