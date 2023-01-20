@@ -1,8 +1,11 @@
 package io.xavier.topwsb.domain.model.trending_stock
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+@Parcelize
 enum class StockType(
     val string: String
-) {
+) : Parcelable {
     ETF("ETF"),
     COMMON_SHARE("Common Share"),
     UNKNOWN("Unknown");

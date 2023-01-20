@@ -7,7 +7,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -35,14 +34,12 @@ fun SentimentCard(
     ) {
         Text(
             text = sentiment.text,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.SemiBold,
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(
                 start = 4.dp,
-                end = 4.dp,
-                top = 2.dp,
-                bottom = 2.dp
+                end = 4.dp
             ),
             maxLines = 1
         )

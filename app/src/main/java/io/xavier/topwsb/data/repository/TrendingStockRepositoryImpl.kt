@@ -79,7 +79,7 @@ class TrendingStockRepositoryImpl @Inject constructor(
                 type = StockType.build(it.second!!.results!!.type),
                 marketCap = it.second!!.results!!.market_cap,
                 sharesOutstanding = it.second!!.results!!.share_class_shares_outstanding,
-                logoUrl = it.second!!.results!!.branding?.logo_url,
+                logoUrl = it.second!!.results!!.branding?.icon_url,
                 lastUpdatedUtc = currentTime,
                 sentiment = Sentiment.fromName(it.first.sentiment),
                 sentimentScore = it.first.sentiment_score,
