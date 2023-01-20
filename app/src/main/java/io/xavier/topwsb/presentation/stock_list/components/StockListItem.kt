@@ -45,7 +45,7 @@ fun StockListItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .size(32.dp)
+                    .size(40.dp)
             ) {
                 trendingStock.logoUrl?.also { url ->
                     val fullUrl = "$url?apiKey=${BuildConfig.API_KEY_POLYGON}"
