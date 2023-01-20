@@ -1,6 +1,6 @@
 package io.xavier.topwsb.presentation.stock_list
 
-import io.xavier.topwsb.domain.model.TrendingStock
+import io.xavier.topwsb.domain.model.trending_stock.TrendingStock
 
 /**
  * State of the stock list screen.

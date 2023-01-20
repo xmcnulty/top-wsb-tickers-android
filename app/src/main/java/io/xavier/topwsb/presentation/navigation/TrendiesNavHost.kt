@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.google.gson.Gson
 import io.xavier.topwsb.presentation.Screen
 import io.xavier.topwsb.presentation.stock_detail.StockDetailScreen
 import io.xavier.topwsb.presentation.stock_list.StockListScreen
@@ -27,20 +28,22 @@ fun TrendiesNavHost(
             route = Screen.StockListScreen.route
         ) {
             StockListScreen(navToStockDetail = { stock ->
+                val stockJson = Gson().toJson(stock)
+
                 navController.navigate(
                     route = Screen.StockDetailScreen.route
-                            + "/${stock.ticker}?sentiment={sentiment}"
+                            + "?stock={stock}"
                         .replace(
-                            oldValue = "{sentiment}",
-                            newValue = stock.sentiment.text
+                            oldValue = "{stock}",
+                            newValue = stockJson
                         )
                 )
             })
         }
 
         composable(
-            route = Screen.StockDetailScreen.route + "/{ticker}?sentiment={sentiment}",
-            arguments = listOf(navArgument("sentiment") {
+            route = Screen.StockDetailScreen.route + "?stock={stock}",
+            arguments = listOf(navArgument("stock") {
                 nullable = true
                 type = NavType.StringType
             })

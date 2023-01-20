@@ -10,20 +10,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import io.xavier.topwsb.presentation.stock_list.StockListState
 
 /**
  * Displays the time of the last update for the trending stocks list.
  * If the data is loading, 'Updating...' and CircularProgressIndicator will be shown.
  *
  * @param modifier [Modifier]
- * @param lastUpdateTime formatted time of last update
- * @param isRefreshing is the data refreshing/loading
+ * @param state State of the stock list screen
  */
 @Composable
 fun LastUpdateText(
     modifier: Modifier = Modifier,
-    lastUpdateTime: String,
-    isRefreshing: Boolean
+    state: StockListState
 ) {
     Column(
         modifier = modifier,
@@ -40,7 +39,7 @@ fun LastUpdateText(
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = if (isRefreshing) "Updating" else lastUpdateTime,
+                text = if (state.isLoading) "Updating" else state.lastUpdateFormatted,
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.End,
@@ -49,7 +48,7 @@ fun LastUpdateText(
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            if (isRefreshing) {
+            if (state.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(16.dp),
                     color = MaterialTheme.colorScheme.onBackground,

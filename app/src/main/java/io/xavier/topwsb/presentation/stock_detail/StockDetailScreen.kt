@@ -21,19 +21,19 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import io.xavier.topwsb.R
-import io.xavier.topwsb.domain.mapper.toMap
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItem
 import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartSection
 import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentListItem
 import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentsState
-import io.xavier.topwsb.presentation.stock_detail.components.market_data.MarketDataState
 import io.xavier.topwsb.presentation.theme.DarkBackground
 import io.xavier.topwsb.presentation.theme.DarkBackgroundTranslucent
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
 import io.xavier.topwsb.presentation.theme.DarkSecondaryText
 import kotlinx.coroutines.launch
 import java.text.DateFormat
+import java.text.NumberFormat
+import java.util.*
 
 private val defaultHorizontalPadding: Dp = 16.dp
 
@@ -86,7 +86,7 @@ fun StockDetailScreen(
                     }
                 },
                 title = {
-                    SectionTitle(title = "\$${viewModel.ticker}")
+                    SectionTitle(title = "\$${viewModel.stock.ticker}")
                 }
             )
         }
@@ -107,7 +107,7 @@ fun StockDetailScreen(
         }
 
         // if the market data couldn't be loaded show a message
-        if (viewModel.isError()) {
+        /*if (viewModel.isError()) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -123,7 +123,7 @@ fun StockDetailScreen(
             }
 
             return@Scaffold
-        }
+        }*/
 
         LazyColumn(
             state = listState,
@@ -166,19 +166,32 @@ fun StockDetailScreen(
                             shape = MaterialTheme.shapes.large
                         )
                 ) {
-                    if (state.marketDataState is MarketDataState.Success) {
-                        state.marketDataState.data.toMap().forEach {
-                            SectionInfoItem(
-                                name = it.key,
-                                value = it.value
-                            )
-                        }
+                    val stock = viewModel.stock
+                    var numFormatter = NumberFormat.getInstance()
 
+                    val detailsMap = mutableMapOf(
+                        "Name" to stock.name,
+                        "Type" to stock.type.string,
+                        "Shares Outstanding" to numFormatter.format(stock.sharesOutstanding)
+                    )
+
+                    stock.marketCap?.let { marketCap ->
+                        numFormatter = NumberFormat.getCurrencyInstance()
+                        numFormatter.maximumFractionDigits = 0
+                        detailsMap["Market Cap"] = numFormatter.format(marketCap.toLong())
+                    }
+
+                    detailsMap.forEach {
                         SectionInfoItem(
-                            name = "WSB Sentiment",
-                            sentiment = viewModel.sentiment
+                            name = it.key,
+                            value = it.value
                         )
                     }
+
+                    SectionInfoItem(
+                        name = "WSB Sentiment",
+                        sentiment = viewModel.stock.sentiment
+                    )
                 }
             }
 

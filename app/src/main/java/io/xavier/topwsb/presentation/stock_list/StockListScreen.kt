@@ -13,7 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import io.xavier.topwsb.R.drawable
-import io.xavier.topwsb.domain.model.TrendingStock
+import io.xavier.topwsb.domain.model.trending_stock.TrendingStock
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_list.components.LastUpdateText
 import io.xavier.topwsb.presentation.stock_list.components.StockListItem
@@ -49,13 +49,12 @@ fun StockListScreen(
                 },
                 actions = {
                     LastUpdateText(
-                        lastUpdateTime = state.lastUpdateFormatted,
-                        isRefreshing = state.isLoading,
                         modifier = Modifier
                             .padding(end = 8.dp)
                             .clickable {
                                 viewModel.refreshStocks()
-                            }
+                            },
+                        state = state
                     )
                 }
             )

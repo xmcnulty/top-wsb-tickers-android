@@ -1,7 +1,7 @@
 package io.xavier.topwsb.domain.use_case.stock_list
 
 import io.xavier.topwsb.common.Resource
-import io.xavier.topwsb.domain.model.TrendingStock
+import io.xavier.topwsb.domain.model.trending_stock.TrendingStock
 import io.xavier.topwsb.domain.repository.TrendingStockRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,7 +17,7 @@ class RefreshTrendingStocksUseCase @Inject constructor(
         emit(Resource.Loading())
 
         try {
-            val stocks = repository.refreshCache()
+            val stocks = repository.refreshTrendingStocks()
 
             emit(Resource.Success(stocks))
         } catch (e: HttpException) {

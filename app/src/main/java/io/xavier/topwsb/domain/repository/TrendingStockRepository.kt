@@ -1,6 +1,6 @@
 package io.xavier.topwsb.domain.repository
 
-import io.xavier.topwsb.domain.model.TrendingStock
+import io.xavier.topwsb.domain.model.trending_stock.TrendingStock
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -24,5 +24,5 @@ interface TrendingStockRepository {
      * @return stocks from newly refreshed cache
      */
     @Throws(HttpException::class, IOException::class)
-    suspend fun refreshCache(): List<TrendingStock>
+    suspend fun refreshTrendingStocks(): List<TrendingStock>
 }
