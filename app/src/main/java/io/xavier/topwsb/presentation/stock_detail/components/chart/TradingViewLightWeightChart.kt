@@ -7,7 +7,10 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
 import com.tradingview.lightweightcharts.api.chart.models.color.IntColor
 import com.tradingview.lightweightcharts.api.chart.models.color.surface.SolidColor
+import com.tradingview.lightweightcharts.api.options.models.GridLineOptions
+import com.tradingview.lightweightcharts.api.options.models.GridOptions
 import com.tradingview.lightweightcharts.api.options.models.layoutOptions
+import com.tradingview.lightweightcharts.api.series.common.SeriesData
 import com.tradingview.lightweightcharts.api.series.models.HistogramData
 import com.tradingview.lightweightcharts.api.series.models.Time
 import com.tradingview.lightweightcharts.api.series.models.WhitespaceData
@@ -31,10 +34,14 @@ fun TradingViewLightWeightChart(
                 layout = layoutOptions {
                     background = SolidColor(DarkBackground.toArgb())
                     textColor = IntColor(DarkPrimaryText.toArgb())
+                    grid = GridOptions(
+                        vertLines = GridLineOptions(visible = false),
+                        horzLines = GridLineOptions(visible = false)
+                    )
                 }
             }
 
-            val histogramData = chartData.dataPoints.map { dataPoint ->
+            val areaData = chartData.dataPoints.map { dataPoint ->
                 HistogramData(
                     Time.Utc(dataPoint.time),
                     dataPoint.close.toFloat()
@@ -52,11 +59,11 @@ fun TradingViewLightWeightChart(
                 HistogramData(Time.BusinessDay(2019, 6, 18), 34.82f)
             )
 
-            chartsView.api.addHistogramSeries(
+            chartsView.api.addAreaSeries(
                 onSeriesCreated = { series ->
-                    val histogramSeries = series
+                    val areaSeries = series
 
-                    histogramSeries.setData(histogramData)
+                    areaSeries.setData(areaData)
                 }
             )
 

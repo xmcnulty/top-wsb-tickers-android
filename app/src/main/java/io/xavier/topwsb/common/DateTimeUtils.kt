@@ -11,12 +11,12 @@ const val MILlIS_24_HOURS: Long = 60 * 60 * 24
 fun getDateOneMonthBeforeToday(): String {
     val cal = Calendar.getInstance()
     cal.add(Calendar.MONTH, -1)
-    val dateFormat = SimpleDateFormat("yyyy-MM-DD")
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
     return dateFormat.format(cal.time)
 }
 @SuppressLint("SimpleDateFormat")
 fun getTodayFormatted(): String {
     val cal = Calendar.getInstance()
-    val dateFormat = SimpleDateFormat("yyyy-MM-DD")
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
     return dateFormat.format(cal.time)
 }
