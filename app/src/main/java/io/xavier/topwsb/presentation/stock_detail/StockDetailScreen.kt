@@ -23,7 +23,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import io.xavier.topwsb.R
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItem
-import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartSection
+import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartState
+import io.xavier.topwsb.presentation.stock_detail.components.chart.TradingViewLightWeightChart
 import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentListItem
 import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentsState
 import io.xavier.topwsb.presentation.theme.DarkBackground
@@ -139,7 +140,19 @@ fun StockDetailScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    ChartSection(chartState = state.chartState)
+                    //ChartSection(chartState = state.chartState)
+
+                    when(state.chartState) {
+                        is ChartState.Success -> {
+                            state.chartState.data?.let {
+                                TradingViewLightWeightChart(
+                                    ticker = "AAPL",
+                                    chartData = it
+                                )
+                            }
+                        }
+                        else -> {}
+                    }
                 }
             }
 

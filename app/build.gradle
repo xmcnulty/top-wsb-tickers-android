@@ -93,6 +93,9 @@ dependencies {
     // candlestick charting
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    // tradingview chart
+    implementation 'com.tradingview:lightweightcharts:3.8.0'
+
     // Coil image
     implementation("io.coil-kt:coil:2.2.2")
     implementation("io.coil-kt:coil-compose:2.2.2")
