@@ -3,7 +3,6 @@ package io.xavier.topwsb.presentation.stock_detail.components.chart
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
 import com.tradingview.lightweightcharts.api.chart.models.color.IntColor
@@ -17,10 +16,9 @@ import com.tradingview.lightweightcharts.runtime.plugins.PriceFormatter
 import com.tradingview.lightweightcharts.runtime.plugins.TimeFormatter
 import com.tradingview.lightweightcharts.view.ChartsView
 import io.xavier.topwsb.domain.model.chart_data.ChartData
+import io.xavier.topwsb.presentation.theme.ChartColors
 import io.xavier.topwsb.presentation.theme.DarkBackground
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
-import io.xavier.topwsb.presentation.theme.NegativeTrend
-import io.xavier.topwsb.presentation.theme.PositiveTrend
 
 @Composable
 fun TradingViewLightWeightChart(
@@ -28,11 +26,6 @@ fun TradingViewLightWeightChart(
     modifier: Modifier = Modifier
 ) {
     val chartFontFamily = MaterialTheme.typography.labelSmall.fontFeatureSettings
-
-    val colPositiveTrendTop: Int = PositiveTrend.toArgb()
-    val colPositiveTrendBottom: Int = Color(40, 221, 100, 0).toArgb()
-    val colNegativeTrendTop: Int = NegativeTrend.toArgb()
-    val colNegativeTrendBottom: Int = Color(230, 79, 25, 0).toArgb()
 
     AndroidView(
         modifier = modifier,
@@ -51,27 +44,24 @@ fun TradingViewLightWeightChart(
                         horzLines = GridLineOptions(visible = false)
                     )
                     kineticScroll = KineticScrollOptions(
-                        touch = false,
+                        touch = true,
                         mouse = false
                     )
                     handleScroll = HandleScrollOptions(
                         mouseWheel = false,
                         pressedMouseMove = false,
                         horzTouchDrag = true,
-                        vertTouchDrag = false
+                        vertTouchDrag = true
                     )
                     rightPriceScale = PriceScaleOptions(
-                        visible = false,
                         borderVisible = false,
-                        autoScale = true,
-                        entireTextOnly = true
+                        entireTextOnly = true,
+                        drawTicks = false
                     )
                     timeScale = TimeScaleOptions(
-                        rightOffset = 1.0f,
                         fixRightEdge = true,
-                        timeVisible = true,
                         fixLeftEdge = true,
-                        visible = true
+                        borderVisible = false
                     )
                     localization = LocalizationOptions(
                         priceFormatter = PriceFormatter("\${price:#0:#0}"),
@@ -102,14 +92,14 @@ fun TradingViewLightWeightChart(
 
                     when {
                         areaData.first().value > areaData.last().value -> {
-                            topColor = IntColor(colNegativeTrendTop)
-                            bottomColor = IntColor(colNegativeTrendBottom)
-                            lineColor = IntColor(colNegativeTrendTop)
+                            topColor = ChartColors.negativeTrendTop
+                            bottomColor = ChartColors.negativeTrendBottom
+                            lineColor = ChartColors.negativeTrendTop
                         }
                         else -> {
-                            topColor = IntColor(colPositiveTrendTop)
-                            bottomColor = IntColor(colPositiveTrendBottom)
-                            lineColor = IntColor(colPositiveTrendTop)
+                            topColor = ChartColors.positiveTrendTop
+                            bottomColor = ChartColors.colPositiveTrendBottom
+                            lineColor = ChartColors.positiveTrendTop
                         }
                     }
                 },
