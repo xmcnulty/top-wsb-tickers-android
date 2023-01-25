@@ -149,7 +149,7 @@ fun StockDetailScreen(
                                     modifier = Modifier
                                         .fillParentMaxWidth()
                                         .requiredHeight(224.dp)
-                                        .padding(start = 8.dp),
+                                        .padding(start = 16.dp),
                                     chartData = it
                                 )
                             }

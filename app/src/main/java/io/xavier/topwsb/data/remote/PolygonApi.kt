@@ -43,6 +43,7 @@ interface PolygonApi {
        @Path("to") to: String,
        @Query("adjusted") adjusted: Boolean = true,
        @Query("sort") sort: String = "asc",
+       @Query("limit") limit: Int = 50_000,
        @Query("apiKey") apiKey: String
     ): ChartDataDto
 }
