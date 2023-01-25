@@ -23,7 +23,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import io.xavier.topwsb.R
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_detail.components.SectionInfoItem
-import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartSection
+import io.xavier.topwsb.presentation.stock_detail.components.chart.ChartState
+import io.xavier.topwsb.presentation.stock_detail.components.chart.TradingViewLightWeightChart
 import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentListItem
 import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentsState
 import io.xavier.topwsb.presentation.theme.DarkBackground
@@ -106,25 +107,6 @@ fun StockDetailScreen(
             return@Scaffold
         }
 
-        // if the market data couldn't be loaded show a message
-        /*if (viewModel.isError()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(DarkBackground),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    painterResource(id = R.drawable.outline_error),
-                    contentDescription = "Error",
-                    modifier = Modifier.requiredSize(64.dp),
-                    tint = DarkBackgroundTranslucent
-                )
-            }
-
-            return@Scaffold
-        }*/
-
         LazyColumn(
             state = listState,
             contentPadding = innerPadding
@@ -139,7 +121,20 @@ fun StockDetailScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    ChartSection(chartState = state.chartState)
+                    when(state.chartState) {
+                        is ChartState.Success -> {
+                            state.chartState.data?.let {
+                                TradingViewLightWeightChart(
+                                    modifier = Modifier
+                                        .fillParentMaxWidth()
+                                        .requiredHeight(224.dp),
+                                        //.padding(start = 16.dp),
+                                    chartData = it
+                                )
+                            }
+                        }
+                        else -> {}
+                    }
                 }
             }
 

@@ -19,7 +19,7 @@ class ChartDataRepositoryImpl @Inject constructor(
     ): ChartData {
         val result = api.getChartData(
             ticker = ticker,
-            multiplier = 1,
+            multiplier = 4,
             timespan = TimeSpan.HOUR,
             from = from,
             to = to,

@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.xavier.topwsb.common.TABLE_NAME_COMMENTS
 import io.xavier.topwsb.common.TICKER_STOCK_COL_NAME
-import io.xavier.topwsb.domain.model.WsbComment
+import io.xavier.topwsb.domain.model.wsb_comment.WsbComment
 
 @Dao
 interface WsbCommentsDao {

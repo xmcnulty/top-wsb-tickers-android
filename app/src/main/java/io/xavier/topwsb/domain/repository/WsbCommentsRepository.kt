@@ -1,6 +1,6 @@
 package io.xavier.topwsb.domain.repository
 
-import io.xavier.topwsb.domain.model.WsbComment
+import io.xavier.topwsb.domain.model.wsb_comment.WsbComment
 
 
 interface WsbCommentsRepository {

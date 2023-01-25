@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import io.xavier.topwsb.domain.model.Sentiment
+import io.xavier.topwsb.domain.model.wsb_comment.Sentiment
 
 /**
  * Custom composable for displaying sentiment within a card with a background that is specified

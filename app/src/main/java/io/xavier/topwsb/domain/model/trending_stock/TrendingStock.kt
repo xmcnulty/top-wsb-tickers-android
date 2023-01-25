@@ -2,7 +2,7 @@ package io.xavier.topwsb.domain.model.trending_stock
 
 import android.os.Parcelable
 import io.xavier.topwsb.data.local.entities.TrendingStockEntity
-import io.xavier.topwsb.domain.model.Sentiment
+import io.xavier.topwsb.domain.model.wsb_comment.Sentiment
 import kotlinx.parcelize.Parcelize
 
 /**

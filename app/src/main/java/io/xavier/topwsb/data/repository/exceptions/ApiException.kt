@@ -1,4 +1,4 @@
-package io.xavier.topwsb.domain.exceptions
+package io.xavier.topwsb.data.repository.exceptions
 
 /**
  * Exception thrown when an API returns an empty result, but still has a status HTTP status code of

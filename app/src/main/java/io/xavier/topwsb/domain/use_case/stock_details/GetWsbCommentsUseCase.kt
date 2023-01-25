@@ -2,9 +2,9 @@ package io.xavier.topwsb.domain.use_case.stock_details
 
 import io.xavier.topwsb.common.MILlIS_24_HOURS
 import io.xavier.topwsb.common.Resource
-import io.xavier.topwsb.domain.exceptions.ERROR_HTTP
-import io.xavier.topwsb.domain.exceptions.ERROR_NO_NETWORK
-import io.xavier.topwsb.domain.model.WsbComment
+import io.xavier.topwsb.data.repository.exceptions.ERROR_HTTP
+import io.xavier.topwsb.data.repository.exceptions.ERROR_NO_NETWORK
+import io.xavier.topwsb.domain.model.wsb_comment.WsbComment
 import io.xavier.topwsb.domain.repository.WsbCommentsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

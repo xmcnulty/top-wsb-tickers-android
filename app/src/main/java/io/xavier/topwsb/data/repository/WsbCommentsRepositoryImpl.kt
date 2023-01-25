@@ -2,8 +2,7 @@ package io.xavier.topwsb.data.repository
 
 import io.xavier.topwsb.data.local.TrendiesDatabase
 import io.xavier.topwsb.data.remote.WsbCommentsApi
-import io.xavier.topwsb.domain.mapper.toWsbComment
-import io.xavier.topwsb.domain.model.WsbComment
+import io.xavier.topwsb.domain.model.wsb_comment.WsbComment
 import io.xavier.topwsb.domain.repository.WsbCommentsRepository
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -27,7 +26,7 @@ class WsbCommentsRepositoryImpl @Inject constructor(
 
     override suspend fun refreshComments(ticker: String, afterUtc: Long): List<WsbComment> {
         val comments = api.getComments(ticker, afterUtc).data.map { dto ->
-            dto.toWsbComment(ticker)
+            WsbComment.buildFromDto(dto, ticker)
         }
 
         dao.insertComments(comments)

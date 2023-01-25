@@ -11,7 +11,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import io.xavier.topwsb.domain.model.Sentiment
+import io.xavier.topwsb.domain.model.wsb_comment.Sentiment
 import io.xavier.topwsb.presentation.common_composables.SentimentCard
 import io.xavier.topwsb.presentation.theme.DarkPrimaryText
 import io.xavier.topwsb.presentation.theme.DarkSecondaryText

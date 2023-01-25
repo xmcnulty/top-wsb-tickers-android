@@ -7,7 +7,7 @@ import io.xavier.topwsb.data.remote.PolygonApi
 import io.xavier.topwsb.data.remote.TrendingStockApi
 import io.xavier.topwsb.data.remote.dto.ticker_detail.TickerDetailDto
 import io.xavier.topwsb.data.remote.dto.trending_stocks.TrendingStockDto
-import io.xavier.topwsb.domain.model.Sentiment
+import io.xavier.topwsb.domain.model.wsb_comment.Sentiment
 import io.xavier.topwsb.domain.model.trending_stock.StockType
 import io.xavier.topwsb.domain.model.trending_stock.TrendingStock
 import io.xavier.topwsb.domain.repository.TrendingStockRepository
