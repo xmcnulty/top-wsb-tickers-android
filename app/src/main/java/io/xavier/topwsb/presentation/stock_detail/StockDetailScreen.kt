@@ -148,8 +148,8 @@ fun StockDetailScreen(
                                 TradingViewLightWeightChart(
                                     modifier = Modifier
                                         .fillParentMaxWidth()
-                                        .requiredHeight(224.dp)
-                                        .padding(start = 16.dp),
+                                        .requiredHeight(224.dp),
+                                        //.padding(start = 16.dp),
                                     chartData = it
                                 )
                             }

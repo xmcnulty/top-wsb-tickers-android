@@ -61,7 +61,7 @@ fun TradingViewLightWeightChart(
                         vertTouchDrag = false
                     )
                     rightPriceScale = PriceScaleOptions(
-                        visible = true,
+                        visible = false,
                         borderVisible = false,
                         autoScale = true,
                         entireTextOnly = true
