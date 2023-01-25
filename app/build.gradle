@@ -90,9 +90,6 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
-    // candlestick charting
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
     // tradingview chart
     implementation 'com.tradingview:lightweightcharts:3.8.0'
 
