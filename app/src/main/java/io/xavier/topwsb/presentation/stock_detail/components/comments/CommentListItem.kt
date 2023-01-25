@@ -5,7 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import io.xavier.topwsb.domain.model.WsbComment
+import io.xavier.topwsb.domain.model.wsb_comment.WsbComment
 import java.text.DateFormat
 import java.util.*
 

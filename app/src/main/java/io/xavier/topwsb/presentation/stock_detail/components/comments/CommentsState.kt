@@ -1,6 +1,6 @@
 package io.xavier.topwsb.presentation.stock_detail.components.comments
 
-import io.xavier.topwsb.domain.model.WsbComment
+import io.xavier.topwsb.domain.model.wsb_comment.WsbComment
 
 /**
  * Sealed class representing the possible states of the comment section for the stock detail screen.

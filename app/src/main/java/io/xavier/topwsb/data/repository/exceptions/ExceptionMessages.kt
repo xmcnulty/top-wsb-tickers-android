@@ -1,4 +1,4 @@
-package io.xavier.topwsb.domain.exceptions
+package io.xavier.topwsb.data.repository.exceptions
 
 // Message string for various exceptions.
 

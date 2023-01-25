@@ -1,4 +1,4 @@
-package io.xavier.topwsb.domain.model
+package io.xavier.topwsb.domain.model.wsb_comment
 
 import androidx.compose.ui.graphics.Color
 import io.xavier.topwsb.presentation.theme.DarkSelectedCard

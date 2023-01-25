@@ -107,25 +107,6 @@ fun StockDetailScreen(
             return@Scaffold
         }
 
-        // if the market data couldn't be loaded show a message
-        /*if (viewModel.isError()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(DarkBackground),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    painterResource(id = R.drawable.outline_error),
-                    contentDescription = "Error",
-                    modifier = Modifier.requiredSize(64.dp),
-                    tint = DarkBackgroundTranslucent
-                )
-            }
-
-            return@Scaffold
-        }*/
-
         LazyColumn(
             state = listState,
             contentPadding = innerPadding
@@ -140,8 +121,6 @@ fun StockDetailScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    //ChartSection(chartState = state.chartState)
-
                     when(state.chartState) {
                         is ChartState.Success -> {
                             state.chartState.data?.let {
