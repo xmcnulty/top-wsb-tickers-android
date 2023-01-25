@@ -146,7 +146,10 @@ fun StockDetailScreen(
                         is ChartState.Success -> {
                             state.chartState.data?.let {
                                 TradingViewLightWeightChart(
-                                    ticker = "AAPL",
+                                    modifier = Modifier
+                                        .fillParentMaxWidth()
+                                        .requiredHeight(224.dp)
+                                        .padding(start = 8.dp),
                                     chartData = it
                                 )
                             }
