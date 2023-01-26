@@ -9,8 +9,10 @@ import io.xavier.topwsb.common.Resource
 import io.xavier.topwsb.di.TimeOnlyFormatter
 import io.xavier.topwsb.domain.use_case.stock_list.GetTrendingStocksUseCase
 import io.xavier.topwsb.domain.use_case.stock_list.RefreshTrendingStocksUseCase
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import java.text.DateFormat
 import java.util.Date
 import javax.inject.Inject
@@ -31,6 +33,9 @@ class StockListViewModel @Inject constructor(
     private val _state = mutableStateOf(StockListState())
     val state: State<StockListState>
         get() = _state
+
+    private val errorEventsChannel = Channel<Int>()
+    val errorEvents = errorEventsChannel.receiveAsFlow()
 
     init {
         getStocks()
@@ -55,9 +60,13 @@ class StockListViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _state.value = StockListState(
-                        error = result.message ?: "An unexpected error occurred",
+                        errorId = result.messageResId,
                         isLoading = false
                     )
+
+                    result.messageResId?.let {
+                        errorEventsChannel.send(it)
+                    }
                 }
                 is Resource.Loading -> {
                     _state.value = StockListState(isLoading = true)
@@ -93,8 +102,12 @@ class StockListViewModel @Inject constructor(
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
                         isLoading = false,
-                        error = result.message
+                        errorId = result.messageResId
                     )
+
+                    result.messageResId?.let {
+                        errorEventsChannel.send(it)
+                    }
                 }
                 is Resource.Success -> {
                     val lastUpdate = result.data!!.maxOfOrNull {

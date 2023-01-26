@@ -9,5 +9,5 @@ data class StockListState(
     val lastUpdateFormatted: String = "-",
     val isLoading: Boolean = true,
     val trendingStocks: List<TrendingStock> = emptyList(),
-    val error: String? = null
+    val errorId: Int? = null
 )
