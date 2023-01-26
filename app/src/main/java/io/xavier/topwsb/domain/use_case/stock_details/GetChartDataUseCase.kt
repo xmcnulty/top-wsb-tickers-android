@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
+/**
+ * Retrieves chart data.
+ */
 class GetChartDataUseCase @Inject constructor(
     private val repository: ChartDataRepository
 ) {
