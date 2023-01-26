@@ -14,4 +14,5 @@ sealed class APIException(val errorResId: Int) : Exception() {
     object NoNetwork : APIException(R.string.error_no_network)
     object NoTrendingStocks : APIException(R.string.error_no_trending_stocks)
     object Unexpected : APIException(R.string.error_unexpected)
+    object NoChartData : APIException(R.string.error_no_chart_data)
 }
