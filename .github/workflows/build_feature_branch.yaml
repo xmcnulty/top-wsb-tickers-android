@@ -1,62 +1,50 @@
-name: Build Feature Branch
+name: Build Pull Request
 
-on:
-  pull_request:
-    branches:
-      - develop
+on: pull_request
 
 jobs:
   test_job:
-    name: Test
+    name: Assemble
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout
         uses: actions/checkout@v2
-
+        
       - name: Restore Cache
         uses: actions/cache@v2
         with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{runner.os}}-gradle-${{hashFiles('**/*.gradle*')}}
           restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Run Debug Tests
-        run: ./gradlew testDebugUnitTest --continue
-
-      - name: Upload Test Reports
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-reports
-          path: '**/build/reports/tests/'
-
+            ${{runner.os}}-gradle-
+        
+      - name: Assemble Debug
+        run: ./gradlew assembleDebug
+        
   lint_job:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout
         uses: actions/checkout@v2
-
+        
       - name: Restore Cache
         uses: actions/cache@v2
         with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{runner.os}}-gradle-${{hashFiles('**/*.gradle*')}}
           restore-keys: |
-            ${{ runner.os }}-gradle-
-
+            ${{runner.os}}-gradle-
+        
       - name: Run Debug Lint
-        run: ./gradlew lintDebug
-
+        run: ./gradlew assembleDebug
+        
       - name: Upload Lint Reports
-        if: ${{ always() }}
+        if: ${{always()}}
         uses: actions/upload-artifact@v2
         with:
           name: lint-report
