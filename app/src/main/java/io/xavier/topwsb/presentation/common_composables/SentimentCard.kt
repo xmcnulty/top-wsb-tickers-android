@@ -36,7 +36,7 @@ fun SentimentCard(
             text = sentiment.text,
             fontWeight = FontWeight.SemiBold,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.padding(
                 start = 4.dp,
                 end = 4.dp

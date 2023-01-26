@@ -7,6 +7,6 @@ import io.xavier.topwsb.domain.model.chart_data.ChartData
  */
 sealed interface ChartState {
     object Loading : ChartState
-    data class Error(val message: String) : ChartState
+    data class Error(val errorMsgResId: Int?) : ChartState
     data class Success(val data: ChartData?) : ChartState
 }

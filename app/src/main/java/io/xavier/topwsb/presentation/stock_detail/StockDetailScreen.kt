@@ -16,6 +16,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -51,18 +52,20 @@ fun StockDetailScreen(
     onBackPressed: () -> Boolean
 ) {
     val state = viewModel.state.value
+    val context = LocalContext.current
+
     val errorEvents = viewModel.errorEvents
     val listState = rememberLazyListState()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = snackbarHostState) {
-        errorEvents.collect { errorMessage ->
+        errorEvents.collect { errorMsgResId ->
             scope.launch {
                 snackbarHostState.showSnackbar(
-                    errorMessage,
+                    context.resources.getString(errorMsgResId),
                     withDismissAction = true,
-                    actionLabel = "Retry"
+                    actionLabel = context.resources.getString(R.string.retry)
                 )
             }
         }
