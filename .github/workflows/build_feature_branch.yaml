@@ -1,4 +1,4 @@
-name: Lint Check
+name: Build Feature Branch
 
 on:
   pull_request:
@@ -23,6 +23,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
       - name: Run Debug Tests
         run: ./gradlew testDebugUnitTest --continue
 
@@ -35,26 +36,28 @@ jobs:
 
   lint_job:
     name: Lint
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v2
+    runs-on: ubuntu-latest
+    steps:
 
-        - name: Restore Cache
-          uses: actions/cache@v2
-          with:
-            path: |
-              ~/.gradle/caches
-              ~/.gradle/wrapper
-            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-            restore-keys: |
-              ${{ runner.os }}-gradle-
-        - name: Run Debug Lint
-          run: ./gradlew lintDebug
+      - name: Checkout
+        uses: actions/checkout@v2
 
-        - name: Upload Lint Reports
-          if: ${{ always() }}
-          uses: actions/upload-artifact@v2
-          with:
-            name: lint-report
-            path: '**/build/reports/lint-results-*'
+      - name: Restore Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Run Debug Lint
+        run: ./gradlew lintDebug
+
+      - name: Upload Lint Reports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: lint-report
+          path: '**/build/reports/lint-results-*'
