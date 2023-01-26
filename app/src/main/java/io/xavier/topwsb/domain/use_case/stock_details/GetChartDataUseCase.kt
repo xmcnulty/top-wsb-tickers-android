@@ -14,6 +14,8 @@ import javax.inject.Inject
  * Retrieves chart data.
  *
  * @property repository [ChartDataRepository]
+ *
+ * @author xmcnulty
  */
 class GetChartDataUseCase @Inject constructor(
     private val repository: ChartDataRepository
