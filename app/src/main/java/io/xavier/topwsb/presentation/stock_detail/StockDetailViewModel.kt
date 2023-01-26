@@ -42,7 +42,7 @@ class StockDetailViewModel @Inject constructor(
     val state: State<StockDetailState>
         get() = _state
 
-    private val errorEventsChannel = Channel<String>()
+    private val errorEventsChannel = Channel<Int>()
     val errorEvents = errorEventsChannel.receiveAsFlow()
 
     init {
@@ -67,14 +67,12 @@ class StockDetailViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
-                    val errorMessage = result.message ?: "An unexpected error occurred"
-
                     _state.value = _state.value.copy(
                         commentsState = CommentsState.Error(
-                            message = errorMessage
+                            errorMsgResId = result.messageResId
                         )
                     )
-                    errorEventsChannel.send(errorMessage)
+                    result.messageResId?.let { errorEventsChannel.send(it) }
                 }
                 is Resource.Success -> {
                     _state.value = _state.value.copy(
@@ -102,7 +100,7 @@ class StockDetailViewModel @Inject constructor(
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
                         chartState = ChartState.Error(
-                            message = result.message ?: "Error loading data"
+                            errorMsgResId = result.messageResId
                         )
                     )
                 }

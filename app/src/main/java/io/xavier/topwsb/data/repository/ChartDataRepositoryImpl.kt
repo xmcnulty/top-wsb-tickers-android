@@ -2,6 +2,7 @@ package io.xavier.topwsb.data.repository
 
 import io.xavier.topwsb.BuildConfig
 import io.xavier.topwsb.data.remote.PolygonApi
+import io.xavier.topwsb.data.repository.exceptions.APIException
 import io.xavier.topwsb.domain.model.chart_data.ChartData
 import io.xavier.topwsb.domain.repository.chart_data.ChartDataRepository
 import io.xavier.topwsb.domain.repository.chart_data.TimeSpan
@@ -16,7 +17,7 @@ class ChartDataRepositoryImpl @Inject constructor(
         ticker: String,
         from: String,
         to: String
-    ): ChartData {
+    ): ChartData = try {
         val result = api.getChartData(
             ticker = ticker,
             multiplier = 4,
@@ -26,6 +27,8 @@ class ChartDataRepositoryImpl @Inject constructor(
             apiKey = BuildConfig.API_KEY_POLYGON
         )
 
-        return ChartData.build(result)
+        ChartData.build(result)
+    } catch (e: Exception) {
+        throw APIException.NoChartData
     }
 }

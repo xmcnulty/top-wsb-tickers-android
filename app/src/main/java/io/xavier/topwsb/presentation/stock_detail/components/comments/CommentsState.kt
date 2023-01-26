@@ -10,6 +10,6 @@ import io.xavier.topwsb.domain.model.wsb_comment.WsbComment
  */
 sealed interface CommentsState {
     object Loading : CommentsState
-    data class Error(val message: String) : CommentsState
+    data class Error(val errorMsgResId: Int?) : CommentsState
     data class Success(val comments: List<WsbComment>) : CommentsState
 }

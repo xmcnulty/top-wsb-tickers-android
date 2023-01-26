@@ -11,7 +11,7 @@ import io.xavier.topwsb.presentation.stock_detail.components.comments.CommentsSt
  * @property isChartVisible is the chart visible
  */
 data class StockDetailState(
-    val chartState: ChartState = ChartState.Error("Data not loaded"),
-    val commentsState: CommentsState = CommentsState.Error("Data not loaded"),
+    val chartState: ChartState = ChartState.Error(null),
+    val commentsState: CommentsState = CommentsState.Error(null),
     val isChartVisible: Boolean = false
 )

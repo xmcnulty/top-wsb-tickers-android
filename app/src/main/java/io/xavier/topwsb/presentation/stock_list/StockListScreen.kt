@@ -8,16 +8,22 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import io.xavier.topwsb.R
 import io.xavier.topwsb.R.drawable
 import io.xavier.topwsb.domain.model.trending_stock.TrendingStock
 import io.xavier.topwsb.presentation.common_composables.SectionTitle
 import io.xavier.topwsb.presentation.stock_list.components.LastUpdateText
 import io.xavier.topwsb.presentation.stock_list.components.StockListItem
 import io.xavier.topwsb.presentation.theme.defaultHorizontalPadding
+import kotlinx.coroutines.launch
 
 /**
  * Screen that displays a list of the top 20 stocks mentioned on r/wallstreetbets
@@ -31,11 +37,30 @@ fun StockListScreen(
     viewModel: StockListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
+    val context = LocalContext.current
 
     val stockListState = rememberLazyListState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = snackbarHostState) {
+        viewModel.errorEvents.collect { errorMsgResId ->
+
+            coroutineScope.launch {
+                snackbarHostState.showSnackbar(
+                    context.resources.getString(errorMsgResId),
+                    withDismissAction = true,
+                    actionLabel = context.resources.getString(R.string.retry)
+                )
+            }
+        }
+    }
 
     Scaffold(
         modifier = Modifier,
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         topBar = {
             CenterAlignedTopAppBar(
                 title = {

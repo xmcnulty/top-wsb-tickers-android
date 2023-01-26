@@ -1,5 +1,6 @@
 package io.xavier.topwsb.domain.repository
 
+import io.xavier.topwsb.data.repository.exceptions.APIException
 import io.xavier.topwsb.domain.model.trending_stock.TrendingStock
 import retrofit2.HttpException
 import java.io.IOException
@@ -15,7 +16,7 @@ interface TrendingStockRepository {
      *
      * @return list of [TrendingStock] objects
      */
-    @Throws(HttpException::class, IOException::class)
+    @Throws(APIException::class)
     suspend fun getTrendingStocks(): List<TrendingStock>
 
     /**

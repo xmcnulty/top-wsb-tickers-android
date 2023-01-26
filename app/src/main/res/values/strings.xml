@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Top WSB</string>
     <string name="comments">Comments:</string>
+
+    <string name="retry">Retry</string>
+    <string name="error_no_network">You appear to be offline. Please check your internet connection.</string>
+    <string name="error_no_trending_stocks">Unable to fetch trending stocks. Try again later.</string>
+    <string name="error_unexpected">An unexpected error occurred. Try again later.</string>
+    <string name="error_no_chart_data">Unable to fetch chart data. Check your internet and try again.</string>
+    <string name="error_no_comments">Unable to load comments. Try again later.</string>
 </resources>
