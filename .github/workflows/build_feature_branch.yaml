@@ -33,11 +33,10 @@ jobs:
           name: test-reports
           path: '**/build/reports/tests/'
 
-    lint_job:
-      name: Lint
+  lint_job:
+    name: Lint
       runs-on: ubuntu-latest
       steps:
-
         - name: Checkout
           uses: actions/checkout@v2
 
