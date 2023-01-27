@@ -31,7 +31,7 @@ data class TrendingStock(
     fun toEntity(): TrendingStockEntity = TrendingStockEntity(
         ticker = this.ticker,
         name = this.name,
-        type = this.type.string,
+        type = this.type.code,
         marketCap = this.marketCap,
         sharesOutstanding = this.sharesOutstanding,
         logoUrl = this.logoUrl,

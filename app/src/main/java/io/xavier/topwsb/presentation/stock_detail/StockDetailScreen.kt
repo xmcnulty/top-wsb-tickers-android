@@ -169,7 +169,7 @@ fun StockDetailScreen(
 
                     val detailsMap = mutableMapOf(
                         "Name" to stock.name,
-                        "Type" to stock.type.string,
+                        "Type" to stock.type.description,
                         "Shares Outstanding" to numFormatter.format(stock.sharesOutstanding)
                     )
 
