@@ -11,3 +11,33 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/xmcnulty/wsb-trendies/badge)](https://www.codefactor.io/repository/github/xmcnulty/wsb-trendies)
 
 </div>
+
+ ----
+
+Lightweight, fast, and open-source monitoring of r/wallstreetbets for Android 📱📈 No Ads, no trackers.
+
+## Features
+
+- **Trending**: up-to-date list of the trending stock tickers mentioned on the r/wallstreetbets subreddit
+- **Details**: view comments, sentiment and market details for each trending stock
+
+<br>
+
+<p float="left">
+  <img src="https://github.com/xmcnulty/wsb-trendies/blob/develop/metadata/images/list-screenshot.png" width="23%" />
+  <img src="https://github.com/xmcnulty/wsb-trendies/blob/develop/metadata/images/detail-screenshot.png" width="23%" />
+</p>
+
+
+### Lightweight
+Stores data locally and updates them automatically only when needed, minimizing network data and battery consumption.
+
+### Designed for Android
+The User Interface has been designed by following the latest Google's Material Design guidelines and by using only native Android components and animations.
+
+
+## Technical Details
+
+- **100% Jetpack Compose** 🚀
+
+- **Material Design 3** 💎
