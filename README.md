@@ -25,7 +25,6 @@ Lightweight, fast, and open-source monitoring of r/wallstreetbets for Android �
 - [Contribution](#contribution)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
-- [Contact](#contact)
 
 ## Visual Overview
 
@@ -64,8 +63,19 @@ After installation, open the app and:
 
 ## Technical Details
 
-- **100% Jetpack Compose** 🚀
-- **Material Design 3** 💎
+- **100% Jetpack Compose** 🚀: The app's UI is entirely built using the modern declarative UI toolkit Jetpack Compose, ensuring a consistent and updated user interface experience.
+  
+- **Material Design 3** 💎: The latest material design principles have been implemented, ensuring a modern and sleek user experience.
+  
+- **MVVM Architecture**: The app follows the Model-View-ViewModel architectural pattern, promoting separation of concerns and making the codebase modular and easier to maintain.
+  
+- **Networking with Retrofit**: Data from r/WallStreetBets is fetched using the Retrofit library, coupled with OkHttp for efficient HTTP requests.
+  
+- **Data Persistence with Room**: The app uses the Room library for data persistence, ensuring efficient data storage and retrieval with an SQLite backend.
+  
+- **Performance Optimizations**: The app employs efficient data structures and algorithms, along with caching mechanisms, to ensure smooth performance even with large volumes of data.
+  
+- **Other Libraries**: Additional tools and libraries used include Glide for image loading and Dagger Hilt for dependency injection, streamlining development and ensuring efficient operations.
 
 ## Contribution
 Contributions are welcomed! If you have suggestions or issues, please open a GitHub issue. If you'd like to improve the code or add a feature, please send a pull request.
@@ -74,9 +84,4 @@ Contributions are welcomed! If you have suggestions or issues, please open a Git
 This project is licensed under the MIT License. See the [LICENSE.md](LICENSE.md) file for details.
 
 ## Acknowledgments
-- Special thanks to [RESOURCE or PERSON] for [SPECIFIC HELP/RESOURCE].
-
-## Contact
-For any queries or feedback, feel free to reach out to me:
-- [Email](your-email@example.com)
-- [LinkedIn](your-linkedin-profile-link)
+- Special thanks to [Philipp Lackner](https://www.youtube.com/@PhilippLackner) for his amazing video guides and tutorials on Android development.
